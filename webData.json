@@ -1,0 +1,72 @@
+{
+  "resdisplay":[
+    [
+      {
+        "pre":"<div class='row-fluid'><div class='span10'><div style='float:left'><a target='_blank' href='",
+        "field":"url",
+        "post":"onClick='setgo()'"
+      },
+      {
+        "pre":"id='searchresult' collectionno=' ",
+        "field":"col",
+        "post":"' "
+
+      },
+      {
+        "pre":" uid='",
+        "field":"uid",
+        "post":"' >"
+
+      },
+      {
+        "pre": "<b>",
+        "field": "title",
+        "post": "</b></a></br></div>"
+      },
+      {
+        "pre": "<div class='span8'><div style='float:right; width:100px; height:5px;'><div class='progress' style='height:10px'> '{\"\"}' <div class='progress-bar' style='width:",
+        "field":"score",
+        "post":"%;'></div></div></div></div></div></div><div class='row-fluid' style='height:20px;'></div>"
+      }
+    ],
+    [
+      {
+        "pre": "<div class='row-fluid' style='height:20px;'>",
+        "field": "image",
+        "post": "</div>"
+      }
+    ],
+    [
+      {
+        "pre": "<div class='row-fluid' style='width:600px;text-align:justify;'>...",
+        "field": "context.text",
+        "post": "...</div>"
+      },
+      {
+        "pre": "</div><div class='row-fluid' style='width:600px;'>",
+        "field": "description",
+        "post": "</div>"
+      }
+    ],
+    [
+      {
+        "pre":"<div class='row-fluid'><i class='_searchresult_url' style='display: block;width: 600px;word-wrap: break-word;'>",
+        "field":"uid",
+        "post":"</i></div>"
+      }
+    ],
+    [
+      {
+        "pre":"<div class='row-fluid'><i>",
+        "field":"lastmodified",
+        "post":"</i></div>"
+      }
+    ]
+  ],
+  "dateTime":"YYYY-MM-DDTHH:mm:ss",
+  "dateFormat":"YYYY-MM-DD",
+  "dateFormat2":"dddd, MMMM Do YYYY, h:mm:ss a",
+  "view"      :["&lt100kB","100kB to 500kB","100kB to 500kB","1MB to 10MB","10MB&gt"],
+  "adddefaultsizefacet":"&facet.field=size&f.size.range=[*TO102400]&f.size.range=[102400TO512000]&f.size.range=[512000TO1048576]&f.size.range=[1048576TO10485760]&f.size.range=[10485760TO*]",
+  "bodyApend" :"'{\"\"}'<div id='dataAlertModal' class='modal' '+fadeClass+' role='dialog' aria-labelledby='dataAlertLabel' aria-hidden='true'><div class='modal-dialog'><div class='modal-content'>'{\"\"}'<div class='modal-header'>'{\"\"}'<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>'{\"\"}'<h3 id='dataAlertLabel'>'{\"\"}'Notification'{\"\"}'</h3>'{\"\"}'</div>'{\"\"}'<div class='modal-body'>'{\"\"}'<div class='form-horizontal'>'{\"\"}'<div class='form-group'>'{\"\"}'<label class='control-label col-sm-2'>Query:</label>'{\"\"}'<div class='controls col-sm-10'>'{\"\"}'<input type='text' id='_percolator-queryorg' value='+options.query+' disabled class='form-control'>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'<div class='form-group'>'{\"\"}'<label class='control-label col-sm-2'>Name:</label>'{\"\"}'<div class='controls col-sm-10'>'{\"\"}'<input type='text' id='_percolator-name' class='form-control'>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'<div class='form-group'>'{\"\"}'<label class='control-label col-sm-2'>Email:</label>'{\"\"}'<div class='controls col-sm-10'>'{\"\"}'<input type='text' id='_percolator-email' class='form-control'>'{\"\"}'</div>\</div>\<div class='form-group'>'{\"\"}'<label class='control-label col-sm-2'>Frequency:</label>'{\"\"}'<div class='controls col-sm-10'>'{\"\"}'<select id='_percolator-frequency' class='form-control'>'{\"\"}'<option>EACH</option>'{\"\"}'<option>DAILY</option>'{\"\"}'<option>WEEKLY</option>'{\"\"}'<option>MONTHLY</option>'{\"\"}'</select>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'<div class='form-group' style='display:none'>'{\"\"}'<label class='control-label col-sm-2'>Docs per mail:</label>'{\"\"}'<div class='controls col-sm-10'>'{\"\"}'<select id='_percolator-docspermail' class='form-control'>'{\"\"}'<option>10</option>'{\"\"}'<option>25</option>'{\"\"}'<option>50</option>'{\"\"}'<option>100</option>'{\"\"}'</select>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'</div>'{\"\"}'<div class='modal-footer'>'{\"\"}'<button class='btn ' + btnClass + '' data-dismiss='modal' aria-hidden='true' id='dataAlertTempOK' style='display:none;'>Ok</button>'{\"\"}'<button class='btn ' + btnClass + '' id='dataAlertOK'>Ok</button>'{\"\"}'</div>'{\"\"}'</div></div></div>"
+}
