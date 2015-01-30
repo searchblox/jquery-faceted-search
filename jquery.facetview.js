@@ -11,39 +11,100 @@
 var jsonData = {};
 var resulted = [];
 (function($) {
-
     setModel = function(index){
         var data;
-        console.log(index.getAttribute('uid'));
+        if(resulted[0].colname == 'fs'){
+            var _id =  index.parentNode.parentNode.parentNode.parentNode;
+
+        }
+        if(resulted[0].colname == 'csv'){
+            var _id =  index.parentNode.parentNode.parentNode.parentNode;
+        }
+        if(resulted[0].colname == 'database'){
+            var _id =  index.parentNode.parentNode.parentNode;
+        }
+        if(resulted[0].colname == 'mongodb'){
+            var _id =  index.parentNode.parentNode.parentNode;
+        }
         for(var i = 0; i < resulted.length; i++) {
-            if (resulted[i].uid == index.getAttribute('uid')) {
-                data = resulted[i];
-                console.log(data);
-                break;
+            if(resulted[i]['@id'] == _id.id){
+                 data = resulted[i];
+                    break;
             }
         }
 
-        var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
-        "<div class='modal-dialog'>" +
-        "<div class='modal-content'>" +
-        "<div class='modal-header'>" +
-        "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-        "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
-        "</div>" +
-        "<div class='modal-body'>"+"<strong> Descriptopn :</strong>" +
-        data.description +"<br>"+ "<strong> File Url :</strong>" +"<i>" + data.url  +  "</i>" +
-        "<br>"+
-        "<strong>last Modified :</strong>"+ data.indexdate +
-        "</div>" +
-        "<div class='modal-footer'>"+
-        "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
-        "</div>"+
-        "</div>"+
-        "</div>"+
-        "</div>";
+        if(data.colname == 'csv'){
+            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
+                "<div class='modal-dialog'>" +
+                "<div class='modal-content'>" +
+                "<div class='modal-header'>" +
+                "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+                "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
+                "</div>" +
+                "<div class='modal-body'>"+"<strong> Description :</strong>" +
+                data.title +"<br>"+ "<strong> File Url :</strong>" +"<i>" + data.url  +  "</i>" +
+                "<br>"+
+                "<strong>last Modified :</strong>"+ data.lastmodified +
+                "</div>" +
+                "<div class='modal-footer'>"+
+                "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
+                "</div>"+
+                "</div>"+
+                "</div>"+
+                "</div>";
+            $("#myModal").replaceWith(popup);
+            $("#myModal").modal('show');
 
-        $("#myModal").replaceWith(popup);
-        $("#myModal").modal('show');
+        }else if(data.colname == 'fs'){
+            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
+             "<div class='modal-dialog'>" +
+             "<div class='modal-content'>" +
+             "<div class='modal-header'>" +
+             "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+             "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
+             "</div>" +
+             "<div class='modal-body'>"+"<strong> Description :</strong>" +
+             data.description +"<br>"+ "<strong> File Url :</strong>" +"<i>" + data.url  +  "</i>" +
+             "<br>"+
+             "<strong>last Modified :</strong>"+ data.lastmodified +
+             "</div>" +
+             "<div class='modal-footer'>"+
+             "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
+             "</div>"+
+             "</div>"+
+             "</div>"+
+             "</div>";
+            $("#myModal").replaceWith(popup);
+            $("#myModal").modal('show');
+        }else if(data.colname == "database" || data.colname == 'mongodb'){
+            var txt = '';
+            for(key in data){
+                txt += '<b>' + key +' :</b>' + data[key] + '<br>';
+            }
+            if(txt){
+            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
+                "<div class='modal-dialog'>" +
+                "<div class='modal-content'>" +
+                "<div class='modal-header'>" +
+                "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+                "<h4 class='modal-title' id='myModalLabel'>" + data.source.post_name + "</h4>" +
+                "</div>" +
+                "<div class='modal-body'>" +
+                 txt +
+                "</div>" +
+                "<div class='modal-footer'>"+
+                "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
+                "</div>"+
+                "</div>"+
+                "</div>"+
+                "</div>";
+            }
+            $("#myModal").replaceWith(popup);
+            $("#myModal").modal('show');
+        }else{
+           window.location =  index.href;
+        }
+
     };
     $.getJSON("/searchblox/plugin/webData.json", function(data){
         console.log(data);
@@ -906,7 +967,7 @@ jQuery(function($){
         var buildrecord = function(index) {
             resulted.push(options.data['records'][index]);
             var record = options.data['records'][index];
-            result = '<tr style="float:left"><td>';
+            result = '<tr style="float:left"><td id="'+record['@id'] +'">';
             var context_flag=false;
             // add first image where available
             if (options.display_images) {
