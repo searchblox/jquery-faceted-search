@@ -77,11 +77,12 @@ var resulted = [];
             $("#myModal").replaceWith(popup);
             $("#myModal").modal('show');
         }else if(data.colname == "database" || data.colname == 'mongodb'){
-            var txt = '';
+            var txt = '<table class="table table-striped table-bordered">';
             for(key in data){
-                txt += '<b>' + key +' :</b>' + data[key] + '<br>';
+                txt += '<tr><th>' + key +' :</th>' + '<td>'+data[key] + '</td></tr>';
             }
             if(txt){
+                txt += '</table>'
             var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
                 "<div class='modal-dialog'>" +
                 "<div class='modal-content'>" +
