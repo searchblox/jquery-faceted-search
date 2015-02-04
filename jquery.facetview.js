@@ -11,20 +11,21 @@
 var jsonData = {};
 var resulted = [];
 (function($) {
+
     setModel = function(index){
         var data;
-        if(resulted[0].colname == 'fs'){
+        if(resulted[0].contenttype == 'TEXT'){
             var _id =  index.parentNode.parentNode.parentNode.parentNode;
 
         }
-        if(resulted[0].colname == 'csv'){
+        if(resulted[0].contenttype == 'csv'){
             var _id =  index.parentNode.parentNode.parentNode.parentNode;
         }
-        if(resulted[0].colname == 'database'){
+        if(resulted[0].contenttype == 'db'){
             var _id =  index.parentNode.parentNode.parentNode;
         }
-        if(resulted[0].colname == 'mongodb'){
-            var _id =  index.parentNode.parentNode.parentNode;
+        if(resulted[0].contenttype == 'mongodb'){
+            var _id =  index.parentNode.parentNode.parentNode.parentNode;
         }
         for(var i = 0; i < resulted.length; i++) {
             if(resulted[i]['@id'] == _id.id){
@@ -32,19 +33,31 @@ var resulted = [];
                     break;
             }
         }
+        var fileName, discription, title, obj;
+        txt = '<table class="table table-striped table-bordered">';
+        if(data.contenttype == 'TEXT' ||data.contenttype == 'csv' ||data.contenttype == 'mongodb'||data.contenttype == 'db' ){
+            if(data.contenttype == 'csv'){
+               var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{col5:data.source.col5},{col2:data.source.col2}];
+               obj =  popupFunc(array);
+            }else if(data.contenttype == 'db'){
+                var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{no:data.no},{fname:data.source.fname},{lname:data.source.lname},{address:data.source.address},{dept:data.deptid},{content_Type:data.contenttype}];
+                obj = popupFunc(array);
+            }if(data.contenttype == 'mongodb'){
+                var array = [{title:data.title},{keywords:data.keywords},{no:data.no},{dept:data.dept},{created_at:data.created_at},{contentType:data.contenttype}];
+                obj = popupFunc(array);
+          }else if(data.contenttype == 'TEXT'){
 
-        if(data.colname == 'csv'){
-            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
+                var array = [{title : data.title},{fileName :data.filename},{discription :data.description}];
+                obj = popupFunc(array);
+            }
+          var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
                 "<div class='modal-dialog'>" +
                 "<div class='modal-content'>" +
                 "<div class='modal-header'>" +
                 "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
                 "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
                 "</div>" +
-                "<div class='modal-body'>"+"<strong> Description :</strong>" +
-                data.title +"<br>"+ "<strong> File Url :</strong>" +"<i>" + data.url  +  "</i>" +
-                "<br>"+
-                "<strong>last Modified :</strong>"+ data.lastmodified +
+                "<div class='modal-body'>" + obj +
                 "</div>" +
                 "<div class='modal-footer'>"+
                 "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
@@ -52,61 +65,27 @@ var resulted = [];
                 "</div>"+
                 "</div>"+
                 "</div>";
-            $("#myModal").replaceWith(popup);
-            $("#myModal").modal('show');
 
-        }else if(data.colname == 'fs'){
-            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
-             "<div class='modal-dialog'>" +
-             "<div class='modal-content'>" +
-             "<div class='modal-header'>" +
-             "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-             "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
-             "</div>" +
-             "<div class='modal-body'>"+"<strong> Description :</strong>" +
-             data.description +"<br>"+ "<strong> File Url :</strong>" +"<i>" + data.url  +  "</i>" +
-             "<br>"+
-             "<strong>last Modified :</strong>"+ data.lastmodified +
-             "</div>" +
-             "<div class='modal-footer'>"+
-             "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
-             "</div>"+
-             "</div>"+
-             "</div>"+
-             "</div>";
             $("#myModal").replaceWith(popup);
-            $("#myModal").modal('show');
-        }else if(data.colname == "database" || data.colname == 'mongodb'){
-            var txt = '<table class="table table-striped table-bordered">';
-            for(key in data){
-                txt += '<tr><th>' + key +' :</th>' + '<td>'+data[key] + '</td></tr>';
-            }
-            if(txt){
-                txt += '</table>'
-            var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
-                "<div class='modal-dialog'>" +
-                "<div class='modal-content'>" +
-                "<div class='modal-header'>" +
-                "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                "<h4 class='modal-title' id='myModalLabel'>" + data.source.post_name + "</h4>" +
-                "</div>" +
-                "<div class='modal-body'>" +
-                 txt +
-                "</div>" +
-                "<div class='modal-footer'>"+
-                "<button type='button' class='btn btn-default' id='closeModel' data-dismiss='modal'>Close</button>" +
-                "</div>"+
-                "</div>"+
-                "</div>"+
-                "</div>";
-            }
-            $("#myModal").replaceWith(popup);
-            $("#myModal").modal('show');
-        }else{
-           window.location =  index.href;
+            $("#myModal").modal('show')
         }
-
+        else{
+            window.location =  index.href;
+        }
     };
+    popupFunc = function(array){
+        for(var i = 0;i<array.length;i++){
+            $.each( array[i], function( key, value ) {
+                if(value == undefined || value == null || value == ''){
+                    value = '';
+                }
+                txt += '<tr><th>' + key +' </th>' + '<td>'+value + '</td></tr>'
+            });
+        }
+        txt += "</table>";
+        return txt;
+    };
+
     $.getJSON("/searchblox/plugin/webData.json", function(data){
         console.log(data);
         jsonData= data;
