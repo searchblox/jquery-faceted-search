@@ -69,4 +69,6 @@
     text-decoration:none;
     margin:0 5px 0 5px;
 }
-
+.width110{
+    width: 110% !important;
+}

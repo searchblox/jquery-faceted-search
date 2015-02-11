@@ -37,13 +37,44 @@ var resulted = [];
         txt = '<table class="table table-striped table-bordered">';
         if(data.contenttype == 'TEXT' ||data.contenttype == 'csv' ||data.contenttype == 'mongodb'||data.contenttype == 'db' ){
             if(data.contenttype == 'csv'){
-               var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{col5:data.source.col5},{col2:data.source.col2}];
+                var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{created_at:data.created_at}];
+                if(data.source) {
+                    $.each(data.source, function (key, value) {
+                        if (value == undefined || value == null || value == '') {
+                            return;
+                        }
+                        var obj ={};
+                        obj[key] = value;
+                        array.push(obj);
+                    });
+
+                }
                obj =  popupFunc(array);
             }else if(data.contenttype == 'db'){
-                var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{no:data.no},{fname:data.source.fname},{lname:data.source.lname},{address:data.source.address},{dept:data.deptid},{content_Type:data.contenttype}];
+                var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{no:data.no},{dept:data.deptid},{content_Type:data.contenttype}];
+                if(data.source) {
+                        $.each(data.source, function (key, value) {
+                            if (value == undefined || value == null || value == '') {
+                            return;
+                            }
+                            var obj ={};
+                            obj[key] = value;
+                            array.push(obj);
+                        });
+                }
                 obj = popupFunc(array);
             }if(data.contenttype == 'mongodb'){
-                var array = [{title:data.title},{keywords:data.keywords},{no:data.no},{dept:data.dept},{created_at:data.created_at},{contentType:data.contenttype}];
+                var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{contentType:data.contenttype}];
+                if(data.source) {
+                    $.each(data.source, function (key, value) {
+                        if (value == undefined || value == null || value == '') {
+                            return;
+                        }
+                        var obj ={};
+                        obj[key] = value;
+                        array.push(obj);
+                    });
+                }
                 obj = popupFunc(array);
           }else if(data.contenttype == 'TEXT'){
 
@@ -52,7 +83,7 @@ var resulted = [];
             }
           var popup = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>" +
                 "<div class='modal-dialog'>" +
-                "<div class='modal-content'>" +
+                "<div class='modal-content width110'>" +
                 "<div class='modal-header'>" +
                 "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
                 "<h4 class='modal-title' id='myModalLabel'>" + data.title + "</h4>" +
@@ -79,7 +110,7 @@ var resulted = [];
                 if(value == undefined || value == null || value == ''){
                     value = '';
                 }
-                txt += '<tr><th>' + key +' </th>' + '<td>'+value + '</td></tr>'
+                txt += '<tr><th>' + key +'</th>' + '<td>'+value + '</td></tr>';
             });
         }
         txt += "</table>";
