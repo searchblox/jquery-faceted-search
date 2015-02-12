@@ -13,22 +13,10 @@ var resulted = [];
 (function($) {
 
     setModel = function(index){
+        var id =  $(index).parents('td');
         var data;
-        if(resulted[0].contenttype == 'TEXT'){
-            var _id =  index.parentNode.parentNode.parentNode.parentNode;
-
-        }
-        if(resulted[0].contenttype == 'csv'){
-            var _id =  index.parentNode.parentNode.parentNode.parentNode;
-        }
-        if(resulted[0].contenttype == 'db'){
-            var _id =  index.parentNode.parentNode.parentNode;
-        }
-        if(resulted[0].contenttype == 'mongodb'){
-            var _id =  index.parentNode.parentNode.parentNode.parentNode;
-        }
         for(var i = 0; i < resulted.length; i++) {
-            if(resulted[i]['@id'] == _id.id){
+            if(resulted[i]['@id'] == id[0].id){
                  data = resulted[i];
                     break;
             }
@@ -54,11 +42,14 @@ var resulted = [];
                 obj = popupFunc(array);
             }if(data.contenttype == 'mongodb'){
                 var array = [];
-                //var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{contentType:data.contenttype}];
                 $.each(data,function(key,value){
-                    var obj = {};
-                    obj[key] = value;
-                    array.push(obj);
+                    if(key == '@id'|| key == '@no' || key == 'score' || key == 'uid' || key == 'col' || key == 'indexdate' || key == 'url' || key == 'size' || key == '_autocomplete'|| key == 'description'|| key == 'created_at'|| key == 'sb_boost'){
+                       return;
+                    }else{
+                         var obj = {};
+                         obj[key] = value;
+                         array.push(obj);
+                    }
                 });
                 obj = popupFunc(array);
           }else if(data.contenttype == 'TEXT'){
