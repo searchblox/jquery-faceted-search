@@ -26,6 +26,16 @@ var resulted = [];
         if(data.contenttype == 'TEXT' ||data.contenttype == 'csv' ||data.contenttype == 'mongodb'||data.contenttype == 'db' ){
             if(data.contenttype == 'csv'){
                 var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{created_at:data.created_at}];
+                if(data.source){
+                $.each(data.source,function(key,value){
+                    if(value == '' || value == undefined || value == null){
+                    return;
+                    }
+                    var obj = {};
+                    obj[key] = value;
+                 array.push(obj);
+                });
+                }
                 obj =  popupFunc(array);
             }else if(data.contenttype == 'db'){
                 var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{content_Type:data.contenttype}];
