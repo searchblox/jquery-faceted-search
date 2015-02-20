@@ -11,8 +11,11 @@
 var jsonData = {};
 var resulted = [];
 (function($) {
-
+    $('a').on('click',function(){
+        setModel($(this));
+    })
     setModel = function(index){
+
         var id =  $(index).parents('td');
         var data;
         for(var i = 0; i < resulted.length; i++) {
@@ -85,9 +88,8 @@ var resulted = [];
 
             $("#myModal").replaceWith(popup);
             $("#myModal").modal('show')
-        }
-        else{
-            window.location =  index.href;
+        }else{
+            return true
         }
     };
     popupFunc = function(array){
@@ -163,8 +165,6 @@ jQuery.extend({
 
 // now the facetview function
 jQuery(function($){
-    /*open modal function for display data at popup*/
-
     $.fn.facetview = function(options) {
 	//the query variable
 	var filterq=new Array();
@@ -181,9 +181,9 @@ jQuery(function($){
         var resdisplay = [
             [
 		    {
-		    	'pre':'<div class="row-fluid"><div class="span10"><div style="float:left"><a  href="',
+		    	'pre':'<div class="row-fluid"><div class="span10"><div style="float:left"><a target="_blank" href="',
 		    	'field':'url',
-		    	'post':'" onClick="setgo();setModel(this)" data-toggle="modal" data-target"#myModel"'
+                'post':'" onClick="return setModel(this); setgo()"'
 		    },
 		    {
 		    	'pre':'id="searchresult" collectionno="',
@@ -483,7 +483,7 @@ jQuery(function($){
             	startdate="&f.lastmodified.filter=["+datefrom+"TO"+dateto+"]";
             	clickdatefilterchoice("From "+datefrom1+" to "+dateto1);
             });
-        }
+        };
 
         var clicksizefilterchoice = function(a) {
 
@@ -515,7 +515,7 @@ jQuery(function($){
             dosearch();
             }
             else{alert("Filter:"+$('#facetview_selectedfilters').find('a[filtername="'+view+'"]').attr('filtername')+" already exist!!");}
-        }
+        };
 
         var clearsizefilter = function(event) {
             event.preventDefault();
