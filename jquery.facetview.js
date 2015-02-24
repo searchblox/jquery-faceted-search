@@ -26,7 +26,10 @@ var resulted = [];
         }
         var fileName, discription, title, obj;
         txt = '<table class="table table-striped table-bordered">';
-        if(data.contenttype == 'TEXT' ||data.contenttype == 'csv' ||data.contenttype == 'mongodb'||data.contenttype == 'db' ){
+        if(data.contenttype == 'csv' ||data.contenttype == 'mongodb'||data.contenttype == 'db' ){
+            $(index).on('click',function(event){
+                event.preventDefault();
+            });
             if(data.contenttype == 'csv'){
                 var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{created_at:data.created_at}];
                 if(data.source){
