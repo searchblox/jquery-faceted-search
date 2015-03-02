@@ -31,7 +31,7 @@ var resulted = [];
                 event.preventDefault();
             });
             if(data.contenttype == 'csv'){
-                var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{created_at:data.created_at}];
+                var array = [{title:data.title},{keywords:data.keywords},{content_Type:data.contenttype},{lastmodified:data.lastmodified}];
                 if(data.source){
                 $.each(data.source,function(key,value){
                     if(value == '' || value == undefined || value == null){
@@ -44,7 +44,7 @@ var resulted = [];
                 }
                 obj =  popupFunc(array);
             }else if(data.contenttype == 'db'){
-                var array = [{title:data.title},{keywords:data.keywords},{created_at:data.created_at},{content_Type:data.contenttype}];
+                var array = [{title:data.title},{keywords:data.keywords},{lastmodified:data.lastmodified},{content_Type:data.contenttype}];
                 if(data.source) {
                         $.each(data.source, function (key, value) {
                             if (value == undefined || value == null || value == '') {
