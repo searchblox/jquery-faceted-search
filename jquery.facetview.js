@@ -1814,7 +1814,7 @@ jQuery(function($){
 	var autosuggest = function(event)
 	{event.preventDefault();
 		if(autosuggestflag){
-			$('#facetview_freetext').autocomplete({
+            $(this.target).find('#facetview_freetext').autocomplete({
 				source : []
 			});
 			autosuggestflag = false;
@@ -1920,7 +1920,7 @@ jQuery(function($){
                     }
                 );
             }
-        }
+        };
 
         // ===============================================
         // now create the plugin on the page
