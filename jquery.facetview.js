@@ -109,11 +109,11 @@ var resulted = [];
     };
 
     $.getJSON("/searchblox/plugin/webData.json", function(data){
-        console.log(data);
+        //console.log(data);
         jsonData= data;
 
     });
-    console.log(jsonData);
+    //console.log(jsonData);
     $.fn.bindWithDelay = function( type, data, fn, timeout, throttle ) {
     var wait = null;
     var that = this;
@@ -148,7 +148,7 @@ jQuery.extend({
         for ( var i = 0; i < hashes.length; i++ ) {
             hash = hashes[i].split('=');
             if ( hash.length > 1 ) {
-            	hash[1] = decodeURI(hash[1]);
+                hash[1] = decodeURI(hash[1]);
                 if ( hash[1].replace(/%22/gi,"")[0] == "[" || hash[1].replace(/%22/gi,"")[0] == "{" ) {
                     hash[1] = hash[1].replace(/^%22/,"").replace(/%22$/,"");
                     var newval = JSON.parse(unescape(hash[1].replace(/%22/gi,'"')));
@@ -169,55 +169,55 @@ jQuery.extend({
 // now the facetview function
 jQuery(function($){
     $.fn.facetview = function(options) {
-	//the query variable
-	var filterq=new Array();
-	var filterqn=-1;
-	var sortq="";
-	var direction="&sortdir=desc";
-	var sizeq=new Array();
-	var startdate="";
-	var enddate="";
-	var sizefilter="";
-	var dummy = false;
-	var autosuggestflag = true;
+    //the query variable
+    var filterq=new Array();
+    var filterqn=-1;
+    var sortq="";
+    var direction="&sortdir=desc";
+    var sizeq=new Array();
+    var startdate="";
+    var enddate="";
+    var sizefilter="";
+    var dummy = false;
+    var autosuggestflag = true;
         // a big default value (pulled into options below)
         var resdisplay = [
             [
-		    {
-		    	'pre':'<div class="row-fluid"><div class="span10"><div style="float:left"><a target="_blank" href="',
-		    	'field':'url',
+            {
+                'pre':'<div class="row-fluid"><div class="span10"><div style="float:left"><a target="_blank" href="',
+                'field':'url',
                 'post':'" onClick="return setModel(this); setgo()"'
-		    },
-		    {
-		    	'pre':'id="searchresult" collectionno="',
-		    	'field':'col',
-		    	'post':'" '
+            },
+            {
+                'pre':'id="searchresult" collectionno="',
+                'field':'col',
+                'post':'" '
 
-		    },
-		    {
-		    	'pre':' uid="',
-		    	'field':'uid',
-		    	'post':'" >'
+            },
+            {
+                'pre':' uid="',
+                'field':'uid',
+                'post':'" >'
 
-		    },
+            },
             {
                   "pre": "<b>",
                   "field": "title",
                   "post": "</b></a></br></div>"
             },
-		    {
-			'pre':'<div class="span8"><div style="float:right; width:100px; height:5px;"><div class="progress" style="height:10px">\
-				<div class="progress-bar" style="width:',
-			'field':'score',
-			'post':'%;"></div></div></div></div></div></div><div class="row-fluid" style="height:20px;"></div>'
-		    }
+            {
+            'pre':'<div class="span8"><div style="float:right; width:100px; height:5px;"><div class="progress" style="height:10px">\
+                <div class="progress-bar" style="width:',
+            'field':'score',
+            'post':'%;"></div></div></div></div></div></div><div class="row-fluid" style="height:20px;"></div>'
+            }
                 ],
                 [
-                 	{
-                 		"pre": '<div class="row-fluid" style="height:20px;">',
-                 		"field": "image",
-                 		"post": '</div>'
-                 	}
+                    {
+                        "pre": '<div class="row-fluid" style="height:20px;">',
+                        "field": "image",
+                        "post": '</div>'
+                    }
                 ],
                 [
                     {
@@ -232,17 +232,17 @@ jQuery(function($){
                     }
                 ],
                 [
-                 	{
-                 		'pre':'<div class="row-fluid"><i class="_searchresult_url" style="display: block;width: 600px;word-wrap: break-word;">',
-                 		"field":"uid",
-                 		'post':'</i></div>'
-                 	}
+                    {
+                        'pre':'<div class="row-fluid"><i class="_searchresult_url" style="display: block;width: 600px;word-wrap: break-word;">',
+                        "field":"uid",
+                        'post':'</i></div>'
+                    }
                 ],
                 [
                     {
-                    	'pre':'<div class="row-fluid"><i>',
-                    	"field":"lastmodified",
-                    	'post':'</i></div>'
+                        'pre':'<div class="row-fluid"><i>',
+                        "field":"lastmodified",
+                        'post':'</i></div>'
                     }
                 ],
             ];
@@ -300,33 +300,33 @@ jQuery(function($){
 
         // show the filter values initially
         var showfiltervalsinit = function() {
-        	$('.facetview_filtershow').each(function(){
-        		if ( $(this).hasClass('facetview_open') ) {
-                	// do nothing
+            $('.facetview_filtershow').each(function(){
+                if ( $(this).hasClass('facetview_open') ) {
+                    // do nothing
                 } else {
                     $(this).children('i').replaceWith('<i class="icon-minus"></i>');
                     $(this).addClass('facetview_open');
                     $(document.getElementById('facetview_' + $(this).attr('rel'))).children().show();
                 }
-        	});
-        	$('.facetview_advfiltershow1').each(function(){
-        		if ( $(this).hasClass('facetview_open') ) {
-                	// do nothing
+            });
+            $('.facetview_advfiltershow1').each(function(){
+                if ( $(this).hasClass('facetview_open') ) {
+                    // do nothing
                 } else {
                     $(this).children('i').replaceWith('<i class="icon-minus"></i>');
                     $(this).addClass('facetview_open');
                     $(document.getElementById('facetview_' + $(this).attr('rel'))).children().show();
                 }
-        	});
-        	$('.facetview_advfiltershow2').each(function(){
-        		if ( $(this).hasClass('facetview_open') ) {
-                	// do nothing
+            });
+            $('.facetview_advfiltershow2').each(function(){
+                if ( $(this).hasClass('facetview_open') ) {
+                    // do nothing
                 } else {
                     $(this).children('i').replaceWith('<i class="icon-minus"></i>');
                     $(this).addClass('facetview_open');
                     $(document.getElementById('facetview_' + $(this).attr('rel'))).children().show();
                 }
-        	});
+            });
         };
 
 
@@ -402,89 +402,89 @@ jQuery(function($){
                   <a style="text-align:left; min-width:70%;" class="facetview_advfiltershow1 btn btn-default" rel="advfilterdate" href="">\
                   <i class="icon-plus"></i>\
                   Date</a></div>\
-        	  <div id="facetview_advfilterdate">\
-        		<span>\
-        			<ul>\
-        			<a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="0" id="optiondatefrom_Last24">Last 24 hours (0)</li></a>\
-        			<a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="1" id="optiondatefrom_pweek">Past Week (0)</li></a>\
-        			<a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="2" id="optiondatefrom_pmonth">Past Month (0)</li></a>\
-        			<a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="3" id="optiondatefrom_pyear">Past Year (0)</li></a>\
-        			<a href="javascript:void(0)" class="facetview_filterchoice1"><li id="optiondatefrom_custom">Custom</li></a>\
-        			</ul>\
-        			<div class="daterange_facet" >\
-        			  <div class="control-group">\
-        			    <label class="control-label">From:</label>\
-        			    <div class="controls">\
-                			<div class="input-group">\
-        				    <span class="input-group-addon"><i class="icon-calendar"></i></span><input class="span2 form-control" readonly id="start_date" size="16" type="text" value="'+moment().subtract('days',1).format("MM/DD/YYYY")+'">\
-                			</div>\
-        			    </div>\
-        			  </div>\
-				      <div class="control-group">\
-				        <label class="control-label">To:</label>\
-				        <div class="controls">\
-					      <div class="input-group">\
-        				  <span class="input-group-addon"><i class="icon-calendar"></i></span><input class="span2 form-control" readonly id="end_date" size="16" type="text" value="'+moment().format("MM/DD/YYYY")+'">\
-					      </div>\
-				        </div>\
-        			    <div class="btn btn-primary" id="date_go" style="margin-bottom:10px; margin-top:10px; -webkit-border-radius:5px; border-radius:5px;">Go!</div>\
-        			  </div>\
-				    </div>\
-        		</span>\
-        	  </div>';
-			$('#adv_filters').html("").append(advfilterhtml);
-			$('.facetview_advfiltershow1').bind('click', showfiltervals);
-			$('.facetview_advfiltershow2').bind('click', showfiltervals);
-			$('#facetview_advfilterdate').children().hide();
-			$('#facetview_advfiltersize').children().hide();
-			$('.daterange_facet').children().hide();
-			$('[id^="optiondatefrom_"]').each(
-					function() {
-						$(this).bind(
-								'click',
-								function() {
-									daterangeclick($(this).html().replace(
-											/.?[(]+\d+[)]/g, ""));
-								});
-					});
-			$('[id^="optionsizefrom_"]').each(function() {
-				$(this).bind('click', function() {
-					sizerangeclick($(this).attr('id').split('_')[1]);
-				});
-			});
-			$('#start_date').focus(function() {
-				$(this).attr('old', $('#start_date').val());
-			});
-			$('#end_date').focus(function() {
-				$(this).attr('old', $('#end_date').val());
-			});
-			$('#start_date').change(function() {
-				var a = moment($('#start_date').val());
-				var b = moment($('#end_date').val());
-				if (a.diff(b) > 0) {
-					$(this).val($(this).attr('old'));
-					alert("Ooops...\nStart date cannot be after the end date");
-				}
-				;
-			});
-			$('#end_date')
-					.change(
-							function() {
-								var a = moment($('#start_date').val());
-								var b = moment($('#end_date').val());
-								if (a.diff(b) > 0) {
-									$(this).val($(this).attr('old'));
-									alert("Ooops...\nEnd date cannot be before the start date");
-								}
-								;
-							});
+              <div id="facetview_advfilterdate">\
+                <span>\
+                    <ul>\
+                    <a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="0" id="optiondatefrom_Last24">Last 24 hours (0)</li></a>\
+                    <a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="1" id="optiondatefrom_pweek">Past Week (0)</li></a>\
+                    <a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="2" id="optiondatefrom_pmonth">Past Month (0)</li></a>\
+                    <a href="javascript:void(0)" class="facetview_filterchoice1"><li sn="3" id="optiondatefrom_pyear">Past Year (0)</li></a>\
+                    <a href="javascript:void(0)" class="facetview_filterchoice1"><li id="optiondatefrom_custom">Custom</li></a>\
+                    </ul>\
+                    <div class="daterange_facet" >\
+                      <div class="control-group">\
+                        <label class="control-label">From:</label>\
+                        <div class="controls">\
+                            <div class="input-group">\
+                            <span class="input-group-addon"><i class="icon-calendar"></i></span><input class="span2 form-control" readonly id="start_date" size="16" type="text" value="'+moment().subtract('days',1).format("MM/DD/YYYY")+'">\
+                            </div>\
+                        </div>\
+                      </div>\
+                      <div class="control-group">\
+                        <label class="control-label">To:</label>\
+                        <div class="controls">\
+                          <div class="input-group">\
+                          <span class="input-group-addon"><i class="icon-calendar"></i></span><input class="span2 form-control" readonly id="end_date" size="16" type="text" value="'+moment().format("MM/DD/YYYY")+'">\
+                          </div>\
+                        </div>\
+                        <div class="btn btn-primary" id="date_go" style="margin-bottom:10px; margin-top:10px; -webkit-border-radius:5px; border-radius:5px;">Go!</div>\
+                      </div>\
+                    </div>\
+                </span>\
+              </div>';
+            $('#adv_filters').html("").append(advfilterhtml);
+            $('.facetview_advfiltershow1').bind('click', showfiltervals);
+            $('.facetview_advfiltershow2').bind('click', showfiltervals);
+            $('#facetview_advfilterdate').children().hide();
+            $('#facetview_advfiltersize').children().hide();
+            $('.daterange_facet').children().hide();
+            $('[id^="optiondatefrom_"]').each(
+                    function() {
+                        $(this).bind(
+                                'click',
+                                function() {
+                                    daterangeclick($(this).html().replace(
+                                            /.?[(]+\d+[)]/g, ""));
+                                });
+                    });
+            $('[id^="optionsizefrom_"]').each(function() {
+                $(this).bind('click', function() {
+                    sizerangeclick($(this).attr('id').split('_')[1]);
+                });
+            });
+            $('#start_date').focus(function() {
+                $(this).attr('old', $('#start_date').val());
+            });
+            $('#end_date').focus(function() {
+                $(this).attr('old', $('#end_date').val());
+            });
+            $('#start_date').change(function() {
+                var a = moment($('#start_date').val());
+                var b = moment($('#end_date').val());
+                if (a.diff(b) > 0) {
+                    $(this).val($(this).attr('old'));
+                    alert("Ooops...\nStart date cannot be after the end date");
+                }
+                ;
+            });
+            $('#end_date')
+                    .change(
+                            function() {
+                                var a = moment($('#start_date').val());
+                                var b = moment($('#end_date').val());
+                                if (a.diff(b) > 0) {
+                                    $(this).val($(this).attr('old'));
+                                    alert("Ooops...\nEnd date cannot be before the start date");
+                                }
+                                ;
+                            });
             $('#date_go').click(function(){
-            	var datefrom=moment($('#start_date').val()).format(jsonData.dateTime);
-            	var dateto=moment($('#end_date').val()).format(jsonData.dateTime);
-            	var datefrom1=moment($('#start_date').val()).format("YYYY-MM-DD");
-            	var dateto1=moment($('#end_date').val()).format("YYYY-MM-DD");
-            	startdate="&f.lastmodified.filter=["+datefrom+"TO"+dateto+"]";
-            	clickdatefilterchoice("From "+datefrom1+" to "+dateto1);
+                var datefrom=moment($('#start_date').val()).format(jsonData.dateTime);
+                var dateto=moment($('#end_date').val()).format(jsonData.dateTime);
+                var datefrom1=moment($('#start_date').val()).format("YYYY-MM-DD");
+                var dateto1=moment($('#end_date').val()).format("YYYY-MM-DD");
+                startdate="&f.lastmodified.filter=["+datefrom+"TO"+dateto+"]";
+                clickdatefilterchoice("From "+datefrom1+" to "+dateto1);
             });
         };
 
@@ -507,8 +507,8 @@ jQuery(function($){
             if($('#facetview_selectedfilters').find('a[filtername="'+view1+'"]').attr('filtername')==undefined){
             var temp=sizefilter;
             $('a[rel=sizefilter]').each(function(){
-            	dummy = true;
-            	$(this).click();
+                dummy = true;
+                $(this).click();
             });
             sizefilter=temp;
             $('#facetview_selectedfilters').append(newobj);
@@ -525,27 +525,29 @@ jQuery(function($){
             $(this).remove();
             sizefilter="";
             if(!dummy)
-            	dosearch();
+                dosearch();
             else
-            	dummy =false;
+                dummy =false;
         }
 
         var clickdatefilterchoice = function(a) {
             var view=a;
             view=view.replace(/ /g,'_');
+            var cleanname =  view.replace(/\(.*\)/,'').replace(/_/g,' ');
+           
             var newobj = '<a class="facetview_filterselected facetview_clear ' +
                 'btn btn-info"' +
                 '" alt="remove" title="remove"' +
                 ' href="javascript:void(0)" rel="datefilter"' + ' filtername='+view+' >' +
-                view.replace(/\(.*\)/,'') + ' <i class="icon-remove"></i></a>';
+                cleanname+ ' <i class="icon-remove"></i></a>';
 
             if($('#facetview_selectedfilters').find('a[filtername="'+view+'"]').attr('filtername')==undefined){
-            	var temp = startdate;
-            	$('a[rel=datefilter]').each(function(){
-                	dummy = true;
-                	$(this).click();
+                var temp = startdate;
+                $('a[rel=datefilter]').each(function(){
+                    dummy = true;
+                    $(this).click();
                 });
-            	startdate = temp;
+                startdate = temp;
             $('#facetview_selectedfilters').append(newobj);
             $('.facetview_filterselected').unbind('click',cleardatefilter);
             $('.facetview_filterselected').bind('click',cleardatefilter);
@@ -560,9 +562,9 @@ jQuery(function($){
             $(this).remove();
             startdate="";
             if(!dummy)
-            	dosearch();
+                dosearch();
             else
-            	dummy =false;
+                dummy =false;
         };
 
 
@@ -571,27 +573,27 @@ jQuery(function($){
             switch(a)
             {
             case '0':
-            	sizefilter="&f.size.filter=[*TO102400]";
-            	break;
+                sizefilter="&f.size.filter=[*TO102400]";
+                break;
 
             case '1':
-            	sizefilter="&f.size.filter=[102400TO512000]";
-            	break;
+                sizefilter="&f.size.filter=[102400TO512000]";
+                break;
 
             case '2':
-            	sizefilter="&f.size.filter=[512000TO1048576]";
-            	break;
+                sizefilter="&f.size.filter=[512000TO1048576]";
+                break;
 
             case '3':
-            	sizefilter="&f.size.filter=[1048576TO10485760]";
-            	break;
+                sizefilter="&f.size.filter=[1048576TO10485760]";
+                break;
 
             case '4':
-            	sizefilter="&f.size.filter=[10485760TO*]";
-            	break;
+                sizefilter="&f.size.filter=[10485760TO*]";
+                break;
 
             default:
-            	sizefilter="";
+                sizefilter="";
             }
             clicksizefilterchoice(a);
         };
@@ -603,173 +605,173 @@ jQuery(function($){
             switch(b)
             {
             case 'Last 24 hours':
-        	startdate="&f.lastmodified.filter=["+moment().subtract('days',1).format(jsonData.dateTime)+"TO*]";
-        	activedate=0;
-        	break;
+            startdate="&f.lastmodified.filter=["+moment().subtract('days',1).format(jsonData.dateTime)+"TO*]";
+            activedate=0;
+            break;
 
             case 'Past Week':
-            	startdate="&f.lastmodified.filter=["+moment().subtract('days',7).format(jsonData.dateTime)+"TO*]";
-            	activedate=1;
-        	break;
+                startdate="&f.lastmodified.filter=["+moment().subtract('days',7).format(jsonData.dateTime)+"TO*]";
+                activedate=1;
+            break;
 
             case 'Past Month':
-            	startdate="&f.lastmodified.filter=["+moment().subtract('months',1).format(jsonData.dateTime)+"TO*]";
-            	activedate=2;
-        	break;
+                startdate="&f.lastmodified.filter=["+moment().subtract('months',1).format(jsonData.dateTime)+"TO*]";
+                activedate=2;
+            break;
 
             case 'Past Year':
-            	startdate="&f.lastmodified.filter=["+moment().subtract('years',1).format(jsonData.dateTime)+"TO*]";
-            	activedate=3;
-        	break;
+                startdate="&f.lastmodified.filter=["+moment().subtract('years',1).format(jsonData.dateTime)+"TO*]";
+                activedate=3;
+            break;
 
             case 'Custom':
-        	$('.daterange_facet').children().show();
+            $('.daterange_facet').children().show();
                 $('#start_date').datepicker();
                 $('#end_date').datepicker();
 
-        	break;
+            break;
 
             default:
-        	startdate="";
-            	enddate="";
+            startdate="";
+                enddate="";
             }
             if(b!='Custom')clickdatefilterchoice("From "+b);
         };
 
-	// match options filter and data filter
-	var findfilterindata = function(filter)
-	{
-		var found="false";
-		for(var i in options.data["facets"])
-			for(var n in options.data["facets"][i])
-			{
-				if(n == filter){
-				found="true";
-				return i;
+    // match options filter and data filter
+    var findfilterindata = function(filter)
+    {
+        var found="false";
+        for(var i in options.data["facets"])
+            for(var n in options.data["facets"][i])
+            {
+                if(n == filter){
+                found="true";
+                return i;
                 }
-			}
-		if(found!=true)
-		return -1;
-	};
+            }
+        if(found!=true)
+        return -1;
+    };
 
-	var filterquery = new Array();
-	var nf=-1;
+    var filterquery = new Array();
+    var nf=-1;
 
-	var removefilterquery = function(facet,filtername)
-	{
-		var s=validatefilteradd(facet,filtername);
-		if(s==-1);
-		else
-		{
-			filterquery.splice(s,1);
-			nf--;
-		}
-	};
+    var removefilterquery = function(facet,filtername)
+    {
+        var s=validatefilteradd(facet,filtername);
+        if(s==-1);
+        else
+        {
+            filterquery.splice(s,1);
+            nf--;
+        }
+    };
 
-	var removeallcontenttypefilterquery = function(){
-		var s=validatefilteradd('contenttype','*');
-		while(s!=-1){
-			filterquery.splice(s,1);
-			nf--;
-			s=validatefilteradd('contenttype','*');
-		}
-	};
+    var removeallcontenttypefilterquery = function(){
+        var s=validatefilteradd('contenttype','*');
+        while(s!=-1){
+            filterquery.splice(s,1);
+            nf--;
+            s=validatefilteradd('contenttype','*');
+        }
+    };
 
-	var validatefilteradd = function(facet,filtername)
-		{
-			if(filtername == '*'){
-				for(var i in filterquery)
-				{
-					if(filterquery[i]['0']==facet)
-						return i;
-				}
-			}
-			else{
-				for(var i in filterquery)
-				{
-					if(filterquery[i]['0']==facet && filterquery[i]['1']==filtername)
-						return i;
-				}
-			}
-			return -1;
-		};
+    var validatefilteradd = function(facet,filtername)
+        {
+            if(filtername == '*'){
+                for(var i in filterquery)
+                {
+                    if(filterquery[i]['0']==facet)
+                        return i;
+                }
+            }
+            else{
+                for(var i in filterquery)
+                {
+                    if(filterquery[i]['0']==facet && filterquery[i]['1']==filtername)
+                        return i;
+                }
+            }
+            return -1;
+        };
 
-	var viewfilter = function()
-	{
-		for(i in filterquery)
-		{
-			alert(JSON.stringify(filterquery[i]));
-		}
-	};
+    var viewfilter = function()
+    {
+        for(i in filterquery)
+        {
+            alert(JSON.stringify(filterquery[i]));
+        }
+    };
 
-	var addfilterquery = function(facet,filtername)
-		{
-	    	var s=validatefilteradd(facet,filtername);
-	        if(s==-1)
-	        {
-	        	nf++;
-	        	filterquery[nf]={'0':facet,'1':filtername};
-	        }
-	    };
+    var addfilterquery = function(facet,filtername)
+        {
+            var s=validatefilteradd(facet,filtername);
+            if(s==-1)
+            {
+                nf++;
+                filterquery[nf]={'0':facet,'1':filtername};
+            }
+        };
 
-	var filterclick = function(rel,html)
-	{
-		addfilterquery(rel,escape(html.replace(/%%%/g,' ')));
-	};
+    var filterclick = function(rel,html)
+    {
+        addfilterquery(rel,escape(html.replace(/%%%/g,' ')));
+    };
 
-	var appendfilterstoquery = function(a)
-	{
-		var b="";
-		for(var i in filterquery)
-		{
-			b=b+"&f."+filterquery[i]['0']+".filter="+filterquery[i]['1'];
-		}
-		return(a+b);
-	};
+    var appendfilterstoquery = function(a)
+    {
+        var b="";
+        for(var i in filterquery)
+        {
+            b=b+"&f."+filterquery[i]['0']+".filter="+filterquery[i]['1'];
+        }
+        return(a+b);
+    };
 
         // set the available filter values based on results
         var putvalsinfilters = function(data)
-	{
-	// for each filter setup, find the results for it and append them to the relevant filter
-	for ( var each in options.facets ) {
+    {
+    // for each filter setup, find the results for it and append them to the relevant filter
+    for ( var each in options.facets ) {
         $(document.getElementById('facetview_' + options.facets[each]['field'].replace(/\./gi,'_'))).children().remove();
-		var n = findfilterindata(options.facets[each]['field']);
-		if(n==-1)continue;
-		var records = data["facets"][n][options.facets[each]['field']];
-		var totcount=records[0];
-		var a="@name";
-		if(options.facets[each]['field']=='lastmodified')
-		{
-		for ( var item in records[1]) {
+        var n = findfilterindata(options.facets[each]['field']);
+        if(n==-1)continue;
+        var records = data["facets"][n][options.facets[each]['field']];
+        var totcount=records[0];
+        var a="@name";
+        if(options.facets[each]['field']=='lastmodified')
+        {
+        for ( var item in records[1]) {
                     var append = '<li class="fltchoice"><p id="fltchoice_'+records[1][item][a]+
                         '" rel="' + options.facets[each]['field'] + '"   class="facetview_filterchoice"'+' href="#">' + moment((isNumber(records[1][item][a])?parseInt(records[1][item][a]):records[1][item][a])).format("dddd, MMMM Do YYYY, h:mm:ss a") +
                         ' (' + records[1][item]['#text'] + ')</p></li>';
                     $('#facetview_' + options.facets[each]['field'].replace(/\./gi,'_')).append(append);
                 }
-		}
-		else if(options.facets[each]['field']=='indexdate')
-		{
-			for ( var item in records[1]) {
-	                    var append = '<li class="fltchoice"><p id="fltchoice_'+records[1][item][a]+
-	                        '" rel="' + options.facets[each]['field'] + '"   class="facetview_filterchoice"'+' href="#">' + moment((isNumber(records[1][item][a])?parseInt(records[1][item][a]):records[1][item][a])).format("dddd, MMMM Do YYYY, h:mm:ss a") +
-	                        ' (' + records[1][item]['#text'] + ')</p></li>';
-	                    $('#facetview_' + options.facets[each]['field'].replace(/\./gi,'_')).append(append);
-	                }
-		}
-		else if(options.facets[each]['field']=='size')
-		{
-			for ( var item in records[1]) {
-			    var sz=parseInt(records[1][item][a]);
-			    var type="bytes";
-			    if(sz>1024){sz=sz/1024;type="KB"}
-			    if(sz>1024){sz=sz/1024;type="MB"}
-	                    var append = '<li class="fltchoice"><a id="fltchoice_'+records[1][item][a]+
-	                        '" rel="' + options.facets[each]['field'] + '"   class="facetview_filterchoice"'+' href="#">' + Math.floor(sz) + " " + type +
-	                        ' (' + records[1][item]['#text'] + ')</a></li>';
-	                    $('#facetview_' + options.facets[each]['field'].replace(/\./gi,'_')).append(append);
-	                }
-		}
-		else{
+        }
+        else if(options.facets[each]['field']=='indexdate')
+        {
+            for ( var item in records[1]) {
+                        var append = '<li class="fltchoice"><p id="fltchoice_'+records[1][item][a]+
+                            '" rel="' + options.facets[each]['field'] + '"   class="facetview_filterchoice"'+' href="#">' + moment((isNumber(records[1][item][a])?parseInt(records[1][item][a]):records[1][item][a])).format("dddd, MMMM Do YYYY, h:mm:ss a") +
+                            ' (' + records[1][item]['#text'] + ')</p></li>';
+                        $('#facetview_' + options.facets[each]['field'].replace(/\./gi,'_')).append(append);
+                    }
+        }
+        else if(options.facets[each]['field']=='size')
+        {
+            for ( var item in records[1]) {
+                var sz=parseInt(records[1][item][a]);
+                var type="bytes";
+                if(sz>1024){sz=sz/1024;type="KB"}
+                if(sz>1024){sz=sz/1024;type="MB"}
+                        var append = '<li class="fltchoice"><a id="fltchoice_'+records[1][item][a]+
+                            '" rel="' + options.facets[each]['field'] + '"   class="facetview_filterchoice"'+' href="#">' + Math.floor(sz) + " " + type +
+                            ' (' + records[1][item]['#text'] + ')</a></li>';
+                        $('#facetview_' + options.facets[each]['field'].replace(/\./gi,'_')).append(append);
+                    }
+        }
+        else{
                 for ( var item in records[1]) {
                     var append = '<li class="fltchoice"><a id="fltchoice_'+records[1][item][a].replace(/ /g,'%%%')+
                         '" rel="' + options.facets[each]['field'] + '" class="facetview_filterchoice"'+' href="#" forcloudrel="'+records[1][item]['#text']+'" forcloudtag="'+records[1][item][a]+'">' + records[1][item][a] +
@@ -778,7 +780,7 @@ jQuery(function($){
                 }
             }
 
-		if ( !$('.facetview_filtershow[rel="' + options.facets[each]['field'].replace(/\./gi,'_') + '"]').hasClass('facetview_open') ) {
+        if ( !$('.facetview_filtershow[rel="' + options.facets[each]['field'].replace(/\./gi,'_') + '"]').hasClass('facetview_open') ) {
                     $(document.getElementById('facetview_' + options.facets[each]['field'].replace(/\./gi,'_'))).children().hide();
         }
       }
@@ -789,8 +791,8 @@ jQuery(function($){
 
   //function to check if string only contains numbers
         var isNumber = function(string){
-        	var isnum = /^\d+$/.test(string);
-        	return isnum;
+            var isnum = /^\d+$/.test(string);
+            return isnum;
         };
 
         // ===============================================
@@ -800,7 +802,7 @@ jQuery(function($){
         // read the result object and return useful vals depending on if ES or SOLR
         // returns an object that contains things like ["data"] and ["facets"]
         var parseresults = function(dataobj) {
-            console.log(dataobj.results.result);
+            //console.log(dataobj.results.result);
             var resultobj = new Object();
             resultobj["records"] = new Array();
             resultobj["start"] = "";
@@ -809,21 +811,21 @@ jQuery(function($){
                 for (var item in dataobj.results.result) {
                     if(item=="@no")
                     {
-                	resultobj["records"].push(dataobj.results.result);
-                	resultobj["found"] = dataobj.results['@hits'];
-                	break;
+                    resultobj["records"].push(dataobj.results.result);
+                    resultobj["found"] = dataobj.results['@hits'];
+                    break;
                     }
                     resultobj["records"].push(dataobj.results.result[item]);
                     resultobj["found"] = dataobj.results['@hits'];
                 };
-	if(dataobj.facets)
-	{
-	resultobj["facets"] = new Object();
-	if(dataobj.facets.facet)
-	{
-		var fname="";
-		var count="";
-		var facetsobj = new Object();
+    if(dataobj.facets)
+    {
+    resultobj["facets"] = new Object();
+    if(dataobj.facets.facet)
+    {
+        var fname="";
+        var count="";
+        var facetsobj = new Object();
             for (var item in dataobj.facets.facet){
                 var values = new Object();
                 if(item == "@name")
@@ -838,59 +840,59 @@ jQuery(function($){
                     facetsobj['name']=fname;
                     facetsobj[fname]=[count,values];
                 }
-		    }
+            }
                 resultobj["facets"][0] = facetsobj;
-		options.noffilters=1;
-	}
-	else
-	{
-		var n=0;
-		for(n in dataobj.facets)
-		{
-			var fname="";
-			var count="";
-			var facetsobj = new Object();
+        options.noffilters=1;
+    }
+    else
+    {
+        var n=0;
+        for(n in dataobj.facets)
+        {
+            var fname="";
+            var count="";
+            var facetsobj = new Object();
             for (var item in dataobj.facets[n])
-			{
-				var values = new Object();
-				if(item == "@name"){
-					fname=dataobj.facets[n][item];
-					if(fname=="lastmodified" || fname=="size")
-					{
-						facetsobj[fname]=new Object();
-						for(var t1 in dataobj.facets[n]['int'])
-						{
-							var data=new Array();
-							data[0]=dataobj.facets[n]['int'][t1]['@from'];
-							data[1]=dataobj.facets[n]['int'][t1]['@to'];
-							data[2]=dataobj.facets[n]['int'][t1]['#text'];
-							facetsobj[fname][t1]=data;
-						}
-					}
-				}
-				else if(item=="@count")
-				count=dataobj.facets[n][item];
-				else if(item=="int")
-				{
+            {
+                var values = new Object();
+                if(item == "@name"){
+                    fname=dataobj.facets[n][item];
+                    if(fname=="lastmodified" || fname=="size")
+                    {
+                        facetsobj[fname]=new Object();
+                        for(var t1 in dataobj.facets[n]['int'])
+                        {
+                            var data=new Array();
+                            data[0]=dataobj.facets[n]['int'][t1]['@from'];
+                            data[1]=dataobj.facets[n]['int'][t1]['@to'];
+                            data[2]=dataobj.facets[n]['int'][t1]['#text'];
+                            facetsobj[fname][t1]=data;
+                        }
+                    }
+                }
+                else if(item=="@count")
+                count=dataobj.facets[n][item];
+                else if(item=="int")
+                {
                     for (var thing in dataobj.facets[n][item])
-					{
-						if(thing=='@name')
-						{
-							values['0']=dataobj.facets[n]['int'];
-							break;
-						}
-                       		 		values[thing]=dataobj.facets[n][item][thing];
-					}
-					facetsobj[fname]= new Object();
-					facetsobj['name']=fname;
-					facetsobj[fname]=[count,values];
-				}
-			}
+                    {
+                        if(thing=='@name')
+                        {
+                            values['0']=dataobj.facets[n]['int'];
+                            break;
+                        }
+                                    values[thing]=dataobj.facets[n][item][thing];
+                    }
+                    facetsobj[fname]= new Object();
+                    facetsobj['name']=fname;
+                    facetsobj[fname]=[count,values];
+                }
+            }
             resultobj["facets"][n] = facetsobj;
-		}
-		options.noffilters=n;
-	}
-	}
+        }
+        options.noffilters=n;
+    }
+    }
         return resultobj;
         };
 
@@ -931,10 +933,10 @@ jQuery(function($){
               </div> \
               ';
             $('#facetview_metadata').html("Your search for<b> "+options.query+" </b>did not match any documents..." +
-            		"<br/><br/>" +
-            		"* Suggestions: Make sure all words are spelled correctly.</br>" +
-            		"* Use similar words or synonyms.</br>" +
-            		"* Try more general keywords.");
+                    "<br/><br/>" +
+                    "* Suggestions: Make sure all words are spelled correctly.</br>" +
+                    "* Use similar words or synonyms.</br>" +
+                    "* Try more general keywords.");
             if (data.found) {
                 var from = options.paging.from + 1;
                 var size = options.paging.size;
@@ -954,12 +956,12 @@ jQuery(function($){
         };
 
         var canplay = function(ext){
-        	 var canPlay = false;
-        	   var v = document.createElement('video');
-        	   if(v.canPlayType && v.canPlayType('video/'+ext).replace(/no/, '')) {
-        	       canPlay = true;
-        	   }
-        	   return canPlay;
+             var canPlay = false;
+               var v = document.createElement('video');
+               if(v.canPlayType && v.canPlayType('video/'+ext).replace(/no/, '')) {
+                   canPlay = true;
+               }
+               return canPlay;
         };
 
         var _uid="";
@@ -978,26 +980,26 @@ jQuery(function($){
                 recstrf = recstr.substring(1,recstr.length);
                 var t = recstr.substring(recstr.lastIndexOf('.')+1).toLowerCase();
                 if(recstr.startsWith('http')||recstr.startsWith('https')){
-                	if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp" ){
-                		var img = new Array();
-                		img[0]=recstr;
-                		var isFile = false;
-                	}if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg"){
-                		var play = canplay(t);
-                		var img = new Array();
-                		img[1]=recstr;
-                		var isFile = false;
-                	}
+                    if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp" ){
+                        var img = new Array();
+                        img[0]=recstr;
+                        var isFile = false;
+                    }if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg"){
+                        var play = canplay(t);
+                        var img = new Array();
+                        img[1]=recstr;
+                        var isFile = false;
+                    }
                 }else if(recstr.startsWith('/') || recstrf.startsWith(':')){
-                	if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp"   ){
-                		var img = new Array();
-                		img[0]=recstr;
-                		var isFile = true;
-                	}if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg" ) {
-                		var play = canplay(t);
-                		var img = new Array();
-                		img[1]=recstr;
-                		var isFile = true;
+                    if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp"   ){
+                        var img = new Array();
+                        img[0]=recstr;
+                        var isFile = true;
+                    }if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg" ) {
+                        var play = canplay(t);
+                        var img = new Array();
+                        img[1]=recstr;
+                        var isFile = true;
                 }}
 
                 var recstri = JSON.stringify(record['_autocomplete']);
@@ -1016,44 +1018,44 @@ jQuery(function($){
                     if(thekey=='image'){
                         if(!isFile){
                             if (img) {
-                    	        if(img[0] != null)
+                                if(img[0] != null)
                                     lines += '<div class="row-fluid"><a href="' +img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /></a></div>';
                                 else{
-                        	        if(play)
-                        		        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
-                        	        else
-                        		        lines += '<a href="' + img[1] + '"><img src="images/play.jpg"/></a></div>';
+                                    if(play)
+                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
+                                    else
+                                        lines += '<a href="' + img[1] + '"><img src="images/play.jpg"/></a></div>';
                                 }
 
                             }
                         }
                         else{
-                    	    if(img){
-                    	    if(img[0] != null)
+                            if(img){
+                            if(img[0] != null)
                                 lines += '<div class="row-fluid"><a href="../servlet/FileServlet?url=' + img[0] + '&col='+colid+'" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="../servlet/FileServlet?url=' + img[0] + '&col='+colid+'" /> </a></div>';
                                 else{
-                            	    if(play)
-                            		    lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="../servlet/FileServlet?url=' + img[1] + '&col='+colid+'"/>'
-                            	    else
-                            		    lines += '<a href="../servlet/FileServlet?url=' + img[1] + '&col='+colid+'"> <img src="images/play.jpg"/></a></div>'
+                                    if(play)
+                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="../servlet/FileServlet?url=' + img[1] + '&col='+colid+'"/>'
+                                    else
+                                        lines += '<a href="../servlet/FileServlet?url=' + img[1] + '&col='+colid+'"> <img src="images/play.jpg"/></a></div>'
                                 }
                             }
                         }
 
                     if (imgi && !img) {
-                    	var width = "width:100px;";
-                    	if(record['contenttype'] == 'tweet') width = "";
-                    	var imgistack = new Array();
-                    	for(var tempi in imgi)
-                    		if(imgi[tempi].toString().startsWith('http'))
-                    			if(imgi[tempi].match(/jpeg$/)!=null||imgi[tempi].match(/gif$/)!=null||imgi[tempi].match(/png$/)!=null||imgi[tempi].match(/jpg$/)!=null){
-                    				if(imgistack.indexOf(imgi[tempi].toString())==-1){
-                    					imgistack.push(imgi[tempi].toString());
-                    					result += '<div class="row-fluid"><a href="' +imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a></div>'
-                    				}
-                    			}
+                        var width = "width:100px;";
+                        if(record['contenttype'] == 'tweet') width = "";
+                        var imgistack = new Array();
+                        for(var tempi in imgi)
+                            if(imgi[tempi].toString().startsWith('http'))
+                                if(imgi[tempi].match(/jpeg$/)!=null||imgi[tempi].match(/gif$/)!=null||imgi[tempi].match(/png$/)!=null||imgi[tempi].match(/jpg$/)!=null){
+                                    if(imgistack.indexOf(imgi[tempi].toString())==-1){
+                                        imgistack.push(imgi[tempi].toString());
+                                        result += '<div class="row-fluid"><a href="' +imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a></div>'
+                                    }
+                                }
                     }
-                    	continue;
+                        continue;
                     }
                     parts = thekey.split('.');
                     // TODO: this should perhaps recurse..
@@ -1072,27 +1074,27 @@ jQuery(function($){
                         if(parts=='lastmodified')thevalue=moment(thevalue).format("dddd, MMMM Do YYYY, h:mm:ss a");
                         if(parts=='context,text')
                         {
-                            	context_flag=true;
-                            	var thevalue1=" ";
-                            	var b=JSON.stringify(record['context']['highlight']);
-                            	if(b.split(',').length==1)
-                            	{
-                            		if(thevalue!=undefined)
-                            			thevalue1=thevalue1+(thevalue[0]==undefined?"":thevalue[0])+"<B>"+record['context']['highlight']+"</B>"+(thevalue==undefined?"":thevalue);
-                            		else
-                            			thevalue1=thevalue1+"<B>"+record['context']['highlight']+"</B>";
-                            	}
-                            	else
-                            		for(var a=0,b=0; a<thevalue.length; a++)
-                            		{
-                            			if(thevalue[a+1]!=undefined && thevalue[a+1] == "...") thevalue1 = thevalue1 + thevalue[a];
-                            			else if (thevalue[a] == "...") thevalue1 = thevalue1 + thevalue[a];
-                            			else if (record['context']['highlight'][b]){
-                            				thevalue1=thevalue1+thevalue[a]+"<B>"+record['context']['highlight'][b]+"</B>";
-                            				b++;
-                            			}
-                            		}
-                        	thevalue=thevalue1;
+                                context_flag=true;
+                                var thevalue1=" ";
+                                var b=JSON.stringify(record['context']['highlight']);
+                                if(b.split(',').length==1)
+                                {
+                                    if(thevalue!=undefined)
+                                        thevalue1=thevalue1+(thevalue[0]==undefined?"":thevalue[0])+"<B>"+record['context']['highlight']+"</B>"+(thevalue==undefined?"":thevalue);
+                                    else
+                                        thevalue1=thevalue1+"<B>"+record['context']['highlight']+"</B>";
+                                }
+                                else
+                                    for(var a=0,b=0; a<thevalue.length; a++)
+                                    {
+                                        if(thevalue[a+1]!=undefined && thevalue[a+1] == "...") thevalue1 = thevalue1 + thevalue[a];
+                                        else if (thevalue[a] == "...") thevalue1 = thevalue1 + thevalue[a];
+                                        else if (record['context']['highlight'][b]){
+                                            thevalue1=thevalue1+thevalue[a]+"<B>"+record['context']['highlight'][b]+"</B>";
+                                            b++;
+                                        }
+                                    }
+                            thevalue=thevalue1;
                         }
                     } else {
                         var thevalue = [];
@@ -1128,65 +1130,65 @@ jQuery(function($){
 
         // put the results on the page
         showresults = function(sdata) {
-        	var data = parseresults(sdata);
+            var data = parseresults(sdata);
             options.data = data;
             //show suggestion if available
             var suggest = sdata["results"]['@suggest'];
             var suggestexist = false;
             var temp = "";
             if(suggest.trim() != ''){
-            	suggestexist = true;
-            	temp += "<table class='table table-condensed'><tbody>";
-            	temp += "<tr><td><i><small><b>Did you mean : <a href='/searchblox/plugin/index.html?query="+ suggest.trim() + "'>" + suggest.trim() + "</a> ?</b></small></i></td></tr>";
-            	temp += "</tbody></table>";
+                suggestexist = true;
+                temp += "<table class='table table-condensed'><tbody>";
+                temp += "<tr><td><i><small><b>Did you mean : <a href='/searchblox/plugin/index.html?query="+ suggest.trim() + "'>" + suggest.trim() + "</a> ?</b></small></i></td></tr>";
+                temp += "</tbody></table>";
             }
             else{
-            	suggestexist = false;
+                suggestexist = false;
             }
             if(suggestexist){
-            	$('#suggest').html(temp);
+                $('#suggest').html(temp);
             }
             else{
-            	$('#suggest').html('');
+                $('#suggest').html('');
             }
 
             //show ads if available
             var adsexist = false;
             if(sdata["ads"]){
-            	var temp = "<table class='table' style='background-color: #F6F4B6;'><tbody>";
-            	temp += "<tr><td><i><small>Results from Ads</small></i></td></tr>";
-            	for(temp1 in sdata["ads"]){
-            		adsexist = true;
-            		var ads_graphic_url = sdata["ads"][temp1]['@graphic_url'];
-            		temp += "<tr>\
-            				<td>\
-            				<div class=\"row-fluid\">\
-            				<div class=\"span10\">\
-            				<div style=\"float:left\">\
-            				<a style=\"color:red\" href=\"" + sdata["ads"][temp1]['@url'] + "\"><b>" + sdata["ads"][temp1]['@title'] + "</b></a><br></div></div></div>";
+                var temp = "<table class='table' style='background-color: #F6F4B6;'><tbody>";
+                temp += "<tr><td><i><small>Results from Ads</small></i></td></tr>";
+                for(temp1 in sdata["ads"]){
+                    adsexist = true;
+                    var ads_graphic_url = sdata["ads"][temp1]['@graphic_url'];
+                    temp += "<tr>\
+                            <td>\
+                            <div class=\"row-fluid\">\
+                            <div class=\"span10\">\
+                            <div style=\"float:left\">\
+                            <a style=\"color:red\" href=\"" + sdata["ads"][temp1]['@url'] + "\"><b>" + sdata["ads"][temp1]['@title'] + "</b></a><br></div></div></div>";
 
-            		temp += '<div class="row-fluid" style="height:20px"></div><div class="row-fluid">';
-            		if(ads_graphic_url!='')
-            			temp += '<a href="'+ sdata["ads"][temp1]['@graphic_url'] +'" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ sdata["ads"][temp1]['@graphic_url'] +'" /> </a>';
-            		temp += sdata["ads"][temp1]['@description'];
-            		var tempurl = sdata["ads"][temp1]['@url'];
-            		var t = tempurl.substring(tempurl.lastIndexOf('.')+1).toLowerCase();
-            		if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp" ){
-            			temp += '<a href="'+ sdata["ads"][temp1]['@url'] +'" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ sdata["ads"][temp1]['@url'] +'" /> </a>';
-            		}
-            		temp += '</div>';
-            		temp += '<div class="row-fluid"><i class="_searchresult_url">' + sdata["ads"][temp1]['@url'] + '</i></div>';
+                    temp += '<div class="row-fluid" style="height:20px"></div><div class="row-fluid">';
+                    if(ads_graphic_url!='')
+                        temp += '<a href="'+ sdata["ads"][temp1]['@graphic_url'] +'" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ sdata["ads"][temp1]['@graphic_url'] +'" /> </a>';
+                    temp += sdata["ads"][temp1]['@description'];
+                    var tempurl = sdata["ads"][temp1]['@url'];
+                    var t = tempurl.substring(tempurl.lastIndexOf('.')+1).toLowerCase();
+                    if( t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp" ){
+                        temp += '<a href="'+ sdata["ads"][temp1]['@url'] +'" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ sdata["ads"][temp1]['@url'] +'" /> </a>';
+                    }
+                    temp += '</div>';
+                    temp += '<div class="row-fluid"><i class="_searchresult_url">' + sdata["ads"][temp1]['@url'] + '</i></div>';
 
-            		temp += '</tr>';
-            	}
-            	temp += "</tbody></table>";
-            	if(adsexist)
-            		$('#ads').html(temp);
-            	else
-            		$('#ads').html('');
+                    temp += '</tr>';
+                }
+                temp += "</tbody></table>";
+                if(adsexist)
+                    $('#ads').html(temp);
+                else
+                    $('#ads').html('');
             }
 
-	    if(data["facets"])
+        if(data["facets"])
             putvalsinfilters(data);
             // put result metadata on the page
             putmetadata(data);
@@ -1201,92 +1203,92 @@ jQuery(function($){
 
             fixadvfiltercount();
             if(options.data['found'] && first==true)
-            	{
-            		$('#sort_btn_aligner').show('slow');
-            		$('#facetview_leftcol').show('slow');
-            		$('#facetview-searchbar').attr('style','margin-bottom:10px;');
-            		$('.header').attr('style','padding:5px;margin-top:15px;');
-    				first=false;
-                	showfiltervalsinit();
-            	}
+                {
+                    $('#sort_btn_aligner').show('slow');
+                    $('#facetview_leftcol').show('slow');
+                    $('#facetview-searchbar').attr('style','margin-bottom:10px;');
+                    $('.header').attr('style','padding:5px;margin-top:15px;');
+                    first=false;
+                    showfiltervalsinit();
+                }
 
             $('[id=searchresult]').each(function(){
-            	if($(this).attr('href').startsWith('db')){
-            		var temp = options.search_url.split('servlet')[0] + 'servlet/DBServlet?col=' + $(this).attr('collectionno') + '&id=' + $(this).attr('uid');
-            		$(this).attr('href',temp);
-            	}
-            	else if($(this).attr('uid').split(':')[0] == 'file'){
-            		var temp = options.search_url.split('servlet')[0] + 'servlet/FileServlet?url=' + encodeURIComponent($(this).attr('href')) + '&col=' + $(this).attr('collectionno');
+                if($(this).attr('href').startsWith('db')){
+                    var temp = options.search_url.split('servlet')[0] + 'servlet/DBServlet?col=' + $(this).attr('collectionno') + '&id=' + $(this).attr('uid');
+                    $(this).attr('href',temp);
+                }
+                else if($(this).attr('uid').split(':')[0] == 'file'){
+                    var temp = options.search_url.split('servlet')[0] + 'servlet/FileServlet?url=' + encodeURIComponent($(this).attr('href')) + '&col=' + $(this).attr('collectionno');
 
-            		if($(this).attr('href').startsWith('http')){
-            			$(this).parent().parent().parent().parent().children().find('._searchresult_url').html($(this).attr('href'));
-            		}
-            		if(!$(this).attr('href').startsWith('http')){
-            			$(this).attr('href',temp);
-            		}
+                    if($(this).attr('href').startsWith('http')){
+                        $(this).parent().parent().parent().parent().children().find('._searchresult_url').html($(this).attr('href'));
+                    }
+                    if(!$(this).attr('href').startsWith('http')){
+                        $(this).attr('href',temp);
+                    }
 
-            	}
-            	else if($(this).attr('href').split(':')[0] == 'eml'){
-            		var temp = options.search_url.split('servlet')[0] + 'servlet/EmailViewer?url=' + $(this).attr('uid') + '&col=' + $(this).attr('collectionno');
-            		$(this).attr('href',temp);
-            	}
+                }
+                else if($(this).attr('href').split(':')[0] == 'eml'){
+                    var temp = options.search_url.split('servlet')[0] + 'servlet/EmailViewer?url=' + $(this).attr('uid') + '&col=' + $(this).attr('collectionno');
+                    $(this).attr('href',temp);
+                }
             });
 
-	    //update total number of results
+        //update total number of results
             if(options.data['found'])
-            	{
-            		$('#nofresults').html(options.data['found']+" results found");
-            		$('#sort_btn_aligner').show();
-            		$('#facetview_leftcol_percolator').show();
-            	}
+                {
+                    $('#nofresults').html(options.data['found']+" results found");
+                    $('#sort_btn_aligner').show();
+                    $('#facetview_leftcol_percolator').show();
+                }
             else
-            	{
-            		$('#nofresults').html("0 results found");
-            		$('#sort_btn_aligner').hide();
-            	}
+                {
+                    $('#nofresults').html("0 results found");
+                    $('#sort_btn_aligner').hide();
+                }
 
            $('[thumbid=_video]').each(function(){
-            	$(this).bind('click',function(){
-            	$(this).attr('controls','');
-            	$(this).attr('height','240');
-            	$(this).attr('width','320');
-            	$(this).attr('poster','');
-            	})
+                $(this).bind('click',function(){
+                $(this).attr('controls','');
+                $(this).attr('height','240');
+                $(this).attr('width','320');
+                $(this).attr('poster','');
+                })
             });
 
             $('a[rel^="prettyPhoto"]').prettyPhoto();
             $('[id=searchresult]').each(function(){
-            	$(this).bind('click',function(){
-            		var clickedcol = $(this).attr('collectionno');
-            		var clickeduid = $(this).attr('uid');
-            		var clickedtitle = $(this).children().html();
-            		var clickedurl = escape($(this).attr('href'));
-            		$.ajax({
+                $(this).bind('click',function(){
+                    var clickedcol = $(this).attr('collectionno');
+                    var clickeduid = $(this).attr('uid');
+                    var clickedtitle = $(this).children().html();
+                    var clickedurl = escape($(this).attr('href'));
+                    $.ajax({
                         type: "get",
                         url: "../servlet/ReportServlet",
                         data:"addclick=yes&col="+clickedcol+"&uid="+clickeduid+"&title="+clickedtitle+"&url="+clickedurl+"&query="+escape(options.query)
-            		});
-            	});
+                    });
+                });
             });
 
             $('[id=topclickedresult]').each(function(){
-            	$(this).bind('click',function(){
-            		var clickedcol = $(this).attr('collectionno');
-            		var clickeduid = $(this).attr('uid');
-            		var clickedtitle = $(this).children().html();
-            		var clickedurl = $(this).attr('href');
-            		$.ajax({
+                $(this).bind('click',function(){
+                    var clickedcol = $(this).attr('collectionno');
+                    var clickeduid = $(this).attr('uid');
+                    var clickedtitle = $(this).children().html();
+                    var clickedurl = $(this).attr('href');
+                    $.ajax({
                         type: "get",
                         url: "../servlet/ReportServlet",
                         data:"addclick=yes&col="+clickedcol+"&uid="+clickeduid+"&title="+clickedtitle+"&url="+clickedurl+"&query="+escape(options.query)
-            		});
-            	});
+                    });
+                });
             });
             //test percolator
             {
-            	$('#facetview_leftcol_percolator > a').bind('click',function(){
-            		bootalert("Register Alert","","btn-primary");
-            	})
+                $('#facetview_leftcol_percolator > a').bind('click',function(){
+                    bootalert("Register Alert","","btn-primary");
+                })
             }
         };
 
@@ -1294,312 +1296,321 @@ jQuery(function($){
         // functions to do with searching
         // ===============================================
 
-	//add default params to query
-	var adddefaultparams = function ( a )
-	{
-		var b="";
-		for(each in options.default_url_params)
-		{
-			b=b+"&"+each+"="+options.default_url_params[each];
-		}
-		for(each in options.facets)
-		{
-			b=b+"&facet.field="+options.facets[each]['field'];
-			if(options.facets[each]['interval']!=undefined && options.facets[each]['interval'].trim()!=""){
-				b += "&f."+options.facets[each]['field']+".interval="+options.facets[each]['interval']
-			}
-		}
-		return (a+b);
-	};
+    //add default params to query
+    var adddefaultparams = function ( a )
+    {
+        var b="";
+        for(each in options.default_url_params)
+        {
+            b=b+"&"+each+"="+options.default_url_params[each];
+        }
+        for(each in options.facets)
+        {
+            b=b+"&facet.field="+options.facets[each]['field'];
+            if(options.facets[each]['interval']!=undefined && options.facets[each]['interval'].trim()!=""){
+                b += "&f."+options.facets[each]['field']+".interval="+options.facets[each]['interval']
+            }
+        }
+        return (a+b);
+    };
 
-	// add extra filters to query
-	var appendextrafilterstoquery = function( a ){
-		var b = "";
-		for(each in options.filter)
-		{
-			if(options.filter[each].split(',').length > 1){
-				var c = options.filter[each].split(':')[1].split(',');
-				for(var d = 0 ; d<c.length ; d++){
-					b=b+"&filter="+options.filter[each].split(':')[0]+":"+c[d];
-				}
-			}
-			else{
-				b=b+"&filter="+options.filter[each];
-			}
-		}
-		return (a+b);
-	};
+    // add extra filters to query
+    var appendextrafilterstoquery = function( a ){
+        var b = "";
+        for(each in options.filter)
+        {
+            if(options.filter[each].split(',').length > 1){
+                var c = options.filter[each].split(':')[1].split(',');
+                for(var d = 0 ; d<c.length ; d++){
+                    b=b+"&filter="+options.filter[each].split(':')[0]+":"+c[d];
+                }
+            }
+            else{
+                b=b+"&filter="+options.filter[each];
+            }
+        }
+        return (a+b);
+    };
 
-	var addfiltervalues = function(a)
-	{
-		var b="";
-		for(var i=0;i<filterq.length;i++)
-		{
-			b=b+filterq[i];
-		}
-		return(a+b);
-	};
+    var addfiltervalues = function(a)
+    {
+        var b="";
+        for(var i=0;i<filterq.length;i++)
+        {
+            b=b+filterq[i];
+        }
+        return(a+b);
+    };
 
-	var addsizevalues = function(a)
-	{
-	    	var b="";
-		for(var i in sizeq)
-		{
-		    for(j in options['facets'])
-			if(options['facets'][j]['field']==i)
-			b=b+'&f.'+i+'.size='+options['facets'][j]['size'];
-		}
-		return(a+b);
-	};
+    var addsizevalues = function(a)
+    {
+            var b="";
+        for(var i in sizeq)
+        {
+            for(j in options['facets'])
+            if(options['facets'][j]['field']==i)
+            b=b+'&f.'+i+'.size='+options['facets'][j]['size'];
+        }
+        return(a+b);
+    };
 
-	var adddefaultdatefacet = function(q)
-	{
-		var b='&facet.field=lastmodified&f.lastmodified.range=['+moment().subtract("days",1).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('days',7).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('months',1).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('years',1).format("YYYY-MM-DD")+'TO*]';
-		return(q+b);
-	};
-
-	var adddefaultsizefacet=function(q)
-	{
-		var b='&facet.field=size&f.size.range=[*TO102400]&f.size.range=[102400TO512000]&f.size.range=[512000TO1048576]&f.size.range=[1048576TO10485760]&f.size.range=[10485760TO*]';
+    var adddefaultdatefacet = function(q)
+    {
+        var b='&facet.field=lastmodified&f.lastmodified.range=['+moment().subtract("days",1).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('days',7).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('months',1).format("YYYY-MM-DD")+'TO*]&f.lastmodified.range=['+moment().subtract('years',1).format("YYYY-MM-DD")+'TO*]';
         return(q+b);
-	};
+    };
+
+    var adddefaultsizefacet=function(q)
+    {
+        var b='&facet.field=size&f.size.range=[*TO102400]&f.size.range=[102400TO512000]&f.size.range=[512000TO1048576]&f.size.range=[1048576TO10485760]&f.size.range=[10485760TO*]';
+        return(q+b);
+    };
 
 
-	var trim = function(s)
-	{
-		var a=s.replace(" ","");
-		return(a);
-	};
+    var trim = function(s)
+    {
+        var a=s.replace(" ","");
+        return(a);
+    };
 
-	var contains = function (a,e) {
-		for (var i = 0; i < a.length; i++) {
-		if (a[i] == e) {
-		return true;
-		}
-		}
-		return false;
-		};
+    var contains = function (a,e) {
+        for (var i = 0; i < a.length; i++) {
+        if (a[i] == e) {
+        return true;
+        }
+        }
+        return false;
+        };
 
-	var z= new Array();
+    var z= new Array();
     // execute a search
-	var oldquery = "";
-	var oldsearchquery = "";
+    var oldquery = "";
+    var oldsearchquery = "";
 
-	var percolate = function(name, email, frequency, nodocs){
-		$.ajax({
+    var percolate = function(name, email, frequency, nodocs){
+        $.ajax({
             type: "get",
             url: options.search_url,
             data:q+"&percolatoremail="+email+"&percolatorqueryname="+name+"&percolatorqueryfreq="+frequency+"&percolatorquerynodocs="+nodocs,
             success: function(data){
             }
-		});
-	};
+        });
+    };
 
-	var bootalert = function(heading, msg, btnClass) {
+    var bootalert = function(heading, msg, btnClass) {
 
-		var fadeClass = "fade";
-		{
-		    var isIE = window.ActiveXObject || "ActiveXObject" in window;
-		    if (isIE) {
-		        fadeClass = "";
-		    }
-		}
+        var fadeClass = "fade";
+        {
+            var isIE = window.ActiveXObject || "ActiveXObject" in window;
+            if (isIE) {
+                fadeClass = "";
+            }
+        }
 
-		$("#dataAlertModal .modal-footer button").removeClass().addClass("btn").addClass(btnClass);
-		if (!$('#dataAlertModal').length) {
-			$('body').append('\
+        $("#dataAlertModal .modal-footer button").removeClass().addClass("btn").addClass(btnClass);
+        if (!$('#dataAlertModal').length) {
+            $('body').append('\
 <div id="dataAlertModal" class="modal '+fadeClass+'" role="dialog" aria-labelledby="dataAlertLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content">\
-	<div class="modal-header">\
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-		<h3 id="dataAlertLabel">\
-			Notification\
-		</h3>\
-	</div>\
-	<div class="modal-body">\
-		<div class="form-horizontal">\
-			<div class="form-group">\
-				<label class="control-label col-sm-2">Query:</label>\
-				<div class="controls col-sm-10">\
-					<input type="text" id="_percolator-queryorg" value="'+options.query+'" disabled class="form-control">\
-				</div>\
-			</div>\
-			<div class="form-group">\
-				<label class="control-label col-sm-2">Name:</label>\
-				<div class="controls col-sm-10">\
-					<input type="text" id="_percolator-name" class="form-control">\
-				</div>\
-			</div>\
-			<div class="form-group">\
-				<label class="control-label col-sm-2">Email:</label>\
-				<div class="controls col-sm-10">\
-					<input type="text" id="_percolator-email" class="form-control">\
-				</div>\
-			</div>\
-			<div class="form-group">\
-				<label class="control-label col-sm-2">Frequency:</label>\
-				<div class="controls col-sm-10">\
-					<select id="_percolator-frequency" class="form-control">\
-						<option>EACH</option>\
-						<option>DAILY</option>\
-						<option>WEEKLY</option>\
-						<option>MONTHLY</option>\
-					</select>\
-				</div>\
-			</div>\
-			<div class="form-group" style="display:none">\
-				<label class="control-label col-sm-2">Docs per mail:</label>\
-				<div class="controls col-sm-10">\
-					<select id="_percolator-docspermail" class="form-control">\
-						<option>10</option>\
-						<option>25</option>\
-						<option>50</option>\
-						<option>100</option>\
-					</select>\
-				</div>\
-			</div>\
-		</div>\
-	</div>\
-	<div class="modal-footer">\
-		<button class="btn ' + btnClass + '" data-dismiss="modal" aria-hidden="true" id="dataAlertTempOK" style="display:none;">Ok</button>\
-		<button class="btn ' + btnClass + '" id="dataAlertOK">Ok</button>\
-	</div>\
+    <div class="modal-header">\
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+        <h3 id="dataAlertLabel">\
+            Notification\
+        </h3>\
+    </div>\
+    <div class="modal-body">\
+        <div class="form-horizontal">\
+            <div class="form-group">\
+                <label class="control-label col-sm-2">Query:</label>\
+                <div class="controls col-sm-10">\
+                    <input type="text" id="_percolator-queryorg" value="'+options.query+'" disabled class="form-control">\
+                </div>\
+            </div>\
+            <div class="form-group">\
+                <label class="control-label col-sm-2">Name:</label>\
+                <div class="controls col-sm-10">\
+                    <input type="text" id="_percolator-name" class="form-control">\
+                </div>\
+            </div>\
+            <div class="form-group">\
+                <label class="control-label col-sm-2">Email:</label>\
+                <div class="controls col-sm-10">\
+                    <input type="text" id="_percolator-email" class="form-control">\
+                </div>\
+            </div>\
+            <div class="form-group">\
+                <label class="control-label col-sm-2">Frequency:</label>\
+                <div class="controls col-sm-10">\
+                    <select id="_percolator-frequency" class="form-control">\
+                        <option>EACH</option>\
+                        <option>DAILY</option>\
+                        <option>WEEKLY</option>\
+                        <option>MONTHLY</option>\
+                    </select>\
+                </div>\
+            </div>\
+            <div class="form-group" style="display:none">\
+                <label class="control-label col-sm-2">Docs per mail:</label>\
+                <div class="controls col-sm-10">\
+                    <select id="_percolator-docspermail" class="form-control">\
+                        <option>10</option>\
+                        <option>25</option>\
+                        <option>50</option>\
+                        <option>100</option>\
+                    </select>\
+                </div>\
+            </div>\
+        </div>\
+    </div>\
+    <div class="modal-footer">\
+        <button class="btn ' + btnClass + '" data-dismiss="modal" aria-hidden="true" id="dataAlertTempOK" style="display:none;">Ok</button>\
+        <button class="btn ' + btnClass + '" id="dataAlertOK">Ok</button>\
+    </div>\
 </div></div></div>');
-		}
-			$('#_percolator-queryorg').val(options.query);
-			$('#dataAlertModal #dataAlertLabel').text(heading);
-			$('#dataAlertModal').modal({
-				show : true
-			});
-			$('#dataAlertOK').click(function(){
-				percolate($('#_percolator-name').val(),$('#_percolator-email').val(),$('#_percolator-frequency').children("option").filter(":selected").val(),$('#_percolator-docspermail').children("option").filter(":selected").val());
-				$('#dataAlertTempOK').trigger('click');
-			});
-	};
+        }
+            $('#_percolator-queryorg').val(options.query);
+            $('#dataAlertModal #dataAlertLabel').text(heading);
+            $('#dataAlertModal').modal({
+                show : true
+            });
+            $('#dataAlertOK').click(function(){
+                percolate($('#_percolator-name').val(),$('#_percolator-email').val(),$('#_percolator-frequency').children("option").filter(":selected").val(),$('#_percolator-docspermail').children("option").filter(":selected").val());
+                $('#dataAlertTempOK').trigger('click');
+            });
+    };
 
     var dosearch = function() {
 
         // update the options with the latest query value from query box
         options.query = $('#facetview_freetext').val().trim()
         if(autosuggestflag){
-    	$.ajax({
+            var autocompletion = "../servlet/AutoSuggest";
+            var pathname = window.location.pathname;
+            if(pathname.indexOf("/secure/") > -1) {
+                autocompletion = "../../servlet/AutoSuggest";
+            }
+        $.ajax({
             type: "post",
-            url: "../servlet/AutoSuggest",
-		data:"q="+options.query+"&limit="+options.nofsuggest,
+            url: autocompletion,
+        data:"q="+options.query+"&limit="+options.nofsuggest,
             dataType: "json",
             success: function(data){
-                		var temp = new Array();
-                		for(var i in data[0]){
-                			temp.push(data[0][i]);
-                		}
+                        var temp = new Array();
+                        for(var i in data[0]){
+                            temp.push(data[0][i]);
+                        }
 
-            			if(temp.length>=1)
-            			{
-            				z=temp;
-            				$('#facetview_freetext').autocomplete({
-            					source : z
-            				});
-            			}
-            	}
+                        if(temp.length>=1)
+                        {
+                            z=temp;
+                            $('#facetview_freetext').autocomplete({
+                                source : z
+                            });
+                        }
+                }
           });
-    	}
+        }
         else{
-        	$('#facetview_freetext').autocomplete( "destroy" );
+            $('#facetview_freetext').autocomplete( "destroy" );
         }
 
 
-	    //refresh query
-	    q=" ";
+        //refresh query
+        q=" ";
             // make the search query
-	    q="query="+escape(encodeURIComponent(options.query));
-	    // add default params
-	    q=adddefaultparams(q);
-	    // add facet filter values to query
-	    q=appendfilterstoquery(q);
-	    // add extra filters to query
-	    q=appendextrafilterstoquery(q);
-	    // add size values of filter
-	    q=addsizevalues(q);
-	    //update sort and direction variables
-	    q+=sortq;
-	    q+=direction;
-	    // update start page variable on new query
-	    if(oldsearchquery != encodeURIComponent(options.query).trim())
-	    	options.paging.from = 0;
-	    // update the page variable
-	    var d = parseInt(options.paging.from) == 0 ? d = 1 : d = (parseInt(options.paging.from) / parseInt(options.paging.size))+1;
-	    q=q+"&page="+parseInt(d);
-	    // update the pagesize in query
-	    q=q+"&pagesize="+options.paging.size;
-	    //update with the daterange variables
-	    q+=startdate;
-	    //addsizefacetsilent
-	    q+=sizefilter;
+        q="query="+escape(encodeURIComponent(options.query));
+        // add default params
+        q=adddefaultparams(q);
+        // add facet filter values to query
+        q=appendfilterstoquery(q);
+        // add extra filters to query
+        q=appendextrafilterstoquery(q);
+        // add size values of filter
+        q=addsizevalues(q);
+        //update sort and direction variables
+        q+=sortq;
+        q+=direction;
+        // update start page variable on new query
+        if(oldsearchquery != encodeURIComponent(options.query).trim())
+            options.paging.from = 0;
+        // update the page variable
+        var d = parseInt(options.paging.from) == 0 ? d = 1 : d = (parseInt(options.paging.from) / parseInt(options.paging.size))+1;
+        q=q+"&page="+parseInt(d);
+        // update the pagesize in query
+        q=q+"&pagesize="+options.paging.size;
+        //update with the daterange variables
+        q+=startdate;
+        //addsizefacetsilent
+        q+=sizefilter;
 
-	    if(q.trim() == oldquery.trim()){
-	    	return;
-	    }
-	    oldquery = q.trim();
-	    oldsearchquery = encodeURIComponent(options.query).trim();
+        if(q.trim() == oldquery.trim()){
+            return;
+        }
+        oldquery = q.trim();
+        oldsearchquery = encodeURIComponent(options.query).trim();
 
-	    //addlastmodifiedfacetsilent
-	    q=adddefaultdatefacet(q);
+        //addlastmodifiedfacetsilent
+        q=adddefaultdatefacet(q);
 
-	    if($('#facetview_freetext').val().trim() != ""){
+        if($('#facetview_freetext').val().trim() != ""){
             displayloader();
-	    	$.getJSON(options.search_url,"callback=?&"+q,
-	    			function(data) {
-	    				createCookie("searchblox_plugin_query",q,0);
-	    				if(data["error"]!=undefined){
-	    					$('#ads').html('<div class="alert alert-danger">'+
-	    							'<div class="content" style="color:red;font-weight:bold;text-align:center;letter-spacing:1px;">' +
-	    							data["error"] +
-	    							'</div></div>');
-	    					$('#ads').parent().parent().css("margin-left", "-100px");
-	    					$('#ads').parent().parent().css("float", "left");
-	    					hideloader();
-	    					return;
-	    				}
+            $.getJSON(options.search_url,"callback=?&"+q,
+                    function(data) {
+                        createCookie("searchblox_plugin_query",q,0);
+                        if(data["error"]!=undefined){
+                            $('#ads').html('<div class="alert alert-danger">'+
+                                    '<div class="content" style="color:red;font-weight:bold;text-align:center;letter-spacing:1px;">' +
+                                    data["error"] +
+                                    '</div></div>');
+                            $('#ads').parent().parent().css("margin-left", "-100px");
+                            $('#ads').parent().parent().css("float", "left");
+                            hideloader();
+                            return;
+                        }
 
-    					$('#ads').html('');
-    					$('#ads').parent().parent().css("margin-left", "");
-    					$('#ads').parent().parent().css("float", "");
-	    				showresults(data);
-	    				hideloader();
-	    	});
-	    }
+                        $('#ads').html('');
+                        $('#ads').parent().parent().css("margin-left", "");
+                        $('#ads').parent().parent().css("float", "");
+                        showresults(data);
+                        hideloader();
+            });
+        }
         };
 
         // trigger a search when a filter choice is clicked
         var clickfilterchoice = function(event) {
             event.preventDefault();
             //alert($(this).attr('id'));
+            var filtername = splitStringfromFirst($(this).attr('id'),'_')[1];
+            filtername = filtername.replace(/%%%/g,'____');
             var newobj = '<a class="facetview_filterselected facetview_clear ' +
                 'btn btn-info" rel="' + $(this).attr("rel") +
                 '" alt="remove" title="remove"' +
-                ' href="' + $(this).attr("href") + '" filtername='+splitStringfromFirst($(this).attr('id'),'_')[1]+' >' +
+                ' href="' + $(this).attr("href") + '" filtername='+filtername+' >' +
                 $(this).html().replace(/\(.*\)/,'') + ' <i class="icon-remove"></i></a>';
-            if($('#facetview_selectedfilters').find('a[rel='+$(this).attr("rel")+'][filtername='+splitStringfromFirst($(this).attr('id'),'_')[1]+']').attr('filtername')==undefined){
-            filterclick($(this).attr("rel"),splitStringfromFirst($(this).attr('id'),'_')[1]);
+            if($('#facetview_selectedfilters').find('a[rel='+$(this).attr("rel")+'][filtername='+filtername+']').attr('filtername')==undefined){
+            filterclick($(this).attr("rel"),filtername.replace(/____/g,' '));
             $('#facetview_selectedfilters').append(newobj);
             $('.facetview_filterselected').unbind('click',clearfilter);
             $('.facetview_filterselected').bind('click',clearfilter);
             options.paging.from = 0;
             dosearch();}
-            else{alert("Filter:"+$('#facetview_selectedfilters').find('a[filtername='+splitStringfromFirst($(this).attr('id'),'_')[1]+']').attr('filtername')+" already exist!!");}
+            else{
+                alert("Filter:"+$('#facetview_selectedfilters').find('a[filtername='+filtername+']').attr('filtername').replace(/____/g,' ')+" already exist!!");
+                }
         };
 
         var splitStringfromFirst = function(str,splitter){
-        	var d = str.indexOf(splitter);
-  		  	if(0>d)return str;
-  		  	else{
-  		  		return [str.substr(0,d) , str.substr(d+splitter.length)];
-  		  	}
+            var d = str.indexOf(splitter);
+            if(0>d)return str;
+            else{
+                return [str.substr(0,d) , str.substr(d+splitter.length)];
+            }
         };
 
         // clear a filter when clear button is pressed, and re-do the search
         var clearfilter = function(event) {
             event.preventDefault();
-            removefilterquery($(this).attr('rel'),escape($(this).attr('filtername').replace(/%%%/g,' ')));
+            removefilterquery($(this).attr('rel'),escape($(this).attr('filtername').replace(/____/g,' ')));
             $(this).remove();
             dosearch();
         };
@@ -1685,81 +1696,81 @@ jQuery(function($){
         };
 
         var displayloader = function(){
-        	var height1 = $('#facetview_results').height();
-        	var width1  = $('#facetview_results').width();
-        	$('.loadingbg').height(height1);
-        	$('.loadingbg').width(width1);
-        	$('#loading').show();
+            var height1 = $('#facetview_results').height();
+            var width1  = $('#facetview_results').width();
+            $('.loadingbg').height(height1);
+            $('.loadingbg').width(width1);
+            $('#loading').show();
 
         };
 
         var hideloader = function(){
-        	$('#loading').hide();
+            $('#loading').hide();
         };
 
 
         // the facet view object to be appended to the page
         var thefacetview = ' \
-        	<div id="facetview"> \
-            	<div class="row-fluid"> \
-        	   		<div class="col-sm-4"> \
-                		<div class="well" id="facetview_leftcol" style="display:none;width:100%;float:left"> \
-	    					<div class="" id="facetview_leftcol_percolator" style="float:right;display:none;"> \
-    							<a class="btn btn-warning" href="#">Create Alert</a>\
-	    					</div> \
-         		 			<div id="nofresults" style="margin-bottom:-34px;"></div>\
-                  			<div id="facetview_filters"></div>\
-        	 	 	 		<div id="adv_filters"></div>\
-                		</div> \
-            			<div class="well" id="facetview_leftcol_topclicks" style="display:none;width:100%;float:left"></div> \
-        	    		<div class="well" id="facetview_leftcol_tagcloud"  style="display:none;width:100%;float:left"></div> \
-               		</div> \
-                	<div class="col-sm-8" id="facetview_rightcol" align="left" style=""> \
-                    	<div id="facetview-searchbar" style="margin-left:-280px;" class="input-group">\
-                    		<div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>\
-                    		<input class="form-control" id="facetview_freetext" name="query" value="" placeholder="search term" autofocus autocomplete="off"/>\
-                    		<div class="input-group-addon">\
-                     			<div class="btn-group">\
-        							<a class="dropdown-toggle" data-toggle="dropdown" href="#"> \
-                     	 	 			<i class="icon-cog"></i> <span class="caret"></span>\
-        							</a> \
-                     				<ul style="margin-left:-110px;" class="dropdown-menu"> \
-                     					<li><a id="facetview_partial_match" href="">partial match</a></li> \
-                     					<li><a id="facetview_exact_match" href="">exact match</a></li> \
-                     					<li><a id="facetview_fuzzy_match" href="">fuzzy match</a></li> \
-                     					<li><a id="facetview_match_all" href="">match all</a></li> \
-         								<li class="divider"></li> \
-     									<li><a id="facetview_autosuggest" href=""><i id="facetview_autosuggest_flag" class="icon-ok"></i>&nbsp;Autosuggest</a></li> \
-                     					<li class="divider"></li> \
-                     					<li><a target="_blank" href="http://www.searchblox.com/">Learn more</a></li> \
-                     					<li class="divider"></li> \
-                     					<li><a id="facetview_howmany" href="#">results per page ({{HOW_MANY}})</a></li> \
-     									<li><a id="facetview_nofsuggest" href="#">suggestions per page ({{HOW_MANY_nofsuggest}})</a></li> \
-                     				</ul> \
- 			 					</div> \
-							</div>\
- 						</div>\
-        				<div>\
-    						<div class="row-fluid" style="height:40px;" id="facetview_sortbtns">\
-								<div id="sort_btn_aligner" style="display:none;text-align:center;">\
-     								<div class="btn-group" data-toggle="buttons">\
- 										<div class="btn btn-warning disabled">Sort By : </div>\
- 										<div class="btn btn-primary" id="sort_date">Date</div>\
- 										<div class="btn btn-primary" id="sort_alpha">Alphabetic</div>\
- 										<div class="btn btn-primary" id="sort_relevance" disabled="true">Relevance</div>\
- 										<div class="btn btn-info" id="direction" dir="desc">\
-										<span class="glyphicon glyphicon-arrow-down"></span>\
- 									</div>\
- 								</div>\
-							</div>\
-        				</div>\
-        				</div>\
+            <div id="facetview"> \
+                <div class="row-fluid"> \
+                    <div class="col-sm-4"> \
+                        <div class="well" id="facetview_leftcol" style="display:none;width:100%;float:left"> \
+                            <div class="" id="facetview_leftcol_percolator" style="float:right;display:none;"> \
+                                <a class="btn btn-warning" href="#">Create Alert</a>\
+                            </div> \
+                            <div id="nofresults" style="margin-bottom:-34px;"></div>\
+                            <div id="facetview_filters"></div>\
+                            <div id="adv_filters"></div>\
+                        </div> \
+                        <div class="well" id="facetview_leftcol_topclicks" style="display:none;width:100%;float:left"></div> \
+                        <div class="well" id="facetview_leftcol_tagcloud"  style="display:none;width:100%;float:left"></div> \
+                    </div> \
+                    <div class="col-sm-8" id="facetview_rightcol" align="left" style=""> \
+                        <div id="facetview-searchbar" style="margin-left:-280px;" class="input-group">\
+                            <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>\
+                            <input class="form-control" id="facetview_freetext" name="query" value="" placeholder="search term" autofocus autocomplete="off"/>\
+                            <div class="input-group-addon">\
+                                <div class="btn-group">\
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"> \
+                                        <i class="icon-cog"></i> <span class="caret"></span>\
+                                    </a> \
+                                    <ul style="margin-left:-110px;" class="dropdown-menu"> \
+                                        <li><a id="facetview_partial_match" href="">partial match</a></li> \
+                                        <li><a id="facetview_exact_match" href="">exact match</a></li> \
+                                        <li><a id="facetview_fuzzy_match" href="">fuzzy match</a></li> \
+                                        <li><a id="facetview_match_all" href="">match all</a></li> \
+                                        <li class="divider"></li> \
+                                        <li><a id="facetview_autosuggest" href=""><i id="facetview_autosuggest_flag" class="icon-ok"></i>&nbsp;Autosuggest</a></li> \
+                                        <li class="divider"></li> \
+                                        <li><a target="_blank" href="http://www.searchblox.com/">Learn more</a></li> \
+                                        <li class="divider"></li> \
+                                        <li><a id="facetview_howmany" href="#">results per page ({{HOW_MANY}})</a></li> \
+                                        <li><a id="facetview_nofsuggest" href="#">suggestions per page ({{HOW_MANY_nofsuggest}})</a></li> \
+                                    </ul> \
+                                </div> \
+                            </div>\
+                        </div>\
+                        <div>\
+                            <div class="row-fluid" style="height:40px;" id="facetview_sortbtns">\
+                                <div id="sort_btn_aligner" style="display:none;text-align:center;">\
+                                    <div class="btn-group" data-toggle="buttons">\
+                                        <div class="btn btn-warning disabled">Sort By : </div>\
+                                        <div class="btn btn-primary" id="sort_date">Date</div>\
+                                        <div class="btn btn-primary" id="sort_alpha">Alphabetic</div>\
+                                        <div class="btn btn-primary" id="sort_relevance" disabled="true">Relevance</div>\
+                                        <div class="btn btn-info" id="direction" dir="desc">\
+                                        <span class="glyphicon glyphicon-arrow-down"></span>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        </div>\
                     <div style="clear:both;" id="facetview_selectedfilters"></div> \
-      	  			<div><div id="suggest"></div>\
-                	<div><div id="ads"></div>\
-         	      	<table class="table table-striped" id="facetview_results" style="word-break: break-all;"></table>\
-                  	<div class="row-fluid" id="facetview_metadata"></div>\
-         		</div> \
+                    <div><div id="suggest"></div>\
+                    <div><div id="ads"></div>\
+                    <table class="table table-striped" id="facetview_results" style="word-break: break-all;"></table>\
+                    <div class="row-fluid" id="facetview_metadata"></div>\
+                </div> \
               </div> \
             ';
 
@@ -1768,75 +1779,75 @@ jQuery(function($){
             var attrs=['sort_date','sort_alpha','sort_relevance'];
             for(var a in attrs)
             {
-        	if(attrs[a]==attrname){
-        	    $('#'+attrs[a]).attr('disabled','true');
-        	    continue;
-        	}
-        	$('#'+attrs[a]).removeAttr('disabled');
+            if(attrs[a]==attrname){
+                $('#'+attrs[a]).attr('disabled','true');
+                continue;
+            }
+            $('#'+attrs[a]).removeAttr('disabled');
             }
         };
 
-	var sorter = function()
-	{
-	    	attrsetter($(this).attr('id'));
-		if($(this).attr('id')=='sort_date')
-		{
-			sortq="&sort=date";
-		}
-		else if($(this).attr('id')=='sort_alpha')
-		{
-			sortq="&sort=alpha";
-		}
-		else if($(this).attr('id')=='sort_relevance')
-		{
-			sortq="&sort=relevance";
-		}
-		dosearch();
-	};
+    var sorter = function()
+    {
+            attrsetter($(this).attr('id'));
+        if($(this).attr('id')=='sort_date')
+        {
+            sortq="&sort=date";
+        }
+        else if($(this).attr('id')=='sort_alpha')
+        {
+            sortq="&sort=alpha";
+        }
+        else if($(this).attr('id')=='sort_relevance')
+        {
+            sortq="&sort=relevance";
+        }
+        dosearch();
+    };
 
-	var director = function()
-	{
-		if($(this).attr('dir')=="desc")
-		{
-			$(this).attr('dir','asc');
-			$('span',this).attr('class','glyphicon glyphicon-arrow-up');
-			direction="&sortdir=asc";
-		}
-		else if($(this).attr('dir')=="asc")
-		{
-			$(this).attr('dir','desc');
-			$('span',this).attr('class','glyphicon glyphicon-arrow-down');
-			direction="&sortdir=desc";
-		}
-		dosearch();
-	};
+    var director = function()
+    {
+        if($(this).attr('dir')=="desc")
+        {
+            $(this).attr('dir','asc');
+            $('span',this).attr('class','glyphicon glyphicon-arrow-up');
+            direction="&sortdir=asc";
+        }
+        else if($(this).attr('dir')=="asc")
+        {
+            $(this).attr('dir','desc');
+            $('span',this).attr('class','glyphicon glyphicon-arrow-down');
+            direction="&sortdir=desc";
+        }
+        dosearch();
+    };
 
-	var autosuggest = function(event)
-	{event.preventDefault();
-		if(autosuggestflag){
+    var autosuggest = function(event)
+    {event.preventDefault();
+        if(autosuggestflag){
             $(this.target).find('#facetview_freetext').autocomplete({
-				source : []
-			});
-			autosuggestflag = false;
-			$('#facetview_autosuggest_flag').attr('class','');
-		}else{
-			autosuggestflag = true;
-			$('#facetview_autosuggest_flag').attr('class','icon-ok')
-		}
-	};
+                source : []
+            });
+            autosuggestflag = false;
+            $('#facetview_autosuggest_flag').attr('class','');
+        }else{
+            autosuggestflag = true;
+            $('#facetview_autosuggest_flag').attr('class','icon-ok')
+        }
+    };
 
-	var fixadvfiltercount = function()
-	{
+    var fixadvfiltercount = function()
+    {
         $('[id^="optionsizefrom_"]').each(function(){
-        	var n = findfilterindata("size");
-        	$(this).html($(this).html().replace(/[(]+\w+[)]/,"("+options.data["facets"][n]["size"][1][$(this).attr('id').split('_')[1]]['#text']+")"));
+            var n = findfilterindata("size");
+            $(this).html($(this).html().replace(/[(]+\w+[)]/,"("+options.data["facets"][n]["size"][1][$(this).attr('id').split('_')[1]]['#text']+")"));
         });
         $('[id^="optiondatefrom_"]').each(function(){
-        	var n = findfilterindata("lastmodified");
-        	if($(this).html()!='Custom')
-        	$(this).html($(this).html().replace(/[(]+\w+[)]/,"("+options.data["facets"][n]["lastmodified"][1][$(this).attr('sn')]['#text']+")"));
+            var n = findfilterindata("lastmodified");
+            if($(this).html()!='Custom')
+            $(this).html($(this).html().replace(/[(]+\w+[)]/,"("+options.data["facets"][n]["lastmodified"][1][$(this).attr('sn')]['#text']+")"));
         });
-	};
+    };
 
 
 
@@ -1870,11 +1881,11 @@ jQuery(function($){
             $('#facetview_freetext').css('width', thewidth - 180 + 'px');
             //set default size values
             for(var i in options.facets)
-        	if(options.facets[i]['size'])sizeq[options.facets[i]['field']]=options.facets[i]['size'];
-        	else{
-        	    options.facets[i]['size']=10;
-        	    sizeq[options.facets[i]['field']]=options.facets[i]['size'];
-        	}
+            if(options.facets[i]['size'])sizeq[options.facets[i]['field']]=options.facets[i]['size'];
+            else{
+                options.facets[i]['size']=10;
+                sizeq[options.facets[i]['field']]=options.facets[i]['size'];
+            }
             // check paging info is available
             !options.paging.size ? options.paging.size = 10 : "";
             !options.paging.from ? options.paging.from = 0 : "";
@@ -1886,19 +1897,19 @@ jQuery(function($){
             // set any default search values into the search bar
             if($('#facetview_freetext').val() == "" && options.query != "")
             {
-            	$('#sort_btn_aligner').show('slow');
-        		$('#facetview_leftcol').show('slow');
-        		$('#facetview-searchbar').attr('style','margin-bottom:10px;');
-        		$('.header').attr('style','padding:5px;margin-top:15px;');
-            	$('#facetview_freetext').val(options.query);
-               	dosearch();
+                $('#sort_btn_aligner').show('slow');
+                $('#facetview_leftcol').show('slow');
+                $('#facetview-searchbar').attr('style','margin-bottom:10px;');
+                $('.header').attr('style','padding:5px;margin-top:15px;');
+                $('#facetview_freetext').val(options.query);
+                dosearch();
             }
             $('#facetview_freetext',obj).bindWithDelay('keyup',dosearch,options.freetext_submit_delay);
             if((readCookie("searchblox_plugin_query")=="new" || readCookie("searchblox_plugin_query")==null) && (readCookie("searchblox_click")=="false" || readCookie("searchblox_click")==null))
-            	createCookie("searchblox_plugin_query","new",0);
+                createCookie("searchblox_plugin_query","new",0);
             else if(readCookie("searchblox_click")=="false" && readCookie("searchblox_plugin_query")!="new")
             {
-            	createCookie("searchblox_plugin_query","new",0);
+                createCookie("searchblox_plugin_query","new",0);
             }
             else {
                 $.getJSON(options.search_url, "callback=?&" + readCookie("searchblox_plugin_query"),
