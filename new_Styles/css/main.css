@@ -2626,10 +2626,12 @@ button, select {
 #facetview_filters ul {
     margin-top: 10px;
     margin-bottom: 15px;
+	color: #5d5d5d;
 }
 #adv_filters ul {
     margin-top: 10px;
     margin-bottom: 15px;
+	color: #5d5d5d;
 }
 .pagination {
     display: inline-block;
@@ -2716,4 +2718,27 @@ button, select {
 ._searchresult_url a,
 .mlt {
     color: #1e68a8;
+}
+#date_go {
+    background-color: #609ed4;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-family: "Lato",sans-serif;
+    border: 0;
+    background-color: #609ed4;
+    font-size: 18px;
+    font-size: 1.125rem;
+    padding: 15px 26px;
+    font-weight: 700;
+    vertical-align: middle;
+    margin: 0;
+    cursor: pointer;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease;
+	border-radius: 0 !important;
+}   
+#date_go:hover {
+background-color: #1e68a8;
+    color: #fff;
 }
