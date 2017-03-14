@@ -227,46 +227,53 @@ jQuery(function ($) {
                 {
                     "pre": "><b>",
                     "field": "title",
-                    "post": "</b></a></br></div>"
+                    "post": "</b></a> "
                 },
                 {
-                    'pre': '<div class="span8"><div class="progress-wrapper" style="float:right; width:100px; height:5px;"><div class="progress" style="height:15px">\
+                    "pre": ' &nbsp;&nbsp;<a class="mlt" style="cursor:pointer" data-col="1" rel="',
+                    "field": "url",
+                    "post": '"> More Like This</a></br></div>'
+                },
+                {
+                    'pre': '<div class="span8"><div class="progress-wrapper" style="float:right; width:100px; height:5px;"><div class="progress" style="height:20px">\
 				<div class="progress-bar" style="width:',
                     'field': 'score',
-                    'post': '%;"></div></div></div></div></div></div><div class="row-fluid" style="height:20px;"></div>'
+                    'post': '%;"'
+                },
+                {
+                    'pre': '>',
+                    'field': 'score',
+                    'post': '%</div></div>'
+                },
+                {
+                    'pre': '<span class="last-modified">',
+                    'field': 'lastmodified',
+                    'post': '</span></div></div><div class="row-fluid" style="height:20px;"></div>'
                 }
             ],
             [
                 {
-                    "pre": '<div class="row-fluid" style="height:20px;">',
+                    "pre": '<div class="row-fluid searched-img" style="height:20px;">',
                     "field": "image",
                     "post": '</div>'
                 }
             ],
             [
                 {
-                    "pre": '<div class="row-fluid" style="width:600px;text-align:justify;clear:left;">...',
+                    "pre": '<div class="row-fluid searched-context" style="width:600px;text-align:justify;clear:left;">...',
                     "field": "context.text",
                     "post": '...</div>'
                 },
                 {
-                    "pre": '</div><div class="row-fluid" style="width:600px;">',
+                    "pre": '</div><div class="row-fluid searched-description" style="width:600px;">',
                     "field": "description",
                     "post": '</div>'
                 }
             ],
             [
                 {
-                    'pre': '<div class="row-fluid"><i class="_searchresult_url" style="display: block;width: 600px;word-wrap: break-word;">',
+                    'pre': '<div class="row-fluid searched-url"><i class="_searchresult_url" style="display: block;width: 600px;word-wrap: break-word;">',
                     "field": "url",
-                    'post': '</i></div>'
-                }
-            ],
-
-            [
-                {
-                    'pre': '<div class="row-fluid"><i>',
-                    "field": "lastmodified",
                     'post': '</i></div>'
                 }
             ],
@@ -379,7 +386,12 @@ jQuery(function ($) {
         // pass a list of filters to be displayed
         var buildfilters = function () {
             var filters = options.facets;
-            var thefilters = '<h3>Filter by</h3>';
+            var thefilters = '<h3>Filter by <div id="nofresults" style="margin-bottom:-34px;"></div></h3>';
+            thefilters += '<div style="clear:both;" id="facetview_selectedfilters"></div>';
+            thefilters += '<div class="" id="facetview_leftcol_percolator" style="display:none;"> \
+                                    <a class="btn btn-warning" href="#">Clear FIlter</a> \
+                                    <a class="btn btn-warning" href="#">Create Alert</a> \
+                                </div>';
             for (var idx in filters) {
                 var _filterTmpl = ' \
                     <div id="facetview_filterbuttons" class="btn-group col-sm-12"> \
@@ -926,7 +938,7 @@ jQuery(function ($) {
                 options.paging.size = parseInt(options.paging.size);
             }
             var metaTmpl = ' \
-              <div> \
+              <div class="pagination_wrapper"> \
                 <ul class="pagination" style="float:left;padding:16px;"> \
                   <li class="prev"><a id="facetview_decrement" href="{{from}}">«</a></li> \
                   <li class="active"><a>{{from}} &ndash; {{to}} of {{total}}</a></li> \
@@ -949,6 +961,7 @@ jQuery(function ($) {
                 meta = meta.replace(/{{to}}/g, to);
                 meta = meta.replace(/{{total}}/g, data.found);
                 $('#facetview_metadata').html("").append(meta);
+                $('#pagination-on-top').html("").append(meta);
                 $('#facetview_decrement').bind('click', decrement);
                 from < size ? $('#facetview_decrement').addClass('_disabled').html('<span>«</span>') : "";
                 $('#facetview_increment').bind('click', increment);
@@ -971,7 +984,7 @@ jQuery(function ($) {
         var buildrecord = function (index) {
             resulted.push(options.data['records'][index]);
             var record = options.data['records'][index];
-            result = '<tr style="float:left"><td id="' + record['@id'] + '">';
+            result = '<tr><td id="' + record['@id'] + '">';
             var context_flag = false;
             // add first image where available
             if (options.display_images) {
@@ -1025,7 +1038,7 @@ jQuery(function ($) {
 
                             if (img) {
                                 if (img[0] != null)
-                                    lines += '<div class="row-fluid"><a href="' + img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /></a></div>';
+                                    lines += '<div class="row-fluid searched-img"><a href="' + img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /></a></div>';
                                 else {
                                     if (play)
                                         lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
@@ -1038,7 +1051,7 @@ jQuery(function ($) {
                         else {
                             if (img) {
                                 if (img[0] != null)
-                                    lines += '<div class="row-fluid"><a href="/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" /> </a></div>';
+                                    lines += '<div class="row-fluid searched-img"><a href="/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" /> </a></div>';
                                 else {
                                     if (play)
                                         lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"/>'
@@ -1057,7 +1070,7 @@ jQuery(function ($) {
                                     if (imgi[tempi].match(/jpeg$/) != null || imgi[tempi].match(/gif$/) != null || imgi[tempi].match(/png$/) != null || imgi[tempi].match(/jpg$/) != null) {
                                         if (imgistack.indexOf(imgi[tempi].toString()) == -1) {
                                             imgistack.push(imgi[tempi].toString());
-                                            result += '<div class="row-fluid"><a href="' + imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a></div>'
+                                            result += '<div class="row-fluid searched-img"><a href="' + imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a></div>'
                                         }
                                     }
                         }
@@ -1131,7 +1144,7 @@ jQuery(function ($) {
             }
 
             lines ? result += lines : result += JSON.stringify(record, "", "    ");
-            result +='<div><a class="mlt" style="cursor:pointer" data-col="'+record['col']+'" rel="'+record['@id']+'">More Like This</a></div>';
+            // result +='<div><a class="mlt" style="cursor:pointer" data-col="'+record['col']+'" rel="'+record['@id']+'">More Like This</a></div>';
             result += '</td></tr>';
 
             return result;
@@ -1218,6 +1231,7 @@ jQuery(function ($) {
             if (options.data['found'] && first == true) {
                 $('#sort_btn_aligner').show('slow');
                 $('#facetview_leftcol').show('slow');
+                $('#facetview_rightcol > h3').show('slow');
                 $('#facetview-searchbar').attr('style', 'margin-bottom:10px;');
                 $('.header').attr('style', 'padding:5px;margin-top:15px;');
                 first = false;
@@ -1250,6 +1264,7 @@ jQuery(function ($) {
                 $('#nofresults').html(options.data['found'] + " results found");
                 $('#sort_btn_aligner').show();
                 $('#facetview_leftcol_percolator').show();
+                $('#facetview_rightcol > h3').show('slow');
             }
             else {
                 $('#nofresults').html("0 results found");
@@ -1791,70 +1806,69 @@ jQuery(function ($) {
             $('#loading').hide();
         };
 
-
         // the facet view object to be appended to the page
         var thefacetview = ' \
-        	<div id="facetview"> \
-            	<div class="row-fluid"> \
-        	   		<div class="col-sm-4"> \
-                		<div class="well" id="facetview_leftcol" style="display:none;width:100%;float:left"> \
-	    					<div class="" id="facetview_leftcol_percolator" style="float:right;display:none;"> \
-    							<!-- <a class="btn btn-warning" href="#">Create Alert</a> -->\
-	    					</div> \
-         		 			<div id="nofresults" style="margin-bottom:-34px;"></div>\
-                  			<div id="facetview_filters"></div>\
-        	 	 	 		<div id="adv_filters"></div>\
-                		</div> \
-            			<div class="well" id="facetview_leftcol_topclicks" style="display:none;width:100%;float:left"></div> \
-        	    		<div class="well" id="facetview_leftcol_tagcloud"  style="display:none;width:100%;float:left"></div> \
-               		</div> \
-                	<div class="col-sm-8" id="facetview_rightcol" align="left" style=""> \
-                    	<div id="facetview-searchbar" style="margin-left:-280px;" class="input-group"> \
-                    	    <div class="search"> \
-                                <input id="facetview_freetext" name="query" type="text" autofocus placeholder="search term"  autocomplete="off" > \
-                                <button><i class="fa fa-search"></i></button>\
-                    		</div> \
-                    		<div class="input-group-addon"> \
-                     			<div class="btn-group"> \
-        							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i><span class="caret"></span></a> \
-                     				<ul style="margin-left:-137px; margin-top: 18px;" class="dropdown-menu"> \
-                     					<li><a id="facetview_partial_match" href="">partial match</a></li> \
-                     					<li><a id="facetview_exact_match" href="">exact match</a></li> \
-                     					<li><a id="facetview_fuzzy_match" href="">fuzzy match</a></li> \
-                     					<li><a id="facetview_match_all" href="">match all</a></li> \
-         								<li class="divider"></li> \
-     									<li><a id="facetview_autosuggest" href=""><i id="facetview_autosuggest_flag" class="icon-ok"></i>&nbsp;Autosuggest</a></li> \
-                     					<li class="divider"></li> \
-                     					<li><a target="_blank" href="http://www.searchblox.com/">Learn more</a></li> \
-                     					<li class="divider"></li> \
-                     					<li><a id="facetview_howmany" href="#">results per page ({{HOW_MANY}})</a></li> \
-     									<li><a id="facetview_nofsuggest" href="#">suggestions per page ({{HOW_MANY_nofsuggest}})</a></li> \
-                     				</ul> \
- 			 					</div> \
-							</div>\
- 						</div>\
-        				<div>\
-    						<div class="row-fluid" style="height:40px;" id="facetview_sortbtns">\
-								<div id="sort_btn_aligner" style="display:none;text-align:center;">\
-     								<div class="btn-group" data-toggle="buttons">\
- 										<div class="btn btn-warning disabled">Sort By : </div>\
- 										<div class="btn btn-primary" id="sort_date">Date</div>\
- 										<div class="btn btn-primary" id="sort_alpha">Alphabetic</div>\
- 										<div class="btn btn-primary" id="sort_relevance" disabled="true">Relevance</div>\
- 										<div class="btn btn-info" id="direction" dir="desc">\
-										<span class="glyphicon glyphicon-arrow-down"></span>\
- 									</div>\
- 								</div>\
-							</div>\
-        				</div>\
-        				</div>\
-                    <div style="clear:both;" id="facetview_selectedfilters"></div> \
-      	  			<div><div id="suggest"></div>\
-                	<div><div id="ads"></div>\
-         	      	<table class="table table-striped" id="facetview_results" style="word-break: break-all;"></table>\
-                  	<div class="row-fluid" id="facetview_metadata"></div>\
-         		</div> \
-              </div> \
+        	<section class="section search-bar"> \
+        	    <div id="facetview-searchbar" class="input-group"> \
+                    <div class="search"> \
+                        <div class="search-db"> \
+                            <label><input type="checkbox" class="mgc mgc-primary mgc-lg" checked="checcked"> CNN.com</label> \
+                            <label><input type="checkbox" class="mgc mgc-primary mgc-lg" checked="checked"> A Big Database</label> \
+                        </div> \
+                        <input id="facetview_freetext" name="query" type="text" autofocus placeholder="search term"  autocomplete="off" > \
+                        <div class="input-group-addon"> \
+                        <div class="btn-group"> \
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i></a> \
+                            <ul class="dropdown-menu"> \
+                                <li><a id="facetview_partial_match" href="">partial match</a></li> \
+                                <li><a id="facetview_exact_match" href="">exact match</a></li> \
+                                <li><a id="facetview_fuzzy_match" href="">fuzzy match</a></li> \
+                                <li><a id="facetview_match_all" href="">match all</a></li> \
+                                <li class="divider"></li> \
+                                <li><a id="facetview_autosuggest" href=""><i id="facetview_autosuggest_flag" class="icon-ok"></i>&nbsp;Autosuggest</a></li> \
+                                <li class="divider"></li> \
+                                <li><a target="_blank" href="http://www.searchblox.com/">Learn more</a></li> \
+                                <li class="divider"></li> \
+                                <li><a id="facetview_howmany" href="#">results per page ({{HOW_MANY}})</a></li> \
+                                <li><a id="facetview_nofsuggest" href="#">suggestions per page ({{HOW_MANY_nofsuggest}})</a></li> \
+                            </ul> \
+                        </div> \
+                    </div>\
+                        <button><i class="fa fa-search"></i></button>\
+                    </div> \
+                </div> \
+        	</section> \
+        	<section class="section search-results"> \
+                <div id="facetview"> \
+                    <div class="row-fluid"> \
+                        <div class="col-sm-3 sidebar"> \
+                            <div class="" id="facetview_leftcol" style="display:none;width:100%;float:left"> \
+                                <div id="facetview_filters"></div>\
+                                <div id="adv_filters"></div>\
+                            </div> \
+                            <div class="" id="facetview_leftcol_topclicks" style="display:none;width:100%;float:left"></div> \
+                            <div class="" id="facetview_leftcol_tagcloud"  style="display:none;width:100%;float:left"></div> \
+                        </div> \
+                        <div class="col-sm-9 results" id="facetview_rightcol" align="left" style=""> \
+                        <h3 style="display:none;">Search Results for '+ options.query +'</h3> \
+                            <div>\
+                                <div class="row-fluid" style="height:40px;" id="facetview_sortbtns">\
+                                    <div id="sort_btn_aligner" style="display:none;text-align:center;">\
+                                        <div class="btn-group sort-by-wrapper" data-toggle="buttons">\
+                                            <div class="btn btn-primary" id="sort_date">Sort by Date</div>\
+                                            <div class="btn btn-primary" id="sort_alpha">Sort Alphabetically</div>\
+                                        </div>\
+                                        <div id="pagination-on-top"></div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        <div><div id="suggest"></div>\
+                        <div><div id="ads"></div>\
+                        <table class="table" id="facetview_results" style="word-break: break-all;"></table>\
+                        <div class="row-fluid" id="facetview_metadata"></div>\
+                    </div> \
+                </div> \
+            </section> \
             ';
 
         var attrsetter = function (attrname) {
@@ -1970,6 +1984,7 @@ jQuery(function ($) {
             if ($('#facetview_freetext').val() == "" && options.query != "") {
                 $('#sort_btn_aligner').show('slow');
                 $('#facetview_leftcol').show('slow');
+                $('#facetview_rightcol > h3').show('slow');
                 $('#facetview-searchbar').attr('style', 'margin-bottom:10px;');
                 $('.header').attr('style', 'padding:5px;margin-top:15px;');
                 $('#facetview_freetext').val(options.query);
