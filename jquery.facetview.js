@@ -400,7 +400,7 @@ jQuery(function ($) {
                       <i class="icon-plus"></i> \
                       {{FILTER_DISPLAY}}</a> \
                       <a class="btn dropdown-toggle btn-default" data-toggle="dropdown" \
-                      href="#"><span class="caret"></span></a> \
+                      href="#"><i class="fa fa-angle-down"></i></span></a> \
                       <ul class="dropdown-menu"> \
                       <li><a class="facetview_morefacetvals" rel="{{FACET_IDX}}" href="{{FILTER_EXACT}}">show up to ({{FILTER_HOWMANY}})</a></li>\
                       </ul>\
@@ -940,9 +940,9 @@ jQuery(function ($) {
             var metaTmpl = ' \
               <div class="pagination_wrapper"> \
                 <ul class="pagination" style="float:left;padding:16px;"> \
-                  <li class="prev"><a id="facetview_decrement" href="{{from}}">«</a></li> \
+                  <li class="prev"><a class="facetview_decrement" href="{{from}}">«</a></li> \
                   <li class="active"><a>{{from}} &ndash; {{to}} of {{total}}</a></li> \
-                  <li class="next"><a id="facetview_increment" href="{{to}}">»</a></li> \
+                  <li class="next"><a class="facetview_increment" href="{{to}}">»</a></li> \
                 </ul> \
               </div> \
               ';
@@ -962,10 +962,10 @@ jQuery(function ($) {
                 meta = meta.replace(/{{total}}/g, data.found);
                 $('#facetview_metadata').html("").append(meta);
                 $('#pagination-on-top').html("").append(meta);
-                $('#facetview_decrement').bind('click', decrement);
-                from < size ? $('#facetview_decrement').addClass('_disabled').html('<span>«</span>') : "";
-                $('#facetview_increment').bind('click', increment);
-                data.found <= to ? $('#facetview_increment').addClass('_disabled').html('<span>»</span>') : "";
+                $('.facetview_decrement').bind('click', decrement);
+                from < size ? $('.facetview_decrement').addClass('_disabled').html('<span>«</span>') : "";
+                $('.facetview_increment').bind('click', increment);
+                data.found <= to ? $('.facetview_increment').addClass('_disabled').html('<span>»</span>') : "";
             }
 
         };

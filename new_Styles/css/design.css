@@ -120,9 +120,10 @@ button, select {
     bottom: 0;
 }
 .last-modified {
-    font-size: 10px;
+    font-size: 13px;
     line-height: 1;
     display: block;
+    word-break: keep-all;
 }
 #facetview_filterbuttons .btn {
     border-radius: 0;
@@ -387,6 +388,12 @@ body {
 }
 #facetview_filterbuttons .btn-default .icon-minus:after {
 
+}
+a.dropdown-toggle .fa-angle-down {
+    color: #000;
+}
+.fa-angle-down:before {
+    content: "\f107";
 }
 .searched-img,
 .searched-context ,
