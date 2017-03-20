@@ -365,6 +365,7 @@ body {
 #facetview_filterbuttons .btn-default {
     border: none;
     font-size: 20px;
+    font-weight: 700;
 }
 #facetview_filters .btn-default:hover,
 #facetview_filters .btn-default:focus,
@@ -439,13 +440,10 @@ img {
     float: right;
     margin-top: 5px;
 }
-.header-icons i {
+.header-icons a i {
     color: #fff;
     margin-right: 15px;
     font-size: 20px;
-}
-.header-icons i:last-child {
-    margin-right: 0px;
 }
 
 /**
@@ -552,6 +550,11 @@ h1 {
 }
 #facetview-searchbar .input-group-addon .btn-group .icon-cog {
     font-size: 25px;
+    margin-left: 6px;
+}
+#facetview-searchbar .input-group-addon .btn-group .icon-cog:before {
+    content: url("../img/settings.png");
+    background-repeat: no-repeat;
 }
 #facetview-searchbar .input-group-addon .btn-group .icon-cog:hover:focus:active {
     color: #000;
