@@ -1150,6 +1150,9 @@ jQuery(function ($) {
             return result;
         };
 
+        close_ads = function() {
+            jQuery("#ads").remove();
+        }
 
         // put the results on the page
         showresults = function (sdata) {
@@ -1178,22 +1181,19 @@ jQuery(function ($) {
                 $('#suggest').html('');
             }
 
+
+
             //show ads if available
             var adsexist = false;
             if (sdata["ads"]) {
-                var temp = "<table class='table' style='background-color: #F6F4B6;'><tbody>";
-                temp += "<tr><td><i><small>Results from Ads</small></i></td></tr>";
+                var temp = "<br/ > <div class='message alert'>";
+                temp += "<a class='close-message' onclick='close_ads()' href='javascript:void(0)''>×</a>"
+                temp += "<i><small>Results from Ads</small></i><hr/>";
                 for (temp1 in sdata["ads"]) {
                     adsexist = true;
                     var ads_graphic_url = sdata["ads"][temp1]['@graphic_url'];
-                    temp += "<tr>\
-            				<td>\
-            				<div class=\"row-fluid\">\
-            				<div class=\"span10\">\
-            				<div style=\"float:left\">\
-            				<a style=\"color:red\" href=\"" + sdata["ads"][temp1]['@url'] + "\"><b>" + sdata["ads"][temp1]['@title'] + "</b></a><br></div></div></div>";
-
-                    temp += '<div class="row-fluid" style="height:20px"></div><div class="row-fluid">';
+                    temp += "<h3 href=\"" + sdata["ads"][temp1]['@url'] + "\"><b>" + sdata["ads"][temp1]['@title'] + "</b></h3>";
+                    //temp += '<div class="row-fluid" style="height:20px"></div><div class="row-fluid">';
                     if (ads_graphic_url != '')
                         temp += '<a href="' + sdata["ads"][temp1]['@graphic_url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@graphic_url'] + '" /> </a>';
                     temp += sdata["ads"][temp1]['@description'];
@@ -1202,12 +1202,11 @@ jQuery(function ($) {
                     if (t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp") {
                         temp += '<a href="' + sdata["ads"][temp1]['@url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@url'] + '" /> </a>';
                     }
-                    temp += '</div>';
                     temp += '<div class="row-fluid"><i class="_searchresult_url">' + sdata["ads"][temp1]['@url'] + '</i></div>';
-
-                    temp += '</tr>';
+                    temp += '</div>';
+                    //temp += '</tr>';
                 }
-                temp += "</tbody></table>";
+                //temp += "</tbody></table>";
                 if (adsexist)
                     $('#ads').html(temp);
                 else
