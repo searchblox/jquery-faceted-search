@@ -705,7 +705,7 @@ input[type="checkbox"].mgc:checked {
     border-radius: 3px;
     margin-bottom: 1.5em;
     position: relative;
-    padding: 9px 1px 11px 20px;
+    padding: 5px 1px 11px 20px;
     color: #5c5c5c;
     border: 1px solid #ccc;
 }
@@ -732,4 +732,9 @@ input[type="checkbox"].mgc:checked {
     text-align: center;
     -webkit-transition: all .25s ease;
     transition: all .25s ease;
+}
+
+#ads hr {
+    margin-bottom:12px;
+    margin-top: 0px;
 }

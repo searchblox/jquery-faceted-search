@@ -1186,27 +1186,28 @@ jQuery(function ($) {
             //show ads if available
             var adsexist = false;
             if (sdata["ads"]) {
-                var temp = "<br/ > <div class='message alert'>";
-                temp += "<a class='close-message' onclick='close_ads()' href='javascript:void(0)''>×</a>"
-                temp += "<i><small>Results from Ads</small></i><hr/>";
+                var temp = "<br/ >";
                 for (temp1 in sdata["ads"]) {
+                    temp += "<div class='message alert'>";
+                    temp += "<a class='close-message' onclick='close_ads()' href='javascript:void(0)''>×</a>"
+                    temp += "<i><small>Results from Ads</small></i><hr/>";
                     adsexist = true;
                     var ads_graphic_url = sdata["ads"][temp1]['@graphic_url'];
                     temp += "<h3 href=\"" + sdata["ads"][temp1]['@url'] + "\"><b>" + sdata["ads"][temp1]['@title'] + "</b></h3>";
-                    //temp += '<div class="row-fluid" style="height:20px"></div><div class="row-fluid">';
-                    if (ads_graphic_url != '')
-                        temp += '<a href="' + sdata["ads"][temp1]['@graphic_url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@graphic_url'] + '" /> </a>';
-                    temp += sdata["ads"][temp1]['@description'];
+                    if (ads_graphic_url != '') {
+                        temp += '<a href="' + sdata["ads"][temp1]['@graphic_url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@graphic_url'] + '" /> </a>';
+                    } else {
+                        temp += sdata["ads"][temp1]['@description'];
+                        temp += "<br />";
+                    }
                     var tempurl = sdata["ads"][temp1]['@url'];
                     var t = tempurl.substring(tempurl.lastIndexOf('.') + 1).toLowerCase();
                     if (t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp") {
-                        temp += '<a href="' + sdata["ads"][temp1]['@url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@url'] + '" /> </a>';
+                        temp += '<a href="' + sdata["ads"][temp1]['@url'] + '" rel="prettyPhoto"> <img class="thumbnail" style="width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + sdata["ads"][temp1]['@url'] + '" /> </a>';
                     }
-                    temp += '<div class="row-fluid"><i class="_searchresult_url">' + sdata["ads"][temp1]['@url'] + '</i></div>';
+                    temp += '<i class="_searchresult_url">' + sdata["ads"][temp1]['@url'] + '</i>';
                     temp += '</div>';
-                    //temp += '</tr>';
                 }
-                //temp += "</tbody></table>";
                 if (adsexist)
                     $('#ads').html(temp);
                 else
