@@ -61,8 +61,7 @@ a:hover {
 header {
     background-color: #529dc9;
     /* Fallback Color */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#5da4cd),
-    to(#529dc9));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5da4cd), to(#529dc9));
     /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, #5da4cd, #529dc9);
     /* Chrome 10+, Saf5.1+, iOS 5+ */
@@ -73,14 +72,14 @@ header {
     background-image: -o-linear-gradient(top, #5da4cd, #529dc9);
     /* Opera 11.10+ */
     background-image: linear-gradient(top, #5da4cd, #529dc9);
+    border-radius: 4px;
+    /*height: 50px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
-    height: 50px;
-    vertical-align: middle;
     padding: 0;
+    margin-bottom: 0px;*/
+    vertical-align: middle;
     line-height: 50px;
-    margin-bottom: 0px;
 }
 
 .top-bar {
@@ -256,14 +255,14 @@ header {
 
 .page-title {
     margin-top: 0px;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/ /* I: commented */
     background: white;
     border: 1px solid #c7dfed;
     border-top: 0;
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
-    padding: 18px 12px;
+    padding: 5px 5px;
     vertical-align: middle;
     line-height: 26px;
 }
@@ -2409,9 +2408,9 @@ important
         transform:rotate(360deg)
     }
 }
-.search label {
+/*.search label {     I: commented to display checkbox collections
     display: none;
-}
+}*/
 .search #facetview_freetext {
     display: block;
     width: 87%;
@@ -2648,7 +2647,6 @@ button, select {
 .pagination > li > a, .pagination > li > span {
     position: relative;
     float: left;
-    padding: 6px 24px;
     color: #5d5d5d;
     margin-left: -1px;
     text-decoration: none;
@@ -2737,7 +2735,7 @@ button, select {
     -webkit-transition: all .25s ease;
     transition: all .25s ease;
 	border-radius: 0 !important;
-}   
+}
 #date_go:hover {
 background-color: #1e68a8;
     color: #fff;
