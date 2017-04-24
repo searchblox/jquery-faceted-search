@@ -137,7 +137,7 @@ var rootUrl = "http://localhost:8080";
 
 
     $.getJSON("webData.json", function (data) {
-        console.log(data);
+        console.log(data); //I: data from webData
         jsonData = data;
     });
 
@@ -582,7 +582,7 @@ jQuery(function ($) {
                 $('#facetview_selectedfilters').append(newobj);
                 $('.facetview_filterselected').unbind('click', clearsizefilter);
                 $('.facetview_filterselected').bind('click', clearsizefilter);
-                options.paging.from = 0;
+                options.paging.from = 1; //I: Changed values from 0 to 1
                 dosearch();
             }
             else {
@@ -623,7 +623,7 @@ jQuery(function ($) {
                 $('#facetview_selectedfilters').append(newobj);
                 $('.facetview_filterselected').unbind('click', cleardatefilter);
                 $('.facetview_filterselected').bind('click', cleardatefilter);
-                options.paging.from = 0;
+                options.paging.from = 1;
                 dosearch();
             }
             else {
@@ -967,27 +967,6 @@ jQuery(function ($) {
             return resultobj;
         };
 
-        // decrement result set
-        var decrement = function (event) {
-          console.log("decrement is called"); // I: To check when this function is triggered
-            event.preventDefault();
-            if ($(this).html() != '..') {
-                options.paging.from = options.paging.from - options.paging.size;
-                options.paging.from < 0 ? options.paging.from = 0 : "";
-                dosearch();
-            }
-        };
-
-        // increment result set
-        var increment = function (event) {
-          console.log("increment is called"); // I: To check when this function is triggered
-            event.preventDefault();
-            if ($(this).html() != '..') {
-                options.paging.from = parseInt($(this).attr('href'));
-                dosearch();
-            }
-        };
-
         var facetview_page_increment = function (event) {
           console.log("facetview_page_increment is called"); // I: To check when this function is triggered
             event.preventDefault();
@@ -1007,38 +986,42 @@ jQuery(function ($) {
                 options.paging.size = parseInt(options.paging.size);
             }
             var noOfPages = Math.ceil(data.found / options.paging.size); // I: Total number pages results will get
+            var currentPage = Math.ceil(options.paging.from/options.paging.size);
             // console.log(data["found"] + "Total results size" + noOfPages); // I: Size of total results for pagination
 
             // I: carried out from if(data.found) condition to modify pagination
-            var from = options.paging.from + 1;
+            var from = options.paging.from;
             var size = options.paging.size;
             !size ? size = 10 : "";
-            var to = options.paging.from + size;
-            data.found < to ? to = data.found : "";
-            var pageNo = Math.ceil(to/size);
+            // I: TO DECIDE HOW PAGINATION SHOULD DISPLAY PAGE NUMBERS
+            var pageNo = 1;
+            if(currentPage <= 3){
+              pageNo = 1;
+            }
+            else if(currentPage >= (noOfPages-4)){
+              pageNo = noOfPages-4;
+            }
+            else{
+              pageNo = currentPage - 2;
+            }
             // metaTmpl staores the pagination elements
             var metaTmpl = ' \
               <div class="pagination_wrapper"> \
                 <ul class="pagination" style="float:left;padding:10px;"> \
-                  <li class="prev"><a class="facetview_decrement" href="'+from+'">«</a></li> \
+                  <li class="prev"><a class="facetview_page" href="'+1+'">«</a></li> \
               ';
               // I: LOOP TO HAVE NUMBER OF PAGES IN PAGINATION
               for(var i = 0; i < 5; i++){
                 if(i < noOfPages){
-                  var targetLink = (parseInt(to) + ((i-1)*size)+ 1);
+                  var targetLink = ((pageNo + i - 1)*size)+1;
                   targetLink < 0 ? targetLink = 1 : false;
-                  if(targetLink > data.found){    // I: IF targetLink is exceeding the total number of results pagination should be limited and no extra pages should be displayed
-                    targetLink = data.found;
-                    metaTmpl = metaTmpl + '<li><a class="facetview_page active" href="'+ targetLink +'">'+ (pageNo + i) +'</a></li>';
-                    break;
-                  }
                   metaTmpl = metaTmpl + '<li><a class="facetview_page active" href="'+ targetLink +'">'+ (pageNo + i) +'</a></li>';
                 }
                 else{
                   break;
                 }
               }
-              metaTmpl = metaTmpl + '<li class="next"><a class="facetview_increment" href="'+to+'">»</a></li> \
+              metaTmpl = metaTmpl + '<li class="next"><a class="facetview_page" href="'+ ((parseInt(data.found) + 1) - (parseInt(data.found) % size)) +'">»</a></li> \
                         </ul> \
                       </div> \
                     ';
@@ -1053,10 +1036,6 @@ jQuery(function ($) {
                 var meta = metaTmpl;
                 $('#facetview_metadata').html("").append(meta);
                 $('#pagination-on-top').html("").append(meta);
-                $('.facetview_decrement').bind('click', decrement);
-                from < size ? $('.facetview_decrement').addClass('_disabled').html('<span>«</span>') : "";
-                $('.facetview_increment').bind('click', increment);
-                data.found <= to ? $('.facetview_increment').addClass('_disabled').html('<span>»</span>') : "";
                 $('.facetview_page').bind('click', facetview_page_increment);
             }
 
@@ -1136,7 +1115,7 @@ jQuery(function ($) {
                                     lines += '<div class="row-fluid searched-img"><a href="' + img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /></a></div>';
                                 else {
                                     if (play)
-                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
+                                        lines += '<br><video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
                                     else
                                         lines += '<a href="' + img[1] + '"><img src="images/play.jpg"/></a></div>';
                                 }
@@ -1149,7 +1128,7 @@ jQuery(function ($) {
                                     lines += '<div class="row-fluid searched-img"><a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" /> </a></div>';  // I: Added rootUrl
                                 else {
                                     if (play)
-                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"/>'   // I: Added rootUrl
+                                        lines += '<br><video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"/>'   // I: Added rootUrl
                                     else
                                         lines += '<a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"> <img src="images/play.jpg"/></a></div>'  // I: Added rootUrl
                                 }
@@ -1194,7 +1173,10 @@ jQuery(function ($) {
                           var kb = 1024;
                           var mb = 1024*1024;
                           var gb = 1024*1024*1024;
-                          if(thevalue > kb && thevalue < mb){
+                          if(thevalue < kb){
+                            thevalue = parseFloat(thevalue/kb).toFixed(2) + "b";
+                          }
+                          else if(thevalue > kb && thevalue < mb){
                             thevalue = parseFloat(thevalue/kb).toFixed(2) + "k";
                           }
                           else if(thevalue > mb && thevalue < gb){
@@ -1641,14 +1623,15 @@ jQuery(function ($) {
                 $.ajax({
                     type: "post",
                     url: rootUrl + autocompletion, // I: Added rootUrl
-                    dataType: "jsonp", // I: Added jsonp for cross origin requests
+                    crossDomain: true,
+                    dataType: "json", // I: Added jsonp for cross origin requests
                     data: "q=" + options.query + "&limit=" + options.nofsuggest,
                     success: function (data) {
                         var temp = new Array();
                         for (var i in data[0]) {
                             temp.push(data[0][i]);
                         }
-
+                        console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
                         if (temp.length >= 1) {
                             z = temp;
                             $('#facetview_freetext').autocomplete({
@@ -1658,6 +1641,22 @@ jQuery(function ($) {
                     }
 
                 });
+
+                // I: AUTOMCOMPLETE TO WORK FROM DIFFERENT DIRECTORIES - NEEDS JSON OBKECT IN RESPONSE
+                /*$.getJSON(rootUrl + autocompletion, "callback=?&q=" + options.query + "&limit=" + options.nofsuggest, function (data) {
+                  console.log("Autosuggest is called and printed xxxxxxxxxxxxxxxxxxx");
+                    var temp = new Array();
+                    for (var i in data[0]) {
+                        temp.push(data[0][i]);
+                    }
+                    console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
+                    if (temp.length >= 1) {
+                        z = temp;
+                        $('#facetview_freetext').autocomplete({
+                            source: z
+                        });
+                    }
+                });*/
             }
             else {
                 $('#facetview_freetext').autocomplete("destroy");
@@ -1681,7 +1680,7 @@ jQuery(function ($) {
             q += direction;
             // update start page variable on new query
             if (oldsearchquery != encodeURIComponent(options.query).trim())
-                options.paging.from = 0;
+                options.paging.from = 1; //I: Changed values from 0 to 1
             // update the page variable
             var d = parseInt(options.paging.from) == 0 ? d = 1 : d = (parseInt(options.paging.from) / parseInt(options.paging.size)) + 1;
             q = q + "&page=" + parseInt(d);
@@ -1817,7 +1816,7 @@ jQuery(function ($) {
                 $('#facetview_selectedfilters').append(newobj);
                 $('.facetview_filterselected').unbind('click', clearfilter);
                 $('.facetview_filterselected').bind('click', clearfilter);
-                options.paging.from = 0;
+                options.paging.from = 1; //I: Changed values from 0 to 1
                 dosearch();
             }
             else {
@@ -1912,7 +1911,7 @@ jQuery(function ($) {
                 ' results per page. How many would you like instead?');
             if (newhowmany) {
                 options.paging.size = parseInt(newhowmany);
-                options.paging.from = 0;
+                options.paging.from = 1; //I: Changed values from 0 to 1
                 $('#facetview_howmany').html('results per page (' + options.paging.size + ')');
                 dosearch();
             }
@@ -1926,7 +1925,7 @@ jQuery(function ($) {
                 ' suggestions per page. How many would you like instead?');
             if (newhowmany) {
                 options.nofsuggest = parseInt(newhowmany);
-                options.paging.from = 0;
+                options.paging.from = 1; //I: Changed values from 0 to 1
                 $('#facetview_nofsuggest').html('suggestions per page (' + options.nofsuggest + ')');
                 dosearch();
             }
@@ -1960,7 +1959,7 @@ jQuery(function ($) {
                           <input id="facetview_freetext" name="query" type="text" autofocus placeholder="search term"  autocomplete="off" > \
                           <div class="input-group-addon"> \
                             <div class="btn-group"> \
-                                <img src="new_styles/img/settings.png" class="dropdown-toggle" data-toggle="dropdown">\
+                                <img src="new_Styles/img/settings.png" class="dropdown-toggle" data-toggle="dropdown">\
                                 <ul class="dropdown-menu"> \
                                     <li><a id="facetview_partial_match" href="">partial match</a></li> \
                                     <li><a id="facetview_exact_match" href="">exact match</a></li> \
@@ -2124,7 +2123,7 @@ jQuery(function ($) {
                 }
             // check paging info is available
             !options.paging.size ? options.paging.size = 10 : "";
-            !options.paging.from ? options.paging.from = 0 : "";
+            !options.paging.from ? options.paging.from = 1 : ""; //I: Changed values from 0 to 1
 
             // append the filters to the facetview object
             buildfilters();
