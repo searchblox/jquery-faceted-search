@@ -2572,7 +2572,7 @@ button, select {
     vertical-align: middle;
     color: #609ed4;
     font-size: 11px;
-    line-height: 10px;
+    line-height: 12px;
     font-weight: 400;
     background-color: #daeffa;
     border: 1px solid #609ed4;
@@ -2581,6 +2581,7 @@ button, select {
     transition: all .25s ease;
     text-decoration: none;
     padding: 8px 13px 8px 17px;
+    cursor: pointer;
 }
 .facetview_filterselected .remove {
     display: inline-block;
@@ -2700,9 +2701,7 @@ button, select {
     border: 1px solid #e3e3e3;
 }
 .searched-title {
-    width: 80%;
     margin-bottom: 10px;
-    word-break: initial;
 }
 .input-group-addon:first-child {
     border-top-right-radius: 0;

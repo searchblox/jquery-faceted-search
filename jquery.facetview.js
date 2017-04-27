@@ -10,6 +10,7 @@
 // https://github.com/bgrins/bindWithDelay/blob/master/bindWithDelay.js
 var jsonData = {};
 var resulted = [];
+//var rootUrl = "http://185.73.37.206:8080";
 var rootUrl = "http://localhost:8080";
 
 (function ($) {
@@ -17,8 +18,9 @@ var rootUrl = "http://localhost:8080";
         setModel($(this));
     })
 
+
     setModel = function (index) {
-      console.log("setModel is called"); // I: To check when this function is triggered
+      //console.log("setModel is called"); // I: To check when this function is triggered
 
         var id = $(index).parents('td');
         var data;
@@ -112,7 +114,7 @@ var rootUrl = "http://localhost:8080";
         }
     };
     popupFunc = function (array) {
-      console.log("popupFunc is called"); // I: To check when this function is triggered
+      //console.log("popupFunc is called"); // I: To check when this function is triggered
         for (var i = 0; i < array.length; i++) {
             $.each(array[i], function (key, value) {
                 if (value == undefined || value == null || value == '') {
@@ -130,20 +132,19 @@ var rootUrl = "http://localhost:8080";
       url: "webData.json",
       dataType: "jsonp",
       success: function (data) {
-          console.log(data);
+          //console.log(data);
           jsonData = data;
       }
     });*/
 
 
     $.getJSON("webData.json", function (data) {
-        console.log(data); //I: data from webData
         jsonData = data;
     });
 
-    //console.log(jsonData);
+    ////console.log(jsonData);
     $.fn.bindWithDelay = function (type, data, fn, timeout, throttle) {
-      console.log("bindWidthDelay is called"); // I: To check when this function is triggered
+      //console.log("bindWidthDelay is called"); // I: To check when this function is triggered
         var wait = null;
         var that = this;
 
@@ -176,7 +177,7 @@ var rootUrl = "http://localhost:8080";
 // add extension to jQuery with a function to get URL parameters
 jQuery.extend({
     getUrlVars: function () {
-      console.log("getUrlVars is called"); // I: To check when this function is triggered
+      //console.log("getUrlVars is called"); // I: To check when this function is triggered
         var params = new Object;
         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         for (var i = 0; i < hashes.length; i++) {
@@ -195,7 +196,7 @@ jQuery.extend({
         return params
     },
     getUrlVar: function (name) {
-      console.log("getUrlVar is called"); // I: To check when this function is triggered
+      //console.log("getUrlVar is called"); // I: To check when this function is triggered
         return jQuery.getUrlVars()[name];
     }
 });
@@ -204,7 +205,7 @@ jQuery.extend({
 // now the facetview function
 jQuery(function ($) {
     $.fn.facetview = function (options) {
-      console.log("facetview is called"); // I: To check when this function is triggered
+      //console.log("facetview is called"); // I: To check when this function is triggered
         //the query variable
         var filterq = new Array();
         var filterqn = -1;
@@ -223,7 +224,93 @@ jQuery(function ($) {
         var resdisplay = [
             [
                 {
-                    'pre': '<div class="row-fluid"><div class="span10"><div class="searched-title" style="float:left"><a target="_blank" href="',
+                    'pre': '<div class="span10 col-xs-12 col-sm-9 col-md-10"><div class="row"><div class="searched-title"><a target="_blank" href="',
+                    'field': 'url',
+                    'post': '" onClick="return setModel(this); setgo()"'
+                },
+                {
+                    'pre': 'id="searchresult" collectionno="',
+                    'field': 'col',
+                    'post': '" '
+
+                },
+                {
+                    'pre': ' uid="',
+                    'field': 'uid',
+                    'post': '"'
+
+                },
+                {
+                    'pre': ' old_uid="',
+                    'field': 'old_uid',
+                    'post': '"'
+
+                },
+                {
+                    "pre": "><b>",
+                    "field": "title",
+                    "post": "</b></a> "
+                },
+                {
+                    "pre": ' &nbsp;&nbsp;<a class="mlt" style="cursor:pointer" data-col="1" rel="',
+                    "field": "url",
+                    "post": '"> <span>More Like This</span></a></br></div> </div>'
+                }
+            ],
+            [
+                {
+                    "pre": '<div class="row"><div class="row-fluid searched-img" style="height:20px;">',
+                    "field": "image",
+                    "post": '</div></div>'
+                }
+            ],
+            [
+                {
+                    "pre": '<div class="row"> <div class="row-fluid searched-context">...',
+                    "field": "context.text",
+                    "post": '...</div> </div>'
+                },
+                {
+                    "pre": '<div class="row"><div class="row-fluid searched-description">',
+                    "field": "description",
+                    "post": '</div> </div>'
+                }
+            ],
+            [
+                {
+                    'pre': '<div class="row"><div class="row-fluid searched-url"><i class="_searchresult_url">',
+                    "field": "url",
+                    'post': '</i></div> </div></div>'
+                }
+            ],
+      			[
+                {
+                    'pre': '<div class="span8 col-xs-12 col-sm-3 col-md-2"><div class="progress-wrapper" style="float:right; width:100px;"><div class="progress" style="height:20px">\
+      				            <div class="progress-bar" style="width:',
+                    'field': 'score',
+                    'post': '%;"'
+                },
+                {
+                    'pre': '>',
+                    'field': 'score',
+                    'post': '%</div></div>'
+                },
+                {
+                    'pre': '<span class="last-modified">',
+                    'field': 'lastmodified',
+                    'post': '</span>' // I: Modified to add size for each record
+                },
+                {
+                    'pre': '<span class="last-modified">',
+                    'field': 'size',
+                    'post': '</span> </div></div></div></div>'
+                }
+      			]
+        ];
+        /*var resdisplay = [
+            [
+                {
+                    'pre': '<div class="row-fluid col-sm-12"><div class="span10"><div class="searched-title" style="float:left"><a target="_blank" href="',
                     'field': 'url',
                     'post': '" onClick="return setModel(this); setgo()"'
                 },
@@ -300,10 +387,10 @@ jQuery(function ($) {
                 {
                     'pre': '<div class="row-fluid searched-url"><i class="_searchresult_url" style="display: block;width: 600px;word-wrap: break-word;">',
                     "field": "url",
-                    'post': '</i></div>'
+                    'post': '</i></div></div>'
                 }
             ],
-        ];
+        ];*/
         // specify the defaults
         var defaults = {
             "config_file": false,           // a remote config file URL
@@ -344,7 +431,7 @@ jQuery(function ($) {
 
         // show the filter values
         var showfiltervals = function (event) {
-          console.log("showfiltervals is called"); // I: To check when this function is triggered
+          //console.log("showfiltervals is called"); // I: To check when this function is triggered
             event.preventDefault();
             if ($(this).hasClass('facetview_open')) {
                 $(this).children('i').replaceWith('<i class="icon-plus"></i>');
@@ -359,7 +446,7 @@ jQuery(function ($) {
 
         // show the filter values initially
         var showfiltervalsinit = function () {
-          console.log("showfiltervalsinit is called"); // I: To check when this function is triggered
+          //console.log("showfiltervalsinit is called"); // I: To check when this function is triggered
             $('.facetview_filtershow').each(function () {
                 if ($(this).hasClass('facetview_open')) {
                     // do nothing
@@ -392,7 +479,7 @@ jQuery(function ($) {
 
         // adjust how many results are shown
         var morefacetvals = function (event) {
-          console.log("morefacetvals is called"); // I: To check when this function is triggered
+          //console.log("morefacetvals is called"); // I: To check when this function is triggered
             event.preventDefault();
             var morewhat = options.facets[$(this).attr('rel')];
             if ('size' in morewhat) {
@@ -414,7 +501,7 @@ jQuery(function ($) {
 
         // pass a list of filters to be displayed
         var buildfilters = function () {
-          console.log("buildfilters is called"); // I: To check when this function is triggered
+          //console.log("buildfilters is called"); // I: To check when this function is triggered
             var filters = options.facets;
             var thefilters = '<h3>Filter by <div id="nofresults" style="margin-bottom:-34px;"></div></h3>';
             thefilters += '<div style="clear:both;" id="facetview_selectedfilters"></div>';
@@ -465,7 +552,7 @@ jQuery(function ($) {
         }
 
         var fixadvfilters = function () {
-          console.log("fixadvfilters is called"); // I: To check when this function is triggered
+          //console.log("fixadvfilters is called"); // I: To check when this function is triggered
             var advfilterhtml = '<div id="facetview_filterbuttons" class="btn-group col-sm-12">\
                   <a style="text-align:left; min-width:70%;" class="facetview_advfiltershow1 btn btn-default" rel="advfilterdate" href="">\
                   <i class="icon-plus"></i>\
@@ -557,7 +644,7 @@ jQuery(function ($) {
         };
 
         var clicksizefilterchoice = function (a) {
-          console.log("clicksizefilterchoice is called"); // I: To check when this function is triggered
+          //console.log("clicksizefilterchoice is called"); // I: To check when this function is triggered
             var view = "";
             if (a == '0')view = "&lt100kB";
             else if (a == '1')view = "100kB to 500kB";
@@ -591,7 +678,7 @@ jQuery(function ($) {
         };
 
         var clearsizefilter = function (event) {
-          console.log("clearsizefilter is called"); // I: To check when this function is triggered
+          //console.log("clearsizefilter is called"); // I: To check when this function is triggered
             event.preventDefault();
             $(this).remove();
             sizefilter = "";
@@ -602,7 +689,7 @@ jQuery(function ($) {
         }
 
         var clickdatefilterchoice = function (a) {
-          console.log("clickdatefilterchoice is called"); // I: To check when this function is triggered
+          //console.log("clickdatefilterchoice is called"); // I: To check when this function is triggered
             var view = a;
             view = view.replace(/ /g, '_');
             var cleanname = view.replace(/\(.*\)/, '').replace(/_/g, ' ');
@@ -632,7 +719,7 @@ jQuery(function ($) {
         };
 
         var cleardatefilter = function (event) {
-          console.log("cleardatefilter is called"); // I: To check when this function is triggered
+          //console.log("cleardatefilter is called"); // I: To check when this function is triggered
             event.preventDefault();
             $(this).remove();
             startdate = "";
@@ -644,7 +731,7 @@ jQuery(function ($) {
 
 
         var sizerangeclick = function (a) {
-          console.log("sizerangeclick is called"); // I: To check when this function is triggered
+          //console.log("sizerangeclick is called"); // I: To check when this function is triggered
             switch (a) {
                 case '0':
                     sizefilter = "&f.size.filter=[*TO102400]";
@@ -674,7 +761,7 @@ jQuery(function ($) {
 
         var activedate = -1;
         var daterangeclick = function (b) {
-          console.log("daterangeclick is called"); // I: To check when this function is triggered
+          //console.log("daterangeclick is called"); // I: To check when this function is triggered
             $('.daterange_facet').children().hide();
             switch (b) {
                 case 'Last 24 hours':
@@ -713,7 +800,7 @@ jQuery(function ($) {
 
         // match options filter and data filter
         var findfilterindata = function (filter) {
-          console.log("findfilterindata is called"); // I: To check when this function is triggered
+          //console.log("findfilterindata is called"); // I: To check when this function is triggered
             var found = "false";
             for (var i in options.data["facets"])
                 for (var n in options.data["facets"][i]) {
@@ -731,7 +818,7 @@ jQuery(function ($) {
 
         // TO REMOVE ALL THE FILTERS APPLIED BY THE USER
         var removefilterquery_all = function () {
-          console.log("removefilterquery_all is called"); // I: To check when this function is triggered
+          //console.log("removefilterquery_all is called"); // I: To check when this function is triggered
           filterquery.length = 0;
           nf = -1;
           $("#facetview_selectedfilters").html("");
@@ -739,7 +826,7 @@ jQuery(function ($) {
         };
 
         var removefilterquery = function (facet, filtername) {
-          console.log("removefilterquery is called"); // I: To check when this function is triggered
+          //console.log("removefilterquery is called"); // I: To check when this function is triggered
             var s = validatefilteradd(facet, filtername);
             if (s == -1);
             else {
@@ -749,7 +836,7 @@ jQuery(function ($) {
         };
 
         var removeallcontenttypefilterquery = function () {
-          console.log("removeallcontenttypefilterquery is called"); // I: To check when this function is triggered
+          //console.log("removeallcontenttypefilterquery is called"); // I: To check when this function is triggered
             var s = validatefilteradd('contenttype', '*');
             while (s != -1) {
                 filterquery.splice(s, 1);
@@ -759,7 +846,7 @@ jQuery(function ($) {
         };
 
         var validatefilteradd = function (facet, filtername) {
-          console.log("validatefilteradd is called"); // I: To check when this function is triggered
+          //console.log("validatefilteradd is called"); // I: To check when this function is triggered
             if (filtername == '*') {
                 for (var i in filterquery) {
                     if (filterquery[i]['0'] == facet)
@@ -776,14 +863,14 @@ jQuery(function ($) {
         };
 
         var viewfilter = function () {
-          console.log("viewfilter is called"); // I: To check when this function is triggered
+          //console.log("viewfilter is called"); // I: To check when this function is triggered
             for (i in filterquery) {
                 alert(JSON.stringify(filterquery[i]));
             }
         };
 
         var addfilterquery = function (facet, filtername) {
-          console.log("addfilterquery is called"); // I: To check when this function is triggered
+          //console.log("addfilterquery is called"); // I: To check when this function is triggered
             var s = validatefilteradd(facet, filtername);
             if (s == -1) {
                 nf++;
@@ -792,12 +879,12 @@ jQuery(function ($) {
         };
 
         var filterclick = function (rel, html) {
-          console.log("filterclick is called"); // I: To check when this function is triggered
+          //console.log("filterclick is called"); // I: To check when this function is triggered
             addfilterquery(rel, escape(html.replace(/%%%/g, ' ')));
         };
 
         var appendfilterstoquery = function (a) {
-          console.log("appendfilterstoquery is called"); // I: To check when this function is triggered
+          //console.log("appendfilterstoquery is called"); // I: To check when this function is triggered
             var b = "";
             for (var i in filterquery) {
                 b = b + "&f." + filterquery[i]['0'] + ".filter=" + filterquery[i]['1'];
@@ -807,7 +894,7 @@ jQuery(function ($) {
 
         // set the available filter values based on results
         var putvalsinfilters = function (data) {
-          console.log("putvalsinfilters is called"); // I: To check when this function is triggered
+          //console.log("putvalsinfilters is called"); // I: To check when this function is triggered
             // for each filter setup, find the results for it and append them to the relevant filter
             for (var each in options.facets) {
                 $(document.getElementById('facetview_' + options.facets[each]['field'].replace(/\./gi, '_'))).children().remove();
@@ -870,7 +957,7 @@ jQuery(function ($) {
 
         //function to check if string only contains numbers
         var isNumber = function (string) {
-          console.log("isNumber is called"); // I: To check when this function is triggered
+          //console.log("isNumber is called"); // I: To check when this function is triggered
             var isnum = /^\d+$/.test(string);
             return isnum;
         };
@@ -882,8 +969,8 @@ jQuery(function ($) {
         // read the result object and return useful vals depending on if ES or SOLR
         // returns an object that contains things like ["data"] and ["facets"]
         var parseresults = function (dataobj) {
-          console.log("parseresults is called"); // I: To check when this function is triggered
-            //console.log(dataobj.results.result);
+          //console.log("parseresults is called"); // I: To check when this function is triggered
+            ////console.log(dataobj.results.result);
             var resultobj = new Object();
             resultobj["records"] = new Array();
             resultobj["start"] = "";
@@ -968,17 +1055,17 @@ jQuery(function ($) {
         };
 
         var facetview_page_increment = function (event) {
-          console.log("facetview_page_increment is called"); // I: To check when this function is triggered
+          //console.log("facetview_page_increment is called"); // I: To check when this function is triggered
             event.preventDefault();
             if ($(this).html() != '..') {
-                options.paging.from = parseInt($(this).attr('href')) - 1;
+                options.paging.from = parseInt($(this).attr('href'));
                 dosearch();
             }
         };
 
         // write the metadata to the page
         var putmetadata = function (data) {
-          console.log("putmetadata is called"); // I: To check when this function is triggered
+          //console.log("putmetadata is called"); // I: To check when this function is triggered
             if (typeof(options.paging.from) != 'number') {
                 options.paging.from = parseInt(options.paging.from);
             }
@@ -987,41 +1074,30 @@ jQuery(function ($) {
             }
             var noOfPages = Math.ceil(data.found / options.paging.size); // I: Total number pages results will get
             var currentPage = Math.ceil(options.paging.from/options.paging.size);
-            // console.log(data["found"] + "Total results size" + noOfPages); // I: Size of total results for pagination
+            // //console.log(data["found"] + "Total results size" + noOfPages); // I: Size of total results for pagination
+
+            var pageMultiple = Math.ceil(currentPage/5); // I: To decide which page numbers to be displayed
 
             // I: carried out from if(data.found) condition to modify pagination
             var from = options.paging.from;
             var size = options.paging.size;
             !size ? size = 10 : "";
             // I: TO DECIDE HOW PAGINATION SHOULD DISPLAY PAGE NUMBERS
-            var pageNo = 1;
-            if(currentPage <= 3){
-              pageNo = 1;
-            }
-            else if(currentPage >= (noOfPages-4)){
-              pageNo = noOfPages-4;
-            }
-            else{
-              pageNo = currentPage - 2;
-            }
+            var pageNo = ((pageMultiple - 1)*5 + 1);
+
             // metaTmpl staores the pagination elements
             var metaTmpl = ' \
               <div class="pagination_wrapper"> \
-                <ul class="pagination" style="float:left;padding:10px;"> \
-                  <li class="prev"><a class="facetview_page" href="'+1+'">«</a></li> \
+                <ul class="pagination" style="float:left;padding:5px;"> \
+                  <li class="prev"><a class="facetview_page" href="'+(pageNo == 1 ? 1 : (size*5*(pageMultiple-2)+1))+'">«</a></li> \
               ';
               // I: LOOP TO HAVE NUMBER OF PAGES IN PAGINATION
-              for(var i = 0; i < 5; i++){
-                if(i < noOfPages){
-                  var targetLink = ((pageNo + i - 1)*size)+1;
+              for(var i = 0; i < 5 && pageNo < noOfPages; i++, pageNo++){
+                  var targetLink = ((pageNo - 1)*size)+1;
                   targetLink < 0 ? targetLink = 1 : false;
-                  metaTmpl = metaTmpl + '<li><a class="facetview_page active" href="'+ targetLink +'">'+ (pageNo + i) +'</a></li>';
-                }
-                else{
-                  break;
-                }
+                  metaTmpl = metaTmpl + '<li><a class="facetview_page activeLink" href="'+ targetLink +'">'+ pageNo +'</a></li>'; //I: ADDED CLASS ACTIVELINK TO HIGHLIGHT ACTIVE PAGE
               }
-              metaTmpl = metaTmpl + '<li class="next"><a class="facetview_page" href="'+ ((parseInt(data.found) + 1) - (parseInt(data.found) % size)) +'">»</a></li> \
+              metaTmpl = metaTmpl + '<li class="next"><a class="facetview_page" href="'+ (pageNo == noOfPages ? (((pageNo - 2)*size)+1) : (size*5*pageMultiple+1)) +'">»</a></li> \
                         </ul> \
                       </div> \
                     ';
@@ -1042,7 +1118,7 @@ jQuery(function ($) {
         };
 
         var canplay = function (ext) {
-          console.log("canplay is called"); // I: To check when this function is triggered
+          //console.log("canplay is called"); // I: To check when this function is triggered
             var canPlay = false;
             var v = document.createElement('video');
             if (v.canPlayType && v.canPlayType('video/' + ext).replace(/no/, '')) {
@@ -1054,10 +1130,10 @@ jQuery(function ($) {
         var _uid = "";
         // given a result record, build how it should look on the page
         var buildrecord = function (index) {
-          console.log("buildrecord is called"); // I: To check when this function is triggered
+          //console.log("buildrecord is called"); // I: To check when this function is triggered
             resulted.push(options.data['records'][index]);
             var record = options.data['records'][index];
-            result = '<tr><td id="' + record['@id'] + '">';
+            result = '<tr><td id="' + record['@id'] + '"> <div class="row-fluid col-sm-12"> <div class="row">'; //I: Added div tag for proper alignment
             var context_flag = false;
             // add first image where available
             if (options.display_images) {
@@ -1107,17 +1183,18 @@ jQuery(function ($) {
                 for (object in display[lineitem]) {
                     var thekey = display[lineitem][object]['field'];
                     if (thekey == 'description' && context_flag == true)continue;
+                    //-------------------------------------------------------------
                     if (thekey == 'image') {
                         if (!isFile) {
 
                             if (img) {
                                 if (img[0] != null)
-                                    lines += '<div class="row-fluid searched-img"><a href="' + img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /></a></div>';
+                                    lines += '<a href="' + img[0] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="' + img[0] + '" /> </a>';
                                 else {
                                     if (play)
-                                        lines += '<br><video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/></a></div>';
+                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="' + img[1] + '"/>';
                                     else
-                                        lines += '<a href="' + img[1] + '"><img src="images/play.jpg"/></a></div>';
+                                        lines += '<a href="' + img[1] + '"><img src="images/play.jpg"/></a>';
                                 }
 
                             }
@@ -1125,12 +1202,12 @@ jQuery(function ($) {
                         else {
                             if (img) {
                                 if (img[0] != null)
-                                    lines += '<div class="row-fluid searched-img"><a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" /> </a></div>';  // I: Added rootUrl
+                                    lines += '<a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; width:100px; margin:0 5px 10px 0; max-height:150px;" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[0]) + '&col=' + colid + '" /> </a>';  // I: Added rootUrl
                                 else {
                                     if (play)
-                                        lines += '<br><video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"/>'   // I: Added rootUrl
+                                        lines += '<video thumbid="_video" width="100" height="100" poster ="images/play.jpg" src="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"/>'   // I: Added rootUrl
                                     else
-                                        lines += '<a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"> <img src="images/play.jpg"/></a></div>'  // I: Added rootUrl
+                                        lines += '<a href="'+ rootUrl +'/searchblox/servlet/FileServlet?url=' + encodeURIComponent(img[1]) + '&col=' + colid + '"> <img src="images/play.jpg"/></a>'  // I: Added rootUrl
                                 }
                             }
                         }
@@ -1144,13 +1221,13 @@ jQuery(function ($) {
                                     if (imgi[tempi].match(/jpeg$/) != null || imgi[tempi].match(/gif$/) != null || imgi[tempi].match(/png$/) != null || imgi[tempi].match(/jpg$/) != null) {
                                         if (imgistack.indexOf(imgi[tempi].toString()) == -1) {
                                             imgistack.push(imgi[tempi].toString());
-                                            result += '<div class="row-fluid searched-img"><a href="' + imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a></div>'
+                                            lines += '<a href="' + imgi[tempi] + '" rel="prettyPhoto"> <img class="thumbnail" style="float:left; ' + width + ' margin:0 5px 10px 0; max-height:150px;" src="' + imgi[tempi] + '" /></a>'
                                         }
                                     }
                         }
                         continue;
                     }
-
+                    //--------------------------------------------
                     parts = thekey.split('.');
                     // TODO: this should perhaps recurse..
                     if (parts.length == 1) {
@@ -1173,17 +1250,14 @@ jQuery(function ($) {
                           var kb = 1024;
                           var mb = 1024*1024;
                           var gb = 1024*1024*1024;
-                          if(thevalue < kb){
-                            thevalue = parseFloat(thevalue/kb).toFixed(2) + "b";
-                          }
-                          else if(thevalue > kb && thevalue < mb){
-                            thevalue = parseFloat(thevalue/kb).toFixed(2) + "k";
+                          if(thevalue < mb){
+                            thevalue = parseFloat(thevalue/kb).toFixed(2) + "Kb";
                           }
                           else if(thevalue > mb && thevalue < gb){
-                            thevalue = parseFloat(thevalue/mb).toFixed(2) + "m";
+                            thevalue = parseFloat(thevalue/mb).toFixed(2) + "Mb";
                           }
                           else if(thevalue > gb){
-                            thevalue = parseFloat(thevalue/gb).toFixed(2) + "g";
+                            thevalue = parseFloat(thevalue/gb).toFixed(2) + "Gb";
                           }
                         }
                         if (parts == 'context,text') {
@@ -1213,6 +1287,7 @@ jQuery(function ($) {
                             thevalue.push(res[row][parts[counter]])
                         }
                     }
+
                     if (thevalue && thevalue.length) {
                         display[lineitem][object]['pre']
                             ? line += display[lineitem][object]['pre'] : false;
@@ -1241,15 +1316,17 @@ jQuery(function ($) {
         };
 
         close_ads = function() {
-          console.log("close_ads is called"); // I: To check when this function is triggered
+          //console.log("close_ads is called"); // I: To check when this function is triggered
             jQuery("#ads").remove();
         }
 
         // put the results on the page
         showresults = function (sdata) {
-          console.log("showresults is called"); // I: To check when this function is triggered
+          //console.log("showresults is called"); // I: To check when this function is triggered
 
           $('#facetview_rightcol > h3').html("Search Results for " + options.query); // I: ADDED TO DISPLAY QUERY SEARCHED
+
+            addMultipleCollectionCheckboxes(sdata);
 
             var data = parseresults(sdata);
             options.data = data;
@@ -1257,12 +1334,13 @@ jQuery(function ($) {
             var suggest = sdata["results"]['@suggest'];
             var suggestexist = false;
             var temp = "";
-            console.log(suggest);
+            //console.log(suggest);
             if (typeof suggest != "undefined") {
                 if(suggest.trim() != '') {
                     suggestexist = true;
                     temp += "<table class='table table-condensed'><tbody>";
-                    temp += "<tr><td><i><small><b>Did you mean : <a href='/searchblox/plugin/index.html?query=" + suggest.trim() + "'>" + suggest.trim() + "</a> ?</b></small></i></td></tr>";
+                    // temp += "<tr><td><i><small><b>Did you mean : <a href='/searchblox/plugin/index.html?query=" + suggest.trim() + "'>" + suggest.trim() + "</a> ?</b></small></i></td></tr>";      I: MAKING CHANGES AS BELOW
+                    temp += "<tr><td><i><small><b>Did you mean : <a href='"+window.location.href+"?query=" + suggest.trim() + "'>" + suggest.trim() + "</a> ?</b></small></i></td></tr>";
                     temp += "</tbody></table>";
                 }
                 else {
@@ -1275,7 +1353,6 @@ jQuery(function ($) {
             else {
                 $('#suggest').html('');
             }
-
 
 
             //show ads if available
@@ -1415,7 +1492,7 @@ jQuery(function ($) {
             $('.mlt').click(function () {
                 var mlturl = $(this).attr('rel');
                 var datacol = $(this).attr('data-col');
-                console.log("mlt"+datacol);
+                //console.log("mlt"+datacol);
                 domltsearch(mlturl,datacol);
             });
 
@@ -1427,7 +1504,7 @@ jQuery(function ($) {
 
         //add default params to query
         var adddefaultparams = function (a) {
-          console.log("adddefaultparams is called"); // I: To check when this function is triggered
+          //console.log("adddefaultparams is called"); // I: To check when this function is triggered
             var b = "";
             for (each in options.default_url_params) {
                 b = b + "&" + each + "=" + options.default_url_params[each];
@@ -1443,7 +1520,7 @@ jQuery(function ($) {
 
         // add extra filters to query
         var appendextrafilterstoquery = function (a) {
-          console.log("appendextrafilterstoquery is called"); // I: To check when this function is triggered
+          //console.log("appendextrafilterstoquery is called"); // I: To check when this function is triggered
             var b = "";
             for (each in options.filter) {
                 if (options.filter[each].split(',').length > 1) {
@@ -1460,7 +1537,7 @@ jQuery(function ($) {
         };
 
         var addfiltervalues = function (a) {
-          console.log("addfiltervalues is called"); // I: To check when this function is triggered
+          //console.log("addfiltervalues is called"); // I: To check when this function is triggered
             var b = "";
             for (var i = 0; i < filterq.length; i++) {
                 b = b + filterq[i];
@@ -1469,7 +1546,7 @@ jQuery(function ($) {
         };
 
         var addsizevalues = function (a) {
-          console.log("addsizevalues is called"); // I: To check when this function is triggered
+          //console.log("addsizevalues is called"); // I: To check when this function is triggered
             var b = "";
             for (var i in sizeq) {
                 for (j in options['facets'])
@@ -1480,26 +1557,26 @@ jQuery(function ($) {
         };
 
         var adddefaultdatefacet = function (q) {
-          console.log("adddefaultdatefacet is called"); // I: To check when this function is triggered
+          //console.log("adddefaultdatefacet is called"); // I: To check when this function is triggered
             var b = '&facet.field=lastmodified&f.lastmodified.range=[' + moment().subtract("days", 1).format("YYYY-MM-DD") + 'TO*]&f.lastmodified.range=[' + moment().subtract('days', 7).format("YYYY-MM-DD") + 'TO*]&f.lastmodified.range=[' + moment().subtract('months', 1).format("YYYY-MM-DD") + 'TO*]&f.lastmodified.range=[' + moment().subtract('years', 1).format("YYYY-MM-DD") + 'TO*]';
             return (q + b);
         };
 
         var adddefaultsizefacet = function (q) {
-          console.log("adddefaultsizefacet is called"); // I: To check when this function is triggered
+          //console.log("adddefaultsizefacet is called"); // I: To check when this function is triggered
             var b = '&facet.field=size&f.size.range=[*TO102400]&f.size.range=[102400TO512000]&f.size.range=[512000TO1048576]&f.size.range=[1048576TO10485760]&f.size.range=[10485760TO*]';
             return (q + b);
         };
 
 
         var trim = function (s) {
-          console.log("trim is called"); // I: To check when this function is triggered
+          //console.log("trim is called"); // I: To check when this function is triggered
             var a = s.replace(" ", "");
             return (a);
         };
 
         var contains = function (a, e) {
-          console.log("contains is called"); // I: To check when this function is triggered
+          //console.log("contains is called"); // I: To check when this function is triggered
             for (var i = 0; i < a.length; i++) {
                 if (a[i] == e) {
                     return true;
@@ -1514,20 +1591,19 @@ jQuery(function ($) {
         var oldsearchquery = "";
 
         var percolate = function (name, email, frequency, nodocs) {
-          console.log("percolate is called"); // I: To check when this function is triggered
+          //console.log("percolate is called"); // I: To check when this function is triggered
             $.ajax({
                 type: "get",
                 url: options.search_url,
                 dataType: "jsonp",    // I: Added json p for CORS
                 data: q + "&percolatoremail=" + email + "&percolatorqueryname=" + name + "&percolatorqueryfreq=" + frequency + "&percolatorquerynodocs=" + nodocs,
                 success: function (data) {
-                  console.log("percolate"); // I: Added to check function is called
                 }
             });
         };
 
         var bootalert = function (heading, msg, btnClass) {
-          console.log("bootalert is called"); // I: To check when this function is triggered
+          //console.log("bootalert is called"); // I: To check when this function is triggered
 
             var fadeClass = "fade";
             {
@@ -1609,17 +1685,16 @@ jQuery(function ($) {
         };
 
         var dosearch = function () {
-          console.log("dosearch is called"); // I: To check when this function is triggered
+          //console.log("dosearch is called"); // I: To check when this function is triggered
             // update the options with the latest query value from query box
             options.query = $('#facetview_freetext').val().trim();
             if (autosuggestflag) {
-              console.log("dosearch");
+              //console.log("dosearch");
                 var autocompletion = "/searchblox/servlet/AutoSuggest";
                 var pathname = window.location.pathname;
                 if (pathname.indexOf("/secure/") > -1) {
                     autocompletion = "../../servlet/AutoSuggest";
                 }
-                console.log(rootUrl + autocompletion);
                 $.ajax({
                     type: "post",
                     url: rootUrl + autocompletion, // I: Added rootUrl
@@ -1631,7 +1706,7 @@ jQuery(function ($) {
                         for (var i in data[0]) {
                             temp.push(data[0][i]);
                         }
-                        console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
+                        //console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
                         if (temp.length >= 1) {
                             z = temp;
                             $('#facetview_freetext').autocomplete({
@@ -1644,12 +1719,12 @@ jQuery(function ($) {
 
                 // I: AUTOMCOMPLETE TO WORK FROM DIFFERENT DIRECTORIES - NEEDS JSON OBKECT IN RESPONSE
                 /*$.getJSON(rootUrl + autocompletion, "callback=?&q=" + options.query + "&limit=" + options.nofsuggest, function (data) {
-                  console.log("Autosuggest is called and printed xxxxxxxxxxxxxxxxxxx");
+                  //console.log("Autosuggest is called and printed xxxxxxxxxxxxxxxxxxx");
                     var temp = new Array();
                     for (var i in data[0]) {
                         temp.push(data[0][i]);
                     }
-                    console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
+                    //console.log("Autosuggest is called and printed"); // I: Tocheck if autosuggest is wroking
                     if (temp.length >= 1) {
                         z = temp;
                         $('#facetview_freetext').autocomplete({
@@ -1690,7 +1765,7 @@ jQuery(function ($) {
             q += startdate;
             //addsizefacetsilent
             q += sizefilter;
-
+            q = addMultipleCollectionsQuery(q); // I: ADDING MULTIPLE COLLECTIONS TO QUERY
             if (q.trim() == oldquery.trim()) {
                 return;
             }
@@ -1702,13 +1777,12 @@ jQuery(function ($) {
 
             if ($('#facetview_freetext').val().trim() != "") {
                 displayloader();
-                console.log(options.search_url);
                 $.getJSON(options.search_url, "callback=?&" + q,
                     function (data) {
-                      console.log("getJSON in dosearch is called"); // I: To check when this function is triggered
+                      //console.log("getJSON in dosearch is called"); // I: To check when this function is triggered
                         createCookie("searchblox_plugin_query", q, 0);
                         if (data["error"] != undefined) {
-                          console.log("if condition in dosearch is called"); // I: To check when this function is triggered
+                          //console.log("if condition in dosearch is called"); // I: To check when this function is triggered
                             $('#ads').html('<div class="alert alert-danger">' +
                                 '<div class="content" style="color:red;font-weight:bold;text-align:center;letter-spacing:1px;">' +
                                 data["error"] +
@@ -1723,15 +1797,41 @@ jQuery(function ($) {
                         $('#ads').parent().parent().css("margin-left", "");
                         $('#ads').parent().parent().css("float", "");
                         showresults(data);
+                        options.paging.from != 1 ? $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color": "#609ed4", "color" : "white"}) : $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color":"#609ed4","color":"white"}); //I: MAKING THE ACTIVE PAGE HIGHLIGHTED
                         hideloader();
                     });
             }
         };
 
+        // I: FUNCTION TO ADD MULTIPLE COLLECTIONS TO QUERY
+        var addMultipleCollectionsQuery = function(q){
+          //console.log("addMultipleCollectionsQuery is called"); //I: To check if addMultipleCollections is called
+          $("[name=colChecks]").each(function(){
+            //console.log($(this).attr("data-colname"));
+            ($(this).attr("data-checked") == "true") ? (q += "&cname=" + $(this).attr("data-colname")) : "";
+          });
+          return q;
+        }
 
+        // I: FUNCTION TO ADD CHECK BOXES FOR SELECTING MULTIPLE COLLECTIONS
+        var addMultipleCollectionCheckboxes = function(data){
+          var collections = data["searchform"]["collections"];
+          var checkboxes = "";
+          var checked = "";
+          for(colname in collections){
+            (collections[colname]["@checked"] == "true") ? (checked = "checked='checked'") : (checked = "");
+            checkboxes += '<label class=""><input type="checkbox" class="mgc mgc-primary mgc-sm colChecks" data-checked="'+collections[colname]["@checked"]+'" '+checked+' name="colChecks" data-colname="'+collections[colname]["@name"]+'">'+ collections[colname]["@name"] +'</label>';
+          }
+          document.getElementById("searchMultiple").innerHTML = checkboxes;
+          $(".colChecks").bind("click", function(){
+            ($(this).attr("data-checked") == "true") ? $(this).attr("data-checked", "false") : $(this).attr("data-checked", "true");
+            dosearch();
+          });
+
+        }
 
         var domltsearch = function (url,col) {
-          console.log("domltsearch is called"); // I: To check when this function is triggered
+          //console.log("domltsearch is called"); // I: To check when this function is triggered
             // update the options with the latest query value from query box
             options.query = $('#facetview_freetext').val().trim();
 
@@ -1801,17 +1901,17 @@ jQuery(function ($) {
 
         // trigger a search when a filter choice is clicked
         var clickfilterchoice = function (event) {
-          console.log("clickfilterchoice is called"); // I: To check when this function is triggered
+          //console.log("clickfilterchoice is called"); // I: To check when this function is triggered
             event.preventDefault();
             //alert($(this).attr('id'));
             var filtername = splitStringfromFirst($(this).attr('id'), '_')[1];
             filtername = filtername.replace(/%%%/g, '____');
-            var newobj = '<a class="facetview_filterselected facetview_clear ' +
-                'btn btn-info" rel="' + $(this).attr("rel") +
+            var newobj = '<div class="facetview_filterselected facetview_clear ' +
+                '"rel="' + $(this).attr("rel") +
                 '" alt="remove" title="remove"' +
                 ' href="' + $(this).attr("href") + '" filtername=' + filtername + ' >' +
-                $(this).html().replace(/\(.*\)/, '') + ' <span class="remove">×</span></a>';
-            if ($('#facetview_selectedfilters').find('a[rel=' + $(this).attr("rel") + '][filtername=' + filtername + ']').attr('filtername') == undefined) {
+                $(this).html().replace(/\([\d]+\)$/, '') + ' <span class="remove">×</span></div>'; // I: changed regular expression to remove only (digits)
+            if ($('#facetview_selectedfilters').find('div[rel="' + $(this).attr("rel") + '"][filtername="' + filtername + '"]').attr('filtername') == undefined) {
                 filterclick($(this).attr("rel"), filtername.replace(/____/g, ' '));
                 $('#facetview_selectedfilters').append(newobj);
                 $('.facetview_filterselected').unbind('click', clearfilter);
@@ -1820,12 +1920,12 @@ jQuery(function ($) {
                 dosearch();
             }
             else {
-                alert("Filter:" + $('#facetview_selectedfilters').find('a[filtername=' + filtername + ']').attr('filtername').replace(/____/g, ' ') + " already exist!!");
+                alert("Filter:" + $('#facetview_selectedfilters').find('div[rel="' + $(this).attr("rel") + '"][filtername="' + filtername + '"]').attr('filtername').replace(/____/g, ' ') + " already exist!!");
             }
         };
 
         var splitStringfromFirst = function (str, splitter) {
-          console.log("splitStringfromFirst is called"); // I: To check when this function is triggered
+          //console.log("splitStringfromFirst is called"); // I: To check when this function is triggered
             var d = str.indexOf(splitter);
             if (0 > d)return str;
             else {
@@ -1835,7 +1935,7 @@ jQuery(function ($) {
 
         // clear a filter when clear button is pressed, and re-do the search
         var clearfilter = function (event) {
-          console.log("clearfilter is called"); // I: To check when this function is triggered
+          //console.log("clearfilter is called"); // I: To check when this function is triggered
             event.preventDefault();
             removefilterquery($(this).attr('rel'), escape($(this).attr('filtername').replace(/____/g, ' ')));
             $(this).remove();
@@ -1844,7 +1944,7 @@ jQuery(function ($) {
 
         // do search options
         var fixmatch = function (event) {
-          console.log("fixmatch is called"); // I: To check when this function is triggered
+          //console.log("fixmatch is called"); // I: To check when this function is triggered
             event.preventDefault();
             if ($(this).attr('id') == "facetview_partial_match") {
                 var newvals = [];
@@ -1905,7 +2005,7 @@ jQuery(function ($) {
 
         // adjust how many results are shown
         var howmany = function (event) {
-          console.log("howmany is called"); // I: To check when this function is triggered
+          //console.log("howmany is called"); // I: To check when this function is triggered
             event.preventDefault()
             var newhowmany = prompt('Currently displaying ' + options.paging.size +
                 ' results per page. How many would you like instead?');
@@ -1919,7 +2019,7 @@ jQuery(function ($) {
 
         // adjust how many suggestions are shown
         var howmanynofsuggest = function (event) {
-          console.log("howmanynofsuggest is called"); // I: To check when this function is triggered
+          //console.log("howmanynofsuggest is called"); // I: To check when this function is triggered
             event.preventDefault();
             var newhowmany = prompt('Currently displaying ' + options.nofsuggest +
                 ' suggestions per page. How many would you like instead?');
@@ -1932,7 +2032,7 @@ jQuery(function ($) {
         };
 
         var displayloader = function () {
-          console.log("displayloader is called"); // I: To check when this function is triggered
+          //console.log("displayloader is called"); // I: To check when this function is triggered
             var height1 = $('#facetview_results').height();
             var width1 = $('#facetview_results').width();
             $('.loadingbg').height(height1);
@@ -1942,17 +2042,16 @@ jQuery(function ($) {
         };
 
         var hideloader = function () {
-          console.log("hideloader is called"); // I: To check when this function is triggered
+          //console.log("hideloader is called"); // I: To check when this function is triggered
             $('#loading').hide();
         };
-        console.log(options.query); //I:  TO CHECK IF options.query HAS STORED SOME VALUE
         // the facet view object to be appended to the page
         var thefacetview = ' \
         	<section class="search-bar col-sm-12 col-md-8 col-md-offset-2"> \
         	    <div id="facetview-searchbar" class="input-group"> \
                     <div class="search"> \
-                        <div class="search-db"> \
-                            <label><input type="checkbox" class="mgc mgc-primary mgc-lg" checked="checked"> CNN.com</label> \
+                        <div class="search-db" id="searchMultiple"> \
+                            <label><input type="checkbox" class="mgc mgc-primary mgc-sm" checked="checked"> CNN.com</label> \
                             <label><input type="checkbox" class="mgc mgc-primary mgc-lg" checked="checked"> A Big Database</label> \
                         </div> \
                         <div class="input-group col-sm-12"> \
@@ -2014,7 +2113,7 @@ jQuery(function ($) {
             ';
 
         var attrsetter = function (attrname) {
-          console.log("attrsetter is called"); // I: To check when this function is triggered
+          //console.log("attrsetter is called"); // I: To check when this function is triggered
             var attrs = ['sort_date', 'sort_alpha', 'sort_relevance'];
             for (var a in attrs) {
                 if (attrs[a] == attrname) {
@@ -2026,7 +2125,7 @@ jQuery(function ($) {
         };
 
         var sorter = function () {
-          console.log("sorter is called"); // I: To check when this function is triggered
+          //console.log("sorter is called"); // I: To check when this function is triggered
             attrsetter($(this).attr('id'));
             if ($(this).attr('id') == 'sort_date') {
                 sortq = "&sort=date";
@@ -2041,7 +2140,7 @@ jQuery(function ($) {
         };
 
         var director = function () {
-          console.log("director is called"); // I: To check when this function is triggered
+          //console.log("director is called"); // I: To check when this function is triggered
             if ($(this).attr('dir') == "desc") {
                 $(this).attr('dir', 'asc');
                 $('span', this).attr('class', 'glyphicon glyphicon-arrow-up');
@@ -2056,7 +2155,7 @@ jQuery(function ($) {
         };
 
         var autosuggest = function (event) {
-          console.log("autosuggest is called"); // I: To check when this function is triggered
+          //console.log("autosuggest is called"); // I: To check when this function is triggered
             event.preventDefault();
             if (autosuggestflag) {
                 $(this.target).find('#facetview_freetext').autocomplete({
@@ -2071,7 +2170,7 @@ jQuery(function ($) {
         };
 
         var fixadvfiltercount = function () {
-          console.log("fixadvfiltercount is called"); // I: To check when this function is triggered
+          //console.log("fixadvfiltercount is called"); // I: To check when this function is triggered
             $('[id^="optionsizefrom_"]').each(function () {
                 var n = findfilterindata("size");
                 $(this).html($(this).html().replace(/[(]+\w+[)]/, "(" + options.data["facets"][n]["size"][1][$(this).attr('id').split('_')[1]]['#text'] + ")"));
@@ -2088,7 +2187,7 @@ jQuery(function ($) {
 
         // what to do when ready to go
         var whenready = function () {
-          console.log("whenready is called"); // I: To check when this function is triggered
+          //console.log("whenready is called"); // I: To check when this function is triggered
             // append the facetview object to this object
 
             thefacetview = thefacetview.replace(/{{HOW_MANY}}/gi, options.paging.size);

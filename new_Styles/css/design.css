@@ -151,7 +151,7 @@ button, select {
     vertical-align: middle;
     color: #609ed4;
     font-size: 11px;
-    line-height: 10px;
+    line-height: 12px;
     font-weight: 400;
     background-color: #daeffa;
     border: 1px solid #609ed4;
@@ -160,6 +160,7 @@ button, select {
     transition: all .25s ease;
     text-decoration: none;
     padding: 8px 13px 8px 17px;
+    cursor: pointer;
 }
 .facetview_filterselected .remove {
     display: inline-block;
@@ -283,9 +284,7 @@ button, select {
     border: 1px solid #e3e3e3;
 }
 .searched-title {
-    width: 80%;
     margin-bottom: 10px;
-    word-break: initial;
 }
 .input-group-addon:first-child {
     border-top-right-radius: 0;
@@ -615,10 +614,12 @@ h1 {
 .search-db {
     margin-bottom: 20px;
     text-align: center;
-    display: none; /* FOR FACET SEARCH SELECTING MULTIPLE COLLECTIONS IS NOT APPLICABLE*/
+    //*display: none; /* FOR FACET SEARCH SELECTING MULTIPLE COLLECTIONS IS NOT APPLICABLE*/
 }
 .search-db label {
     margin-right: 15px;
+    font-weight: 400;
+    font-size: 16px;
 }
 .search-db label:last-child {
     margin-right: 0px;
@@ -629,8 +630,8 @@ h1 {
 }
 input[type="checkbox"].mgc {
     position: relative;
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     background-clip: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -646,16 +647,16 @@ input[type="checkbox"].mgc {
 input[type="checkbox"].mgc:checked:after {
     content:'';
     display:block;
-    height:8px;
-    width:16px;
+    height:7px;
+    width:14px;
     border:0 solid #609ed4;
     border-width:0 0 2px 2px;
     -webkit-transform:rotate(-45deg);
     -ms-transform:rotate(-45deg);
     transform:rotate(-45deg);
     position:absolute;
-    top:6px;
-    left:4px
+    top:3px;
+    left:2px
 }
 input[type="checkbox"].mgc:disabled {
     opacity:0.65
