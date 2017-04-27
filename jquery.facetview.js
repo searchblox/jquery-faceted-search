@@ -2051,8 +2051,6 @@ jQuery(function ($) {
         	    <div id="facetview-searchbar" class="input-group"> \
                     <div class="search"> \
                         <div class="search-db" id="searchMultiple"> \
-                            <label><input type="checkbox" class="mgc mgc-primary mgc-sm" checked="checked"> CNN.com</label> \
-                            <label><input type="checkbox" class="mgc mgc-primary mgc-lg" checked="checked"> A Big Database</label> \
                         </div> \
                         <div class="input-group col-sm-12"> \
                           <input id="facetview_freetext" name="query" type="text" autofocus placeholder="search term"  autocomplete="off" > \
