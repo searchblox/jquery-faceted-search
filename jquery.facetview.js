@@ -1498,6 +1498,7 @@ jQuery(function ($) {
                 mltFlag = true;
                 //dosearch();
                 //console.log("mlt"+datacol);
+                options.paging.from = 1;
                 domltsearch(mlturl,datacol, 1);
             });
 
