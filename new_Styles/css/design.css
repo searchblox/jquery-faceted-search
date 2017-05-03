@@ -118,6 +118,7 @@ button, select {
     top: 0;
     left: 0;
     bottom: 0;
+    word-break:normal;
 }
 .last-modified {
     font-size: 13px;
