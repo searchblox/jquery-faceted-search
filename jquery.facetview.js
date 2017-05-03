@@ -10,8 +10,8 @@
 // https://github.com/bgrins/bindWithDelay/blob/master/bindWithDelay.js
 var jsonData = {};
 var resulted = [];
-var rootUrl = "http://185.73.37.206:8080";
-//var rootUrl = "http://localhost:8080";
+//var rootUrl = "http://185.73.37.206:8080";
+var rootUrl = "http://localhost:8080";
 
 (function ($) {
     $('a').on('click', function () {
@@ -1894,7 +1894,7 @@ jQuery(function ($) {
             // q = adddefaultdatefacet(q);
             if ($('#facetview_freetext').val().trim() != "") {
                 displayloader();
-                $.getJSON(options.search_url,"callback=?&xsl=json&" + q,
+                /*$.getJSON(options.search_url,"callback=?&xsl=json&" + q,
                     function (data) {
                       console.log("data loaded for mlt");
                         createCookie("searchblox_plugin_query", q, 0);
@@ -1915,7 +1915,34 @@ jQuery(function ($) {
                         showresults(data);
                         options.paging.from != 1 ? $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color": "#609ed4", "color" : "white"}) : $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color":"#609ed4","color":"white"}); //I: MAKING THE ACTIVE PAGE HIGHLIGHTED
                         hideloader();
-                    });
+                    });*/
+                    $.ajax({
+                        type: "get",                        // I: changed getJSON to ajax & dataType jsonp for CORS
+                        url: options.search_url,
+                        data: "callback=?&xsl=json&" + q,
+                        dataType: "jsonp",
+                        success: function (data) {
+                          console.log("data loaded for mlt");
+                            createCookie("searchblox_plugin_query", q, 0);
+                            if (data["error"] != undefined) {
+                                $('#ads').html('<div class="alert alert-danger">' +
+                                    '<div class="content" style="color:red;font-weight:bold;text-align:center;letter-spacing:1px;">' +
+                                    data["error"] +
+                                    '</div></div>');
+                                $('#ads').parent().parent().css("margin-left", "-100px");
+                                $('#ads').parent().parent().css("float", "left");
+                                hideloader();
+                                return;
+                            }
+
+                            $('#ads').html('');
+                            $('#ads').parent().parent().css("margin-left", "");
+                            $('#ads').parent().parent().css("float", "");
+                            showresults(data);
+                            options.paging.from != 1 ? $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color": "#609ed4", "color" : "white"}) : $(".activeLink[href="+(options.paging.from)+"] ").css({"background-color":"#609ed4","color":"white"}); //I: MAKING THE ACTIVE PAGE HIGHLIGHTED
+                            hideloader();
+                        }
+                  });
             }
         };
 
