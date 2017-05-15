@@ -118,12 +118,15 @@ button, select {
     top: 0;
     left: 0;
     bottom: 0;
+    word-break:normal;
 }
 .last-modified {
     font-size: 13px;
     line-height: 1;
     display: block;
     word-break: keep-all;
+    float: right;
+    padding: 2px 2px;
 }
 #facetview_filterbuttons .btn {
     border-radius: 0;
@@ -149,7 +152,7 @@ button, select {
     vertical-align: middle;
     color: #609ed4;
     font-size: 11px;
-    line-height: 10px;
+    line-height: 12px;
     font-weight: 400;
     background-color: #daeffa;
     border: 1px solid #609ed4;
@@ -158,6 +161,7 @@ button, select {
     transition: all .25s ease;
     text-decoration: none;
     padding: 8px 13px 8px 17px;
+    cursor: pointer;
 }
 .facetview_filterselected .remove {
     display: inline-block;
@@ -210,6 +214,9 @@ button, select {
     margin-bottom: 15px;
     color: #5d5d5d;
 }
+#facetview_advfilterdate ul{
+  margin-left: 15px;
+}
 .pagination {
     display: inline-block;
     padding-left: 0;
@@ -225,7 +232,6 @@ button, select {
 .pagination > li > a, .pagination > li > span {
     position: relative;
     float: left;
-    padding: 6px 24px;
     color: #5d5d5d;
     margin-left: -1px;
     text-decoration: none;
@@ -279,9 +285,7 @@ button, select {
     border: 1px solid #e3e3e3;
 }
 .searched-title {
-    width: 80%;
     margin-bottom: 10px;
-    word-break: initial;
 }
 .input-group-addon:first-child {
     border-top-right-radius: 0;
@@ -365,7 +369,7 @@ body {
 #facetview_filterbuttons .btn-default {
     border: none;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 900;
 }
 #facetview_filters .btn-default:hover,
 #facetview_filters .btn-default:focus,
@@ -409,7 +413,7 @@ a.dropdown-toggle .fa-angle-down {
 .header {
     background-color: #5c5c5c;
     background-image: none;
-    padding: 20px 0 15px 0 !important;
+    padding: 10px 0 10px 0 !important;
     margin: 0 !important;
     width:100%;
     border-radius: 0;
@@ -417,12 +421,13 @@ a.dropdown-toggle .fa-angle-down {
 }
 .wrap {
     box-sizing: border-box;
-    max-width: 1300px;
-    margin-left: auto;
-    margin-right: auto;
+    /*max-width: 1300px;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 10px;*/
+    margin-left: 2%;
+    margin-right: 2%;
     min-height: 24px;
+    width: 96%;
 }
 .logo img {
     vertical-align: bottom;
@@ -442,7 +447,7 @@ img {
 }
 .header-icons a i {
     color: #fff;
-    margin-right: 15px;
+    margin-right: 1em;
     font-size: 20px;
 }
 
@@ -456,25 +461,25 @@ figcaption, figure, main {
     display: block;
 }
 .main {
-    padding-top: 16px;
+    padding-top: 5px;
 }
 .page-title {
-    padding-left: 47px;
+    padding-left: 2em;
     margin-bottom: 0;
     background: transparent;
     border: none;
 }
 h1 {
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 600;
     line-height: 1.2;
     margin: 0 0 .8em 0;
-    color: #000;
-    margin-bottom: .35em;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 5px;
     font-family: "Lato",sans-serif;
 }
 .content {
-    padding: 47px 10px;
+    padding: 2em 0em;
     border: 1px solid #ccc;
     background-color: #fff;
     overflow: hidden;
@@ -483,23 +488,17 @@ h1 {
 .content .facet-view-simple {
     width: 100%;
 }
-.section.search-bar {
+/*.section.search-bar {
     max-width: 900px;
     margin: 0 auto 50px auto;
-}
-#facetview_filters > h3 {
+}*/
+#facetview_filters > h3, #facetview_rightcol > h3 {
     background-color: #f2f2f2;
     color: #5d5d5d;
     padding: 15px;
     margin-top: 0;
     font-weight: bold;
-}
-#facetview_rightcol > h3 {
-    background-color: #f2f2f2;
-    color: #5d5d5d;
-    padding: 15px;
-    margin-top: 0;
-    font-weight: bold;
+    font-size: 18px;
 }
 #nofresults {
     display: inline;
@@ -537,35 +536,37 @@ h1 {
     height: 50px;
     font-size:30px;
     color: #f1f2f4;
-    padding: 5px 12px 10px 0;
+    padding: 5px;
     line-height: 1;
     float: left;
     background-color: #fff;
 }
-#facetview-searchbar .input-group-addon:before {
+/*#facetview-searchbar .input-group-addon:before {
     content: "|";
-}
+}*/
 #facetview-searchbar .input-group-addon .btn-group {
-    width: auto;
+    width: 100%;
+    border-left: 2px solid rgba(0, 0, 0, 0.2);
+    height: 100%;
 }
 #facetview-searchbar .input-group-addon .btn-group .icon-cog {
     font-size: 25px;
     margin-left: 6px;
 }
-#facetview-searchbar .input-group-addon .btn-group .icon-cog:before {
-    content: url("../img/settings.png");
-    background-repeat: no-repeat;
+#facetview-searchbar .input-group-addon .btn-group img:hover {
+    cursor: pointer
 }
 #facetview-searchbar .input-group-addon .btn-group .icon-cog:hover:focus:active {
     color: #000;
 }
+
 .fa, a .fa, a.fa {
     color: #609ed4;
-    font-size: 22px;
+    font-size: 16px;
 }
 .fa {
     display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
+    font: normal normal normal 10px/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -614,9 +615,12 @@ h1 {
 .search-db {
     margin-bottom: 20px;
     text-align: center;
+    //*display: none; /* FOR FACET SEARCH SELECTING MULTIPLE COLLECTIONS IS NOT APPLICABLE*/
 }
 .search-db label {
     margin-right: 15px;
+    font-weight: 400;
+    font-size: 16px;
 }
 .search-db label:last-child {
     margin-right: 0px;
@@ -627,8 +631,8 @@ h1 {
 }
 input[type="checkbox"].mgc {
     position: relative;
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     background-clip: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -644,16 +648,16 @@ input[type="checkbox"].mgc {
 input[type="checkbox"].mgc:checked:after {
     content:'';
     display:block;
-    height:8px;
-    width:16px;
+    height:7px;
+    width:14px;
     border:0 solid #609ed4;
     border-width:0 0 2px 2px;
     -webkit-transform:rotate(-45deg);
     -ms-transform:rotate(-45deg);
     transform:rotate(-45deg);
     position:absolute;
-    top:6px;
-    left:4px
+    top:3px;
+    left:2px
 }
 input[type="checkbox"].mgc:disabled {
     opacity:0.65
@@ -737,4 +741,8 @@ input[type="checkbox"].mgc:checked {
 #ads hr {
     margin-bottom:12px;
     margin-top: 0px;
+}
+
+#ads a:not(.close-message){
+  color: red;
 }
