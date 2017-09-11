@@ -264,7 +264,7 @@ jQuery(function ($) {
                 },
                 {
                     "pre": 'rel="', // I: Added class as mlt
-                    "field": "uid",
+                    "field": "@id",
                     "post": '"> <span>More Like This</span></a></br></div> </div>'
                 }
             ],
@@ -1250,6 +1250,7 @@ jQuery(function ($) {
                     }
                     var counter = parts.length - 1;
                     if (res && res.constructor.toString().indexOf("Array") == -1) {
+
                         var thevalue = res[parts[counter]];
                         if (parts == 'uid')_uid = thevalue;
                         if (parts == 'title' && JSON.stringify(thevalue).trim() == '[]')thevalue = _uid;
@@ -1995,6 +1996,10 @@ jQuery(function ($) {
                             $('#ads').parent().parent().css("float", "left");
                             hideloader();
                             return;
+                        }else if(data['results'] === undefined || data['results'] === null){
+                          alert("No Results");
+                          hideloader();
+                          return;
                         }
 
                         $('#ads').html('');
